@@ -81,7 +81,7 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        cursor: none !important; /* Hide native cursor by default */
+        cursor: crosshair !important; /* Use crosshair so clicks are perfectly accurate */
       }
 
       body.modal-active * {
@@ -1727,9 +1727,9 @@
 
         <div
           class="card interactive"
-          onclick="openGame('arcade/index.html#/stage-5')"
+          onclick="window.location.href='world-explorer.html'"
         >
-          <span class="card-number">GAME.04</span>
+          <span class="card-number">EXP.02</span>
           <h2>World Explorer</h2>
           <p class="card-desc">
             Geo-locational deduction riddle. Target locked.
@@ -1810,8 +1810,8 @@
 
       function animateOrb() {
         // Lerp orb towards mouse
-        orbX += (mouseX - orbX) * 0.15;
-        orbY += (mouseY - orbY) * 0.15;
+        orbX += (mouseX - orbX) * 0.25;
+        orbY += (mouseY - orbY) * 0.25;
         aiCompanion.style.transform = `translate3d(${orbX}px, ${orbY}px, 0)`;
         requestAnimationFrame(animateOrb);
       }
