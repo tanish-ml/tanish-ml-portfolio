@@ -9,12 +9,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Courier+New:wght@400;700&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0a0a0a;
+            --bg: #020504;
             --text: #ffffff;
             --accent: #00ffcc;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --card-border: rgba(255, 255, 255, 0.08);
+            --card-bg: rgba(0, 20, 10, 0.6);
+            --card-border: #00ff66;
         }
+        
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            cursor: none !important; /* Hide native cursor */
+        }
+
         body { 
             background-color: var(--bg); 
             color: var(--text); 
@@ -27,25 +33,24 @@
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             pointer-events: none; z-index: 999999;
             background: 
-                linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%), 
                 linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            background-size: 100% 2px, 3px 100%;
+            background-size: 100% 3px, 3px 100%;
         }
         .crt-vignette {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             pointer-events: none; z-index: 999998;
-            background: radial-gradient(circle, rgba(0,0,0,0) 60%, rgba(0,0,0,0.6) 100%);
+            background: radial-gradient(circle, rgba(0,0,0,0) 60%, rgba(0,0,0,0.8) 100%);
         }
 
         /* --- CYBER DECODER --- */
         .decode-title {
             font-family: 'Courier New', monospace;
-            font-size: clamp(2rem, 5vw, 4rem);
+            font-size: clamp(2.5rem, 6vw, 5rem);
             font-weight: 900;
-            letter-spacing: 2px;
+            letter-spacing: 4px;
             color: var(--accent);
-            cursor: pointer;
-            text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+            text-shadow: 0 0 15px rgba(0, 255, 204, 0.6);
         }
 
         /* --- SHOWSTOPPER CARDS --- */
@@ -58,8 +63,8 @@
         
         .card {
             background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
+            border: 1px solid rgba(0, 255, 102, 0.3);
+            border-radius: 4px;
             padding: 2rem;
             text-decoration: none;
             color: inherit;
@@ -68,59 +73,120 @@
             display: flex;
             flex-direction: column;
             gap: 1rem;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.2s ease;
             backdrop-filter: blur(10px);
-            cursor: pointer;
-        }
-        
-        .card::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 204, 0.1), transparent);
-            transition: transform 0.6s ease;
         }
         
         .card:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: rgba(0, 255, 204, 0.3);
-            background: rgba(255, 255, 255, 0.05);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.5), 0 0 20px rgba(0, 255, 204, 0.15);
+            background: rgba(255, 0, 85, 0.1);
+            border-color: #ff0055;
+            box-shadow: 0 0 25px rgba(255, 0, 85, 0.4);
+            transform: translateY(-4px);
         }
-        
-        .card:hover::before { transform: translateX(200%); }
 
         .card-number {
             font-size: 0.875rem; color: var(--accent); font-weight: 700;
             letter-spacing: 2px; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem;
+            transition: color 0.2s;
         }
-        .card-number::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--accent); }
-        .card h2 { font-size: 1.5rem; font-weight: 700; }
-        .card-desc { color: #9ca3af; font-size: 0.95rem; line-height: 1.5; }
+        .card-number::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--accent); transition: background 0.2s;}
+        
+        .card:hover .card-number { color: #ff0055; }
+        .card:hover .card-number::before { background: #ff0055; }
+        
+        .card h2 { font-size: 1.5rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+        .card-desc { color: #00aa44; font-size: 0.95rem; line-height: 1.5; font-family: 'Courier New', monospace; letter-spacing: 1px;}
+        
+        .card:hover .card-desc { color: #ffaa44; }
 
         /* --- AMBIENT BLOBS --- */
-        .blob { position: fixed; filter: blur(90px); z-index: -1; opacity: 0.3; border-radius: 50%; animation: float 10s infinite ease-in-out alternate; pointer-events: none;}
+        .blob { position: fixed; filter: blur(90px); z-index: -1; opacity: 0.2; border-radius: 50%; animation: float 10s infinite ease-in-out alternate; pointer-events: none;}
         .blob-1 { top: 10%; left: -10%; width: 40vw; height: 40vw; background: #00ffcc22; }
-        .blob-2 { bottom: 10%; right: -10%; width: 50vw; height: 50vw; background: #3b82f622; animation-delay: -5s; }
+        .blob-2 { bottom: 10%; right: -10%; width: 50vw; height: 50vw; background: #ff005522; animation-delay: -5s; }
         
         @keyframes float {
             0% { transform: translate(0, 0) scale(1); }
             100% { transform: translate(30px, 50px) scale(1.1); }
         }
 
+        /* --- CUSTOM GHOST CURSOR --- */
+        .cursor-node {
+            position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999999;
+            will-change: transform; transform: translate3d(-100px, -100px, 0);
+        }
+
+        .hud-reticle {
+            width: 44px; height: 44px; margin-left: -22px; margin-top: -22px;
+            border: 1px solid #00ff66; border-radius: 50%; position: relative;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 0 10px rgba(0, 255, 102, 0.4);
+            transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+        }
+
+        .hud-reticle::before {
+            content: ''; width: 4px; height: 4px; background: #00ff66;
+            border-radius: 50%; box-shadow: 0 0 8px #00ff66;
+        }
+
+        .hud-reticle::after {
+            content: ''; position: absolute; inset: -6px;
+            border: 1px dashed rgba(0, 255, 102, 0.6); border-radius: 50%;
+            animation: spin 12s linear infinite;
+        }
+
+        .hud-label {
+            position: absolute; top: 26px; left: 26px; font-size: 0.6rem;
+            letter-spacing: 1px; color: #00ff66; white-space: nowrap;
+            background: rgba(0, 5, 2, 0.8); padding: 2px 6px;
+            border: 1px solid rgba(0, 255, 102, 0.4); font-family: monospace;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .ghost-1 .hud-reticle { width: 36px; height: 36px; margin-left: -18px; margin-top: -18px; opacity: 0.65; border-color: #00e55c; }
+        .ghost-1 .hud-label { display: none; }
+        .ghost-2 .hud-reticle { width: 28px; height: 28px; margin-left: -14px; margin-top: -14px; opacity: 0.45; border-color: #00cc52; }
+        .ghost-2 .hud-label { display: none; }
+        .ghost-3 .hud-reticle { width: 20px; height: 20px; margin-left: -10px; margin-top: -10px; opacity: 0.25; border-color: #00993d; }
+        .ghost-3 .hud-label { display: none; }
+        .ghost-4 .hud-reticle { width: 12px; height: 12px; margin-left: -6px; margin-top: -6px; opacity: 0.12; border-color: #006629; }
+        .ghost-4 .hud-label { display: none; }
+
+        body.target-locked .hud-reticle {
+            border-color: #ff0055;
+            box-shadow: 0 0 20px #ff0055, inset 0 0 10px rgba(255, 0, 85, 0.5);
+            transform: scale(1.25) rotate(45deg);
+        }
+        body.target-locked .hud-reticle::before { background: #ff0055; box-shadow: 0 0 10px #ff0055; }
+        body.target-locked .hud-reticle::after { border-color: #ff0055; animation-duration: 2s; }
+        body.target-locked .hud-label { color: #ff0055; border-color: #ff0055; content: 'TARGET_LOCKED'; }
+        body.target-locked .ghost-node .hud-reticle { border-color: #ff0055; }
+
         /* Modal for Games */
         #game-modal {
             display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: #000; z-index: 1000000;
+            background: #000; z-index: 100000;
         }
         #game-frame { width: 100%; height: 100%; border: none; }
         .close-btn {
             position: absolute; top: 20px; right: 30px; color: var(--accent);
-            font-size: 2rem; cursor: pointer; z-index: 1000001; font-family: monospace;
+            font-size: 2rem; z-index: 100001; font-family: monospace;
             text-shadow: 0 0 10px var(--accent); transition: transform 0.2s;
         }
-        .close-btn:hover { transform: scale(1.2); }
+        .close-btn:hover { transform: scale(1.2); color: #ff0055; text-shadow: 0 0 10px #ff0055; }
     </style>
 </head>
 <body class="antialiased">
+
+    <!-- Spectral Ghost Cursor Nodes -->
+    <div class="cursor-node" id="cursor-main">
+        <div class="hud-reticle"></div>
+        <div class="hud-label" id="hud-text">TRK // 0x9A</div>
+    </div>
+    <div class="cursor-node ghost-node ghost-1" id="ghost-1"><div class="hud-reticle"></div></div>
+    <div class="cursor-node ghost-node ghost-2" id="ghost-2"><div class="hud-reticle"></div></div>
+    <div class="cursor-node ghost-node ghost-3" id="ghost-3"><div class="hud-reticle"></div></div>
+    <div class="cursor-node ghost-node ghost-4" id="ghost-4"><div class="hud-reticle"></div></div>
 
     <div class="crt-overlay"></div>
     <div class="crt-vignette"></div>
@@ -129,63 +195,63 @@
     <div class="blob blob-2"></div>
 
     <!-- Nav -->
-    <nav class="fixed w-full z-50 bg-black/50 backdrop-blur-md border-b border-white/10">
+    <nav class="fixed w-full z-50 border-b border-[var(--accent)]/30" style="background: rgba(0, 10, 3, 0.8);">
         <div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-16">
-            <span class="text-xl font-bold tracking-widest text-white">TANISH<span class="text-[var(--accent)]">_</span></span>
-            <div class="flex space-x-6 text-sm font-mono text-gray-400">
-                <a href="#projects" class="hover:text-[var(--accent)] transition">/projects</a>
-                <a href="#arcade" class="hover:text-[var(--accent)] transition">/arcade</a>
-                <a href="https://github.com/tanish-ml" target="_blank" class="hover:text-white transition"><i class="fab fa-github text-lg"></i></a>
+            <span class="text-xl font-bold tracking-widest text-[var(--accent)] text-shadow-sm">TANISH_</span>
+            <div class="flex space-x-6 text-sm font-mono text-[var(--accent)]">
+                <a href="#projects" class="hover:text-[#ff0055] transition">/projects</a>
+                <a href="#arcade" class="hover:text-[#ff0055] transition">/arcade</a>
+                <a href="https://github.com/tanish-ml" target="_blank" class="hover:text-[#ff0055] transition"><i class="fab fa-github text-lg"></i></a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="min-h-screen flex flex-col justify-center items-start px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto pt-20">
-        <p class="text-gray-400 font-mono mb-4">> INITIALIZING PROFILE...</p>
+        <p class="text-[#00aa44] font-mono mb-4 tracking-widest">> SYSTEM_INITIALIZATION_COMPLETE</p>
         <h1 class="decode-title" id="decoder" data-value="TANISH MITTAL">TANISH MITTAL</h1>
-        <p class="text-xl md:text-2xl text-gray-300 mt-6 max-w-2xl leading-relaxed font-light">
-            Machine Learning Engineer & Creative Developer. <br>
-            Specializing in <span class="text-[var(--accent)] font-mono">Edge AI, Computer Vision, and Generative Systems</span>.
+        <p class="text-lg md:text-xl text-[#00aa44] mt-6 max-w-2xl leading-relaxed font-mono">
+            [ ROLE: MACHINE_LEARNING_ENGINEER ] <br>
+            [ FOCUS: EDGE_AI | COMPUTER_VISION | GENERATIVE_NLP ]
         </p>
-        <div class="flex gap-4 mt-10 font-mono">
-            <a href="#projects" class="border border-[var(--accent)] text-[var(--accent)] hover:bg-[var(--accent)] hover:text-black px-8 py-3 transition shadow-[0_0_15px_rgba(0,255,204,0.3)]">ACCESS_MAINFRAME</a>
+        <div class="flex gap-4 mt-12 font-mono">
+            <a href="#projects" class="border border-[var(--accent)] text-black bg-[var(--accent)] hover:bg-[#ff0055] hover:border-[#ff0055] hover:text-white px-8 py-3 transition font-bold tracking-widest shadow-[0_0_15px_rgba(0,255,204,0.4)]">ACCESS_MAINFRAME</a>
         </div>
     </section>
 
     <!-- Projects Section -->
     <section id="projects" class="py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative z-10">
         <div class="mb-16">
-            <h2 class="text-3xl font-mono font-bold text-white mb-2">> /projects/featured</h2>
+            <h2 class="text-3xl font-mono font-bold text-white mb-2 tracking-widest">> /projects/featured</h2>
             <div class="w-20 h-1 bg-[var(--accent)]"></div>
         </div>
         
         <div class="grid-ui">
             <!-- Project 1 -->
-            <a href="https://github.com/tanish-ml/TubeIntel" target="_blank" class="card">
+            <a href="https://github.com/tanish-ml/TubeIntel" target="_blank" class="card interactive">
                 <span class="card-number">SYS.01</span>
                 <h2>TubeIntel</h2>
-                <p class="card-desc">AI-powered Streamlit web app using OpenAI to automatically extract transcripts and synthesize multi-video summaries and insights from YouTube.</p>
+                <p class="card-desc">AI-powered web app extracting transcripts and synthesizing multi-video insights from YouTube.</p>
                 <div class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4">
                     <span>[PYTHON]</span> <span>[OPENAI]</span> <span>[STREAMLIT]</span>
                 </div>
             </a>
             
             <!-- Project 2 -->
-            <a href="https://github.com/tanish-ml/DocuMind" target="_blank" class="card">
+            <a href="https://github.com/tanish-ml/DocuMind" target="_blank" class="card interactive">
                 <span class="card-number">SYS.02</span>
                 <h2>DocuMind</h2>
-                <p class="card-desc">Local Document Analyst Chatbot (RAG). Upload PDFs or Text files and interactively query them using LangChain and local ChromaDB vector storage.</p>
+                <p class="card-desc">Local Document Analyst Chatbot (RAG). Interactively query PDFs using LangChain and local ChromaDB.</p>
                 <div class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4">
                     <span>[LANGCHAIN]</span> <span>[CHROMADB]</span> <span>[RAG]</span>
                 </div>
             </a>
 
             <!-- Project 3 -->
-            <a href="https://github.com/tanish-ml/ResViT-Tiny" target="_blank" class="card">
+            <a href="https://github.com/tanish-ml/ResViT-Tiny" target="_blank" class="card interactive">
                 <span class="card-number">SYS.03</span>
                 <h2>ResViT-Tiny</h2>
-                <p class="card-desc">Lightweight Hybrid Segmentation using FastResUNet on Pascal VOC 2012, optimized specifically for integrated graphics and Edge AI deployments.</p>
+                <p class="card-desc">Lightweight Hybrid Segmentation on Pascal VOC 2012, optimized for integrated graphics and Edge AI.</p>
                 <div class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4">
                     <span>[PYTORCH]</span> <span>[EDGE AI]</span> <span>[CNN/VIT]</span>
                 </div>
@@ -194,59 +260,59 @@
     </section>
 
     <!-- Arcade Section -->
-    <section id="arcade" class="py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative z-10 border-t border-white/10">
+    <section id="arcade" class="py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative z-10 border-t border-[var(--accent)]/30">
         <div class="mb-16">
-            <h2 class="text-3xl font-mono font-bold text-white mb-2">> /vault/arcade_games</h2>
-            <p class="text-gray-400 font-mono">Select a module to initiate simulation...</p>
+            <h2 class="text-3xl font-mono font-bold text-white mb-2 tracking-widest">> /vault/arcade_games</h2>
+            <p class="text-[#00aa44] font-mono">[ SELECT A MODULE TO INITIATE SIMULATION ]</p>
         </div>
         
         <div class="grid-ui">
-            <div class="card" onclick="openGame('arcade/index.html#/stage-2')">
+            <div class="card interactive" onclick="openGame('arcade/index.html#/stage-2')">
                 <span class="card-number">GAME.01</span>
                 <h2>Cyber Maze</h2>
-                <p class="card-desc">Navigate the digital labyrinth. CSS/JS Grid physics.</p>
-                <div class="text-[var(--accent)] mt-4"><i class="fas fa-play"></i> LAUNCH</div>
+                <p class="card-desc">Navigate the digital labyrinth. Grid physics mapping.</p>
+                <div class="text-[var(--accent)] mt-4 font-mono font-bold"><i class="fas fa-play"></i> EXECUTE</div>
             </div>
             
-            <div class="card" onclick="openGame('arcade/index.html#/stage-3')">
+            <div class="card interactive" onclick="openGame('arcade/index.html#/stage-3')">
                 <span class="card-number">GAME.02</span>
                 <h2>Flappy Terminal</h2>
-                <p class="card-desc">A retro clone inside the mainframe.</p>
-                <div class="text-[var(--accent)] mt-4"><i class="fas fa-play"></i> LAUNCH</div>
+                <p class="card-desc">A retro avoidance clone inside the mainframe.</p>
+                <div class="text-[var(--accent)] mt-4 font-mono font-bold"><i class="fas fa-play"></i> EXECUTE</div>
             </div>
 
-            <div class="card" onclick="openGame('arcade/index.html#/stage-4')">
+            <div class="card interactive" onclick="openGame('arcade/index.html#/stage-4')">
                 <span class="card-number">GAME.03</span>
                 <h2>Twist Puzzle</h2>
-                <p class="card-desc">Spatial reasoning challenge. Rotate to align.</p>
-                <div class="text-[var(--accent)] mt-4"><i class="fas fa-play"></i> LAUNCH</div>
+                <p class="card-desc">Spatial reasoning challenge. Rotate nodes to align.</p>
+                <div class="text-[var(--accent)] mt-4 font-mono font-bold"><i class="fas fa-play"></i> EXECUTE</div>
             </div>
 
-            <div class="card" onclick="openGame('arcade/index.html#/stage-5')">
+            <div class="card interactive" onclick="openGame('arcade/index.html#/stage-5')">
                 <span class="card-number">GAME.04</span>
                 <h2>World Explorer</h2>
-                <p class="card-desc">Geo-locational deduction riddle.</p>
-                <div class="text-[var(--accent)] mt-4"><i class="fas fa-play"></i> LAUNCH</div>
+                <p class="card-desc">Geo-locational deduction riddle. Target locked.</p>
+                <div class="text-[var(--accent)] mt-4 font-mono font-bold"><i class="fas fa-play"></i> EXECUTE</div>
             </div>
 
-            <div class="card" onclick="openGame('arcade/index.html#/stage-6')">
+            <div class="card interactive" onclick="openGame('arcade/index.html#/stage-6')">
                 <span class="card-number">GAME.05</span>
                 <h2>Devil's Challenge</h2>
-                <p class="card-desc">The ultimate logical showdown.</p>
-                <div class="text-[var(--accent)] mt-4"><i class="fas fa-play"></i> LAUNCH</div>
+                <p class="card-desc">The ultimate logical showdown simulation.</p>
+                <div class="text-[var(--accent)] mt-4 font-mono font-bold"><i class="fas fa-play"></i> EXECUTE</div>
             </div>
         </div>
     </section>
 
     <!-- Game Modal -->
     <div id="game-modal">
-        <div class="close-btn" onclick="closeGame()">[X]</div>
+        <div class="close-btn interactive" onclick="closeGame()">[ SHUTDOWN_SIMULATION ]</div>
         <iframe id="game-frame" src=""></iframe>
     </div>
 
     <!-- Scripts -->
     <script>
-        // Cyber Text Decoder Logic
+        // --- CYBER TEXT DECODER ---
         const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*!¿§";
         const el = document.getElementById('decoder');
         let interval = null;
@@ -273,15 +339,57 @@
             }, 30);
         }
 
-        // Run on load and on hover
         scramble();
         el.addEventListener('mouseenter', scramble);
 
-        // Game Modal Logic
+        // --- GHOST CURSOR KINEMATICS ---
+        const mainCursor = document.getElementById('cursor-main');
+        const hudText = document.getElementById('hud-text');
+        const ghosts = [
+            document.getElementById('ghost-1'),
+            document.getElementById('ghost-2'),
+            document.getElementById('ghost-3'),
+            document.getElementById('ghost-4')
+        ];
+        
+        const mouse = { x: -100, y: -100 };
+        const points = [ {x: -100, y: -100}, {x: -100, y: -100}, {x: -100, y: -100}, {x: -100, y: -100}, {x: -100, y: -100} ];
+        const lerpSpeeds = [1.0, 0.42, 0.28, 0.18, 0.10];
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+            
+            const isTarget = e.target.closest('.interactive, a, button, input');
+            if (isTarget) {
+                document.body.classList.add('target-locked');
+                hudText.innerText = 'LOCK // ENGAGED';
+            } else {
+                document.body.classList.remove('target-locked');
+                hudText.innerText = 'TRK // [' + Math.round(mouse.x) + ',' + Math.round(mouse.y) + ']';
+            }
+        });
+
+        function renderAnimation() {
+            points[0].x = mouse.x; points[0].y = mouse.y;
+            mainCursor.style.transform = 'translate3d(' + points[0].x + 'px, ' + points[0].y + 'px, 0)';
+
+            for (let i = 1; i < points.length; i++) {
+                const prev = points[i - 1];
+                const current = points[i];
+                current.x += (prev.x - current.x) * lerpSpeeds[i];
+                current.y += (prev.y - current.y) * lerpSpeeds[i];
+                ghosts[i - 1].style.transform = 'translate3d(' + current.x + 'px, ' + current.y + 'px, 0)';
+            }
+            requestAnimationFrame(renderAnimation);
+        }
+        renderAnimation();
+
+        // --- GAME MODAL LOGIC ---
         function openGame(url) {
             document.getElementById('game-frame').src = url;
             document.getElementById('game-modal').style.display = 'block';
-            document.body.style.overflow = 'hidden'; // prevent scrolling
+            document.body.style.overflow = 'hidden';
         }
         function closeGame() {
             document.getElementById('game-modal').style.display = 'none';
