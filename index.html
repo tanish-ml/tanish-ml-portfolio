@@ -1721,7 +1721,7 @@
 
         Object.assign(container.style, {
           position: "absolute",
-          top: "40px",
+          top: "120px",
           right: "40px",
           overflow: "hidden",
           borderRadius: "20px",
@@ -1763,7 +1763,7 @@
         img.onload = () => {
           const aspect = img.height / img.width;
 
-          const cols = 150;
+          const cols = 250;
           const rows = Math.floor(cols * aspect * 0.55);
 
           offCanvas.width = cols;
@@ -1771,7 +1771,7 @@
           offCtx.drawImage(img, 0, 0, cols, rows);
           const imgData = offCtx.getImageData(0, 0, cols, rows).data;
 
-          const baseWidth = 350; // visual size on screen
+          const baseWidth = 450; // visual size on screen
           const fontSize = baseWidth / (cols * 0.6);
           const charWidth = fontSize * 0.6;
           const charHeight = fontSize;
