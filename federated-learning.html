@@ -127,46 +127,47 @@
 
     <div class="scroll-content" id="scroll-container">
         
-        <!-- Step 0: Intro -->
+        <!-- Step 0: The Centralized Cloud -->
         <div class="step" data-step="0">
             <div class="step-content">
-                <h2>FEDERATED EDGE AI</h2>
-                <p>The future of Machine Learning is decentralized. <br><br>Instead of sending massive amounts of private data to a central cloud, we deploy models to Edge devices. Scroll down to initiate the Federated Learning simulation.</p>
+                <h2>1 // THE CLOUD PARADIGM</h2>
+                <p>Welcome to the old way of doing AI. <br><br>In a traditional architecture, there is only one massive Central Server. All user data is collected and transmitted directly to this cloud for training and inference.</p>
+                <div class="code-block" style="color: #00aaff; border-color: #0044aa;">Central Server Online.<br>Awaiting user data...</div>
             </div>
         </div>
 
-        <!-- Step 1: Cloud Paradigm -->
+        <!-- Step 1: Bottlenecks & Privacy -->
         <div class="step right-align" data-step="1">
             <div class="step-content">
-                <h2>1 // THE CLOUD PARADIGM</h2>
-                <p>Traditionally, all raw data is transmitted from users to a central server. This massive data transfer causes high latency, severe bandwidth bottlenecks, and serious privacy risks. The central server becomes overwhelmed.</p>
-                <div class="code-block" style="color: #ff3333; border-color: #551111;">Warning: Bandwidth Exceeded<br>Latency: 850ms [SERVER OVERLOAD]</div>
+                <h2>2 // BOTTLENECKS & PRIVACY</h2>
+                <p>As millions of users send raw data, the network chokes. Worse, transmitting private images, audio, and sensor data across the internet is a massive security risk. The central server becomes a vulnerable target.</p>
+                <div class="code-block" style="color: #ff3333; border-color: #551111;">WARNING: Bandwidth Overloaded<br>WARNING: Data Privacy Compromised</div>
             </div>
         </div>
 
-        <!-- Step 2: Edge Deployment -->
+        <!-- Step 2: Spawning IoT -->
         <div class="step" data-step="2">
             <div class="step-content">
-                <h2>2 // EDGE DEPLOYMENT</h2>
-                <p>We break the monolith. We push heavily optimized, quantized INT8 models directly to the Edge devices (phones, IoT sensors, vehicles). The network stabilizes.</p>
-                <div class="code-block">Deploying to 1.4M Edge Nodes...<br>Local inference initialized.</div>
+                <h2>3 // THE EDGE AI SOLUTION</h2>
+                <p>Instead of bringing the data to the model, we bring the model to the data. <br><br>We introduce thousands of IoT devices and smartphones to the network. We deploy lightweight, quantized ML models directly to these "Edge Nodes".</p>
+                <div class="code-block">Spawning 1.4M Edge Nodes...<br>Deploying INT8 Models...</div>
             </div>
         </div>
 
-        <!-- Step 3: Federated Training -->
+        <!-- Step 3: Local Training -->
         <div class="step right-align" data-step="3">
             <div class="step-content">
-                <h2>3 // LOCAL TRAINING</h2>
-                <p>Edge devices begin training the model locally using their own private data. The raw data never leaves the device, ensuring total privacy.</p>
-                <div class="code-block">Epoch 1/5 [Edge Node 0x7A]<br>Loss: 0.142 ... Privacy preserved.</div>
+                <h2>4 // LOCAL TRAINING</h2>
+                <p>The heavy data transfer stops completely. <br><br>Each Edge Node begins training the model locally using its own private data. The raw data never leaves the device, ensuring total cryptographic privacy.</p>
+                <div class="code-block">Edge Node 0x7A Training...<br>Privacy: 100% Preserved.</div>
             </div>
         </div>
 
-        <!-- Step 4: Global Aggregation -->
+        <!-- Step 4: Secure Aggregation (FedAvg) -->
         <div class="step" data-step="4">
             <div class="step-content">
-                <h2>4 // GLOBAL AGGREGATION</h2>
-                <p>Instead of data, nodes transmit secure "weight updates" (gradients) back to the central server. The server uses Federated Averaging (FedAvg) to combine these into a smarter Master Model.</p>
+                <h2>5 // SECURE AGGREGATION</h2>
+                <p>Instead of sending private data, the Edge Nodes securely transmit only the mathematical "weight updates" (gradients) back to the server. The server aggregates these into a smarter Master Model.</p>
                 <div class="code-block">ΔW = local_gradients<br>Aggregating via FedAvg...</div>
             </div>
         </div>
@@ -174,8 +175,8 @@
         <!-- Outro -->
         <div class="step right-align" data-step="5">
             <div class="step-content">
-                <h2>SIMULATION COMPLETE</h2>
-                <p>Maximum privacy, zero latency inference, and distributed global intelligence. This is the power of Federated Edge AI.</p>
+                <h2>FEDERATED EDGE AI</h2>
+                <p>The server pushes the updated Master Model back to the edge. <br><br>This is Federated Learning: Decentralized compute, zero latency inference, and distributed global intelligence.</p>
                 <br>
                 <a href="index.html" class="text-[var(--accent)] hover:text-[#ffffff] underline font-mono text-lg mt-4 inline-block">Return to Portfolio</a>
             </div>
@@ -228,34 +229,35 @@
         scene.add(networkGroup);
 
         // 1. Central Server Node
-        const serverGeo = new THREE.IcosahedronGeometry(4, 2);
+        const serverGeo = new THREE.IcosahedronGeometry(5, 2);
         const serverMat = new THREE.MeshBasicMaterial({ color: 0x00aaff, wireframe: true, transparent: true, opacity: 0.8 });
         const serverNode = new THREE.Mesh(serverGeo, serverMat);
         networkGroup.add(serverNode);
         
-        const serverCoreGeo = new THREE.SphereGeometry(3.5, 32, 32);
+        const serverCoreGeo = new THREE.SphereGeometry(4.5, 32, 32);
         const serverCoreMat = new THREE.MeshBasicMaterial({ color: 0x0044ff, transparent: true, opacity: 0.5 });
         const serverCore = new THREE.Mesh(serverCoreGeo, serverCoreMat);
         networkGroup.add(serverCore);
 
-        // 2. Edge Nodes (Swarm around server)
+        // 2. Edge Nodes (Spawned later, initially invisible)
         const edgeNodes = [];
         const lines = [];
-        const lineMaterial = new THREE.LineBasicMaterial({ color: 0x00aaff, transparent: true, opacity: 0.05 });
+        const lineMaterial = new THREE.LineBasicMaterial({ color: 0x00aaff, transparent: true, opacity: 0.0 });
         const edgeGeo = new THREE.SphereGeometry(0.5, 16, 16);
         
-        const numEdges = 120;
+        const numEdges = 150;
         for (let i = 0; i < numEdges; i++) {
             // Distribute on a sphere/ring
             const phi = Math.acos(-1 + (2 * i) / numEdges);
             const theta = Math.sqrt(numEdges * Math.PI) * phi;
-            const r = 25 + Math.random() * 15;
+            const r = 30 + Math.random() * 20;
             
             const x = r * Math.cos(theta) * Math.sin(phi);
-            const y = r * Math.sin(theta) * Math.sin(phi) * 0.4; // Flatten slightly like a galaxy
+            const y = r * Math.sin(theta) * Math.sin(phi) * 0.3; // Flatten slightly like a galaxy
             const z = r * Math.cos(phi);
 
-            const edgeMat = new THREE.MeshBasicMaterial({ color: 0x00ffcc, transparent: true, opacity: 0.2 });
+            // Initially invisible (opacity 0)
+            const edgeMat = new THREE.MeshBasicMaterial({ color: 0x00ffcc, transparent: true, opacity: 0.0 });
             const edge = new THREE.Mesh(edgeGeo, edgeMat);
             edge.position.set(x, y, z);
             edge.userData = { baseX: x, baseY: y, baseZ: z, angle: Math.random() * Math.PI * 2, speed: 0.002 + Math.random() * 0.005 };
@@ -263,25 +265,48 @@
             networkGroup.add(edge);
             edgeNodes.push(edge);
 
-            // Connect to server
-            const points = [serverNode.position, edge.position];
+            // Connect to server (lines initially invisible)
+            const points = [new THREE.Vector3(0,0,0), new THREE.Vector3(x, y, z)];
             const geo = new THREE.BufferGeometry().setFromPoints(points);
             const line = new THREE.Line(geo, lineMaterial.clone());
+            // Store reference to end point for dynamic updating if needed
+            line.userData = { node: edge };
             networkGroup.add(line);
             lines.push(line);
         }
 
         // 3. Data Packets (for animation)
-        const packets = [];
-        const packetGeo = new THREE.SphereGeometry(0.3, 8, 8);
-        const packetMat = new THREE.MeshBasicMaterial({ color: 0xff3333 });
+        const packetGeo = new THREE.SphereGeometry(0.4, 8, 8);
+        
+        // Helper to shoot packets from infinity to server (Step 0, 1)
+        function spawnExternalPacket(colorHex, duration, isHeavy) {
+            const packet = new THREE.Mesh(packetGeo, new THREE.MeshBasicMaterial({ color: colorHex }));
+            const angle = Math.random() * Math.PI * 2;
+            const dist = 100;
+            packet.position.set(Math.cos(angle) * dist, (Math.random() - 0.5) * 40, Math.sin(angle) * dist);
+            if(isHeavy) packet.scale.set(1.5, 1.5, 1.5);
+            
+            networkGroup.add(packet);
+            
+            gsap.to(packet.position, {
+                x: 0, y: 0, z: 0,
+                duration: duration,
+                ease: "power2.in",
+                onComplete: () => {
+                    networkGroup.remove(packet);
+                    packet.geometry.dispose();
+                    packet.material.dispose();
+                }
+            });
+        }
 
-        function spawnPacket(fromServer, colorHex, duration) {
+        // Helper to shoot packets between edge and server
+        function spawnInternalPacket(fromServer, colorHex, duration) {
             const edge = edgeNodes[Math.floor(Math.random() * edgeNodes.length)];
             const packet = new THREE.Mesh(packetGeo, new THREE.MeshBasicMaterial({ color: colorHex }));
             
-            const startPos = fromServer ? serverNode.position : edge.position;
-            const endPos = fromServer ? edge.position : serverNode.position;
+            const startPos = fromServer ? new THREE.Vector3(0,0,0) : edge.position.clone();
+            const endPos = fromServer ? edge.position.clone() : new THREE.Vector3(0,0,0);
             
             packet.position.copy(startPos);
             networkGroup.add(packet);
@@ -299,6 +324,7 @@
         }
 
         let packetInterval;
+        let shakeInterval;
 
         // --- INTERSECTION OBSERVER & SCROLL LOGIC ---
         let currentStep = -1;
@@ -324,107 +350,185 @@
         // --- ANIMATIONS & STATE MACHINE ---
         function update3DModel(step) {
             clearInterval(packetInterval);
+            clearInterval(shakeInterval);
             
-            // Default states
-            let camX = 0, camY = 20, camZ = 80;
+            // Stop shaking server
+            gsap.killTweensOf(serverNode.position);
+            serverNode.position.set(0,0,0);
+            serverCore.position.set(0,0,0);
             
-            // Reset colors and opacity
-            serverCoreMat.color.setHex(0x0044ff); gsap.to(serverCoreMat, { opacity: 0.5, duration: 1 });
-            serverMat.color.setHex(0x00aaff);
-            edgeNodes.forEach(node => {
-                gsap.killTweensOf(node.material); gsap.killTweensOf(node.scale);
-                node.material.color.setHex(0x00ffcc); gsap.to(node.material, { opacity: 0.2, duration: 1 });
-                gsap.to(node.scale, { x: 1, y: 1, z: 1, duration: 1 });
-            });
-            lines.forEach(line => gsap.to(line.material, { opacity: 0.05, duration: 1 }));
-
             if (step === 0) {
-                camX = 0; camZ = 80;
+                // Step 0: The Centralized Cloud (No Edge Nodes)
+                gsap.to(camera.position, { x: 0, y: 10, z: 80, duration: 2, ease: "power2.inOut" });
+                
+                serverCoreMat.color.setHex(0x0044ff);
+                gsap.to(serverCoreMat, { opacity: 0.6, duration: 1 });
+                serverMat.color.setHex(0x00aaff);
+                
+                // Hide all edge nodes
+                edgeNodes.forEach(node => gsap.to(node.material, { opacity: 0, duration: 1 }));
+                lines.forEach(line => gsap.to(line.material, { opacity: 0, duration: 1 }));
+                
+                // Normal data packets flowing in
+                packetInterval = setInterval(() => {
+                    spawnExternalPacket(0x00aaff, 2.0, false);
+                }, 200);
             }
             else if (step === 1) {
-                // Cloud Paradigm: Heavy red data packets from edge to server
-                camX = -15; camZ = 60;
-                serverCoreMat.color.setHex(0xff1111); gsap.to(serverCoreMat, { opacity: 0.9, duration: 2 }); // Overloaded server
+                // Step 1: Bottlenecks (Still no edge nodes, just chaos)
+                gsap.to(camera.position, { x: -20, y: 15, z: 70, duration: 2, ease: "power2.inOut" });
+                
+                serverCoreMat.color.setHex(0xff0000);
+                gsap.to(serverCoreMat, { opacity: 0.9, duration: 1 });
                 serverMat.color.setHex(0xff3333);
-                lines.forEach(line => { line.material.color.setHex(0xff3333); gsap.to(line.material, { opacity: 0.2, overwrite: true, duration: 1 }); });
                 
-                packetInterval = setInterval(() => {
-                    spawnPacket(false, 0xff1111, 2.0); // Slow, heavy red packets
-                }, 100);
-            }
-            else if (step === 2) {
-                // Edge Deployment: Models fly from server to edge
-                camX = 0; camY = 30; camZ = 50;
-                serverCoreMat.color.setHex(0x00ffcc); gsap.to(serverCoreMat, { opacity: 0.8, duration: 1 });
-                serverMat.color.setHex(0x00ffcc);
+                edgeNodes.forEach(node => gsap.to(node.material, { opacity: 0, duration: 1 }));
+                lines.forEach(line => gsap.to(line.material, { opacity: 0, duration: 1 }));
                 
-                // Models (cyan packets) deploying
+                // Heavy red data packets crashing in
                 packetInterval = setInterval(() => {
-                    spawnPacket(true, 0x00ffcc, 1.0);
+                    spawnExternalPacket(0xff1111, 1.0, true);
                 }, 50);
 
-                // Edge nodes light up as they receive models
-                edgeNodes.forEach((node, i) => {
-                    gsap.to(node.material, { opacity: 0.8, duration: 0.5, delay: 0.5 + Math.random() * 1.5 });
-                    gsap.to(node.scale, { x: 1.5, y: 1.5, z: 1.5, duration: 0.5, delay: 0.5 + Math.random() * 1.5 });
+                // Shake the server
+                shakeInterval = setInterval(() => {
+                    serverNode.position.x = (Math.random() - 0.5) * 1.5;
+                    serverNode.position.y = (Math.random() - 0.5) * 1.5;
+                    serverCore.position.x = serverNode.position.x;
+                    serverCore.position.y = serverNode.position.y;
+                }, 50);
+            }
+            else if (step === 2) {
+                // Step 2: Spawning IoT (Edge Deployment)
+                gsap.to(camera.position, { x: 0, y: 30, z: 60, duration: 2, ease: "power2.inOut" });
+                
+                // Server calms down
+                serverCoreMat.color.setHex(0x00aaff);
+                gsap.to(serverCoreMat, { opacity: 0.5, duration: 2 });
+                serverMat.color.setHex(0x00aaff);
+                
+                // Lines appear slightly
+                lines.forEach(line => {
+                    line.material.color.setHex(0x00aaff);
+                    gsap.to(line.material, { opacity: 0.05, duration: 2 });
                 });
+                
+                // Edge nodes spawn and light up in a cascading wave
+                edgeNodes.forEach((node, i) => {
+                    node.material.color.setHex(0x00ffcc);
+                    node.scale.set(0.1, 0.1, 0.1);
+                    gsap.to(node.material, { opacity: 0.4, duration: 1, delay: i * 0.01 });
+                    gsap.to(node.scale, { x: 1, y: 1, z: 1, duration: 1, ease: "back.out", delay: i * 0.01 });
+                });
+
+                // Server shoots models to edge nodes
+                let spawnCount = 0;
+                packetInterval = setInterval(() => {
+                    if (spawnCount > 50) return; // Burst of models
+                    spawnInternalPacket(true, 0x00ffcc, 1.0);
+                    spawnCount++;
+                }, 40);
             }
             else if (step === 3) {
-                // Local Training: Edge nodes pulse independently
-                camX = -20; camY = 10; camZ = 40;
+                // Step 3: Local Training
+                gsap.to(camera.position, { x: 30, y: 10, z: 50, duration: 2, ease: "power2.inOut" });
                 
-                edgeNodes.forEach(node => {
+                // Server goes dim
+                serverCoreMat.color.setHex(0x002255);
+                gsap.to(serverCoreMat, { opacity: 0.2, duration: 1 });
+                
+                // Lines dim
+                lines.forEach(line => gsap.to(line.material, { opacity: 0.01, duration: 1 }));
+                
+                // Edge nodes pulse brightly (Training on local data)
+                edgeNodes.forEach((node) => {
+                    node.material.color.setHex(0x00ffcc);
+                    gsap.killTweensOf(node.material);
+                    gsap.killTweensOf(node.scale);
                     gsap.to(node.material, { opacity: 1, duration: 0.4 + Math.random(), yoyo: true, repeat: -1 });
-                    gsap.to(node.scale, { x: 2, y: 2, z: 2, duration: 0.4 + Math.random(), yoyo: true, repeat: -1 });
+                    gsap.to(node.scale, { x: 1.8, y: 1.8, z: 1.8, duration: 0.4 + Math.random(), yoyo: true, repeat: -1 });
                 });
             }
             else if (step === 4) {
-                // Global Aggregation: Fast green gradients to server
-                camX = 0; camY = 0; camZ = 60;
-                serverCoreMat.color.setHex(0x00ff44); gsap.to(serverCoreMat, { opacity: 1, duration: 0.5, yoyo: true, repeat: -1 });
+                // Step 4: Secure Aggregation
+                gsap.to(camera.position, { x: 0, y: 20, z: 70, duration: 2, ease: "power2.inOut" });
                 
-                lines.forEach(line => { line.material.color.setHex(0x00ffcc); gsap.to(line.material, { opacity: 0.3, overwrite: true, duration: 1 }); });
-                edgeNodes.forEach(node => gsap.to(node.material, { opacity: 0.6, duration: 1 }));
+                serverCoreMat.color.setHex(0x00ff44);
+                gsap.to(serverCoreMat, { opacity: 1, duration: 0.5, yoyo: true, repeat: -1 });
+                serverMat.color.setHex(0x00ffcc);
 
-                // Fast gradient updates
+                lines.forEach(line => {
+                    line.material.color.setHex(0x00ff44);
+                    gsap.to(line.material, { opacity: 0.15, duration: 1 });
+                });
+                
+                // Edge nodes stop pulsing as intensely
+                edgeNodes.forEach((node) => {
+                    gsap.killTweensOf(node.material);
+                    gsap.killTweensOf(node.scale);
+                    node.material.color.setHex(0x00ffcc);
+                    gsap.to(node.material, { opacity: 0.5, duration: 1 });
+                    gsap.to(node.scale, { x: 1, y: 1, z: 1, duration: 1 });
+                });
+
+                // Shoot fast gradients to server
                 packetInterval = setInterval(() => {
-                    spawnPacket(false, 0x00ffcc, 0.4);
+                    spawnInternalPacket(false, 0x00ff44, 0.4);
                 }, 30);
             }
             else if (step === 5) {
-                // Complete
-                camX = -10; camY = 20; camZ = 90;
-                serverCoreMat.color.setHex(0x00ffcc); gsap.to(serverCoreMat, { opacity: 0.6, duration: 2 });
-                edgeNodes.forEach(node => gsap.to(node.material, { opacity: 0.4, duration: 2 }));
-            }
+                // Step 5: Outro
+                gsap.to(camera.position, { x: -10, y: 30, z: 90, duration: 2, ease: "power2.inOut" });
+                
+                gsap.killTweensOf(serverCoreMat);
+                serverCoreMat.color.setHex(0x00aaff);
+                gsap.to(serverCoreMat, { opacity: 0.8, duration: 2 });
+                serverMat.color.setHex(0x00aaff);
 
-            gsap.to(camera.position, { x: camX, y: camY, z: camZ, duration: 2.5, ease: "power2.inOut" });
-            gsap.to(camera.rotation, { x: 0, y: 0, z: 0, duration: 2.5, ease: "power2.inOut" });
+                lines.forEach(line => {
+                    line.material.color.setHex(0x00aaff);
+                    gsap.to(line.material, { opacity: 0.05, duration: 2 });
+                });
+                
+                edgeNodes.forEach(node => {
+                    node.material.color.setHex(0x00ffcc);
+                    gsap.to(node.material, { opacity: 0.3, duration: 2 });
+                });
+            }
         }
 
         // --- RENDER LOOP ---
         function animate() {
             requestAnimationFrame(animate);
             
-            // Slowly rotate the entire network
             networkGroup.rotation.y += 0.001;
             serverNode.rotation.x += 0.005;
             serverNode.rotation.y += 0.005;
             
-            // Orbit edge nodes slightly
-            edgeNodes.forEach(node => {
+            // Orbit edge nodes
+            edgeNodes.forEach((node, i) => {
                 node.userData.angle += node.userData.speed;
                 const r = Math.sqrt(node.userData.baseX**2 + node.userData.baseZ**2);
                 node.position.x = r * Math.cos(node.userData.angle);
                 node.position.z = r * Math.sin(node.userData.angle);
                 node.position.y = node.userData.baseY + Math.sin(node.userData.angle * 5) * 2;
+                
+                // Update line positions dynamically so they follow the orbiting nodes
+                if(lines[i]) {
+                    const pos = lineMaterial.clone(); // Just to reference, actually we need to update geometry
+                    const positions = lines[i].geometry.attributes.position.array;
+                    // First point is (0,0,0) (Server), Second point is edge node
+                    positions[3] = node.position.x;
+                    positions[4] = node.position.y;
+                    positions[5] = node.position.z;
+                    lines[i].geometry.attributes.position.needsUpdate = true;
+                }
             });
 
             composer.render();
         }
         animate();
 
-        // Responsive handling
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
