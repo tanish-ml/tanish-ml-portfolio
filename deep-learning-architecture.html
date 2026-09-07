@@ -1,396 +1,497 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scrollytelling | Neural Architecture</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Courier+New:wght@400;700&family=Inter:wght@400;700;900&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Courier+New:wght@400;700&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <style>
-      :root {
-        --bg: #020504;
-        --text: #ffffff;
-        --accent: #00ffcc;
-      }
-      body {
-        background-color: var(--bg);
-        color: var(--text);
-        font-family: "Inter", sans-serif;
-        margin: 0;
-        overflow-x: hidden;
-      }
-      #webgl-container {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        z-index: -1;
-        pointer-events: none;
-      }
-      .scroll-content {
-        position: relative;
-        z-index: 10;
-      }
-      .step {
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        padding-left: 10vw;
-        opacity: 0.1;
-        transition: opacity 0.5s ease-in-out;
-      }
-      .step.active {
-        opacity: 1;
-      }
-      .step-content {
-        max-width: 400px;
-        background: rgba(0, 10, 3, 0.8);
-        border: 1px solid rgba(0, 255, 102, 0.3);
-        border-left: 4px solid var(--accent);
-        padding: 2rem;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 0 30px rgba(0, 255, 102, 0.1);
-        transform: translateY(20px);
-        transition: transform 0.5s ease-out;
-      }
-      .step.active .step-content {
-        transform: translateY(0);
-      }
-      h2 {
-        font-family: "Courier New", monospace;
-        color: var(--accent);
-        font-size: 2rem;
-        margin-bottom: 1rem;
-        text-shadow: 0 0 10px rgba(0, 255, 204, 0.4);
-      }
-      p {
-        color: #ccc;
-        line-height: 1.6;
-      }
-      /* Top nav simple */
-      nav {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        padding: 1.5rem 2rem;
-        z-index: 50;
-        font-family: "Courier New", monospace;
-      }
-      nav a {
-        color: var(--accent);
-        text-decoration: none;
-        font-weight: bold;
-      }
-      nav a:hover {
-        color: #ff0055;
-        text-shadow: 0 0 10px #ff0055;
-      }
+        :root {
+            --bg: #010302;
+            --text: #ffffff;
+            --accent: #00ffcc;
+        }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        #webgl-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .scroll-content {
+            position: relative;
+            z-index: 10;
+        }
+        .step {
+            height: 120vh; /* Give plenty of scroll room per step */
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding-left: 10vw;
+            opacity: 0.2;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .step.active {
+            opacity: 1;
+        }
+        .step-content {
+            max-width: 450px;
+            background: rgba(0, 10, 3, 0.7);
+            border: 1px solid rgba(0, 255, 102, 0.2);
+            border-left: 4px solid var(--accent);
+            padding: 2.5rem;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 0 40px rgba(0, 255, 102, 0.05);
+            transform: translateY(30px);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .step.active .step-content {
+            transform: translateY(0);
+            box-shadow: 0 0 40px rgba(0, 255, 102, 0.15);
+        }
+        h2 {
+            font-family: "Courier New", monospace;
+            color: var(--accent);
+            font-size: 2.2rem;
+            margin-bottom: 1.2rem;
+            text-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
+            letter-spacing: 2px;
+        }
+        p {
+            color: #d1d5db;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+        .code-block {
+            background: #020804;
+            padding: 1rem;
+            border-radius: 4px;
+            font-family: "Courier New", monospace;
+            color: #ff0055;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            border: 1px solid #113322;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            z-index: 50;
+            font-family: "Courier New", monospace;
+            background: linear-gradient(to bottom, rgba(1,3,2,0.9), transparent);
+        }
+        nav a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+        nav a:hover {
+            color: #ff0055;
+            text-shadow: 0 0 10px #ff0055;
+            letter-spacing: 1px;
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
+
     <nav>
-      <a href="index.html">← RETURN TO MAIN_FRAME</a>
+        <a href="index.html"><i class="fas fa-arrow-left mr-2"></i>RETURN TO MAIN_FRAME</a>
     </nav>
 
     <div id="webgl-container"></div>
 
     <div class="scroll-content" id="scroll-container">
-      <!-- Step 0: Intro -->
-      <div class="step" data-step="0">
-        <div class="step-content">
-          <h2>DEEP LEARNING ARCHITECTURE</h2>
-          <p>
-            A visual journey through a custom Multi-Layer Perceptron (MLP) built
-            for edge-device anomaly detection. Scroll down to inspect the
-            layers.
-          </p>
+        
+        <!-- Step 0: Intro -->
+        <div class="step" data-step="0">
+            <div class="step-content">
+                <h2>FEED-FORWARD NETWORK</h2>
+                <p>Welcome to the core of classical Deep Learning: The Feed-Forward Network (FFN). <br><br>Also known as a Multi-Layer Perceptron (MLP), this architecture is the foundation of modern AI. Scroll down to physically trace how data moves through the matrix.</p>
+            </div>
         </div>
-      </div>
 
-      <!-- Step 1: Input Layer -->
-      <div class="step" data-step="1">
-        <div class="step-content">
-          <h2>1 // INPUT LAYER</h2>
-          <p>
-            Sensors push raw telemetry data (784 dimensions) into the network.
-            This layer normalizes the high-frequency noise and prepares the
-            tensor for forward propagation.
-          </p>
+        <!-- Step 1: Input Layer -->
+        <div class="step" data-step="1">
+            <div class="step-content">
+                <h2>1 // THE INPUT LAYER</h2>
+                <p>Data enters the network here. Imagine a 28x28 pixel image being flattened into an array of 784 numbers. Each node represents one feature (e.g., the brightness of a single pixel).</p>
+                <div class="code-block">X = [0.1, 0.9, ..., 0.4]<br>Shape: (batch_size, input_dim)</div>
+            </div>
         </div>
-      </div>
 
-      <!-- Step 2: Hidden Layers -->
-      <div class="step" data-step="2">
-        <div class="step-content">
-          <h2>2 // HIDDEN LAYERS</h2>
-          <p>
-            Two dense hidden layers with ReLU activation. The weights here were
-            heavily quantized to INT8 to ensure real-time inference on edge
-            microcontrollers without sacrificing accuracy.
-          </p>
+        <!-- Step 2: Weights & Synapses -->
+        <div class="step" data-step="2">
+            <div class="step-content">
+                <h2>2 // WEIGHTS & BIASES</h2>
+                <p>Every node connects to the next layer. These connections are 'Weights'. During training (Backpropagation), the network adjusts these weights to prioritize important signals and ignore noise.</p>
+                <div class="code-block">Z = (W * X) + B</div>
+            </div>
         </div>
-      </div>
 
-      <!-- Step 3: Output Layer -->
-      <div class="step" data-step="3">
-        <div class="step-content">
-          <h2>3 // OUTPUT LAYER</h2>
-          <p>
-            The final Softmax layer condenses the learned features into a
-            probability distribution, predicting the anomaly class instantly.
-          </p>
+        <!-- Step 3: Hidden Layers & Activation -->
+        <div class="step" data-step="3">
+            <div class="step-content">
+                <h2>3 // HIDDEN LAYERS & ReLU</h2>
+                <p>The nodes sum the weighted inputs. But to learn complex, real-world patterns, we must introduce chaos. We pass the sum through a non-linear Activation Function like ReLU, dropping negative values to zero.</p>
+                <div class="code-block">A = max(0, Z)</div>
+            </div>
         </div>
-      </div>
 
-      <div class="step" data-step="4">
-        <div class="step-content">
-          <h2>END OF SIMULATION</h2>
-          <p>Model loaded successfully. Ready for deployment.</p>
-          <br />
-          <a
-            href="index.html"
-            class="text-[var(--accent)] hover:text-[#ff0055] underline font-mono"
-            >Return to Portfolio</a
-          >
+        <!-- Step 4: Forward Propagation -->
+        <div class="step" data-step="4">
+            <div class="step-content">
+                <h2>4 // FORWARD PROPAGATION</h2>
+                <p>Data flows strictly forward. Layer by layer, raw pixels are transformed into edges, edges into shapes, and shapes into high-level abstract concepts. This cascade is inference in real-time.</p>
+            </div>
         </div>
-      </div>
+
+        <!-- Step 5: Output Layer -->
+        <div class="step" data-step="5">
+            <div class="step-content">
+                <h2>5 // OUTPUT & SOFTMAX</h2>
+                <p>The final layer condenses the abstraction down to your target classes (e.g., "Cat" vs "Dog"). A Softmax function converts the raw scores into a clean probability distribution summing to 100%.</p>
+                <div class="code-block">Prediction = argmax(Softmax(Output))</div>
+            </div>
+        </div>
+        
+        <!-- Outro -->
+        <div class="step" data-step="6">
+            <div class="step-content">
+                <h2>SIMULATION COMPLETE</h2>
+                <p>You have successfully traversed a forward pass. In Edge AI, we heavily quantize these weights to INT8 to run this entire massive calculation on microchips in milliseconds.</p>
+                <br>
+                <a href="index.html" class="text-[var(--accent)] hover:text-[#ff0055] underline font-mono text-lg mt-4 inline-block">Return to Portfolio</a>
+            </div>
+        </div>
     </div>
 
-    <!-- Three.js and GSAP for animation -->
+    <!-- Three.js Core -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Three.js Post-Processing for Bloom (Neon Glow) -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+
+    <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
     <script>
-      // --- 3D NEURAL NETWORK SETUP ---
-      const container = document.getElementById("webgl-container");
-      const scene = new THREE.Scene();
-      scene.fog = new THREE.FogExp2(0x020504, 0.02);
+        // --- 3D SCENE SETUP ---
+        const container = document.getElementById('webgl-container');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x010302); // Deep dark background
+        
+        // Add a subtle grid floor for scale
+        const gridHelper = new THREE.GridHelper(200, 100, 0x004422, 0x001105);
+        gridHelper.position.y = -15;
+        scene.add(gridHelper);
 
-      const camera = new THREE.PerspectiveCamera(
-        60,
-        window.innerWidth / window.innerHeight,
-        0.1,
-        1000,
-      );
-      camera.position.set(0, 0, 40);
+        const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 0, 50);
 
-      const renderer = new THREE.WebGLRenderer({
-        antialias: true,
-        alpha: true,
-      });
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      container.appendChild(renderer.domElement);
-
-      // Network Topology
-      const layers = [
-        { nodes: 15, x: -15, color: 0x00ffcc }, // Input
-        { nodes: 20, x: -5, color: 0x00aa44 }, // Hidden 1
-        { nodes: 20, x: 5, color: 0x00aa44 }, // Hidden 2
-        { nodes: 5, x: 15, color: 0xff0055 }, // Output
-      ];
-
-      const nodeGeometry = new THREE.SphereGeometry(0.4, 16, 16);
-      const nodeMaterialBase = new THREE.MeshBasicMaterial({ color: 0xffffff });
-
-      const nodes = [];
-      const layerMeshes = [[], [], [], []];
-      const lines = [];
-
-      // Build Nodes
-      layers.forEach((layer, layerIdx) => {
-        for (let i = 0; i < layer.nodes; i++) {
-          const material = new THREE.MeshBasicMaterial({
-            color: layer.color,
-            transparent: true,
-            opacity: 0.3,
-          });
-          const mesh = new THREE.Mesh(nodeGeometry, material);
-
-          // Spread nodes vertically
-          const yOffset = (i - layer.nodes / 2) * 2;
-          mesh.position.set(layer.x, yOffset, Math.random() * 2 - 1);
-
-          scene.add(mesh);
-          nodes.push(mesh);
-          layerMeshes[layerIdx].push(mesh);
-        }
-      });
-
-      // Build Connections
-      const lineMaterial = new THREE.LineBasicMaterial({
-        color: 0xffffff,
-        transparent: true,
-        opacity: 0.05,
-      });
-
-      for (let l = 0; l < layerMeshes.length - 1; l++) {
-        const currentLayer = layerMeshes[l];
-        const nextLayer = layerMeshes[l + 1];
-
-        currentLayer.forEach((nodeA) => {
-          nextLayer.forEach((nodeB) => {
-            // Only connect a subset to avoid visual clutter
-            if (Math.random() > 0.6) return;
-
-            const points = [];
-            points.push(nodeA.position);
-            points.push(nodeB.position);
-
-            const geometry = new THREE.BufferGeometry().setFromPoints(points);
-            const line = new THREE.Line(geometry, lineMaterial.clone());
-            scene.add(line);
-            lines.push({
-              line: line,
-              layerIndex: l, // 0 for Input->H1, 1 for H1->H2, 2 for H2->Out
-            });
-          });
-        });
-      }
-
-      // Particle System for background dust
-      const particlesGeometry = new THREE.BufferGeometry();
-      const particlesCount = 500;
-      const posArray = new Float32Array(particlesCount * 3);
-      for (let i = 0; i < particlesCount * 3; i++) {
-        posArray[i] = (Math.random() - 0.5) * 100;
-      }
-      particlesGeometry.setAttribute(
-        "position",
-        new THREE.BufferAttribute(posArray, 3),
-      );
-      const particlesMaterial = new THREE.PointsMaterial({
-        size: 0.1,
-        color: 0x00ffcc,
-        transparent: true,
-        opacity: 0.4,
-      });
-      const particlesMesh = new THREE.Points(
-        particlesGeometry,
-        particlesMaterial,
-      );
-      scene.add(particlesMesh);
-
-      // --- SCROLL INTERSECTION OBSERVER ---
-      let currentStep = 0;
-      const steps = document.querySelectorAll(".step");
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const stepIndex = parseInt(
-                entry.target.getAttribute("data-step"),
-              );
-              if (currentStep !== stepIndex) {
-                steps[currentStep].classList.remove("active");
-                currentStep = stepIndex;
-                entry.target.classList.add("active");
-                update3DModel(currentStep);
-              }
-            }
-          });
-        },
-        { rootMargin: "-50% 0px -50% 0px" },
-      ); // Trigger exactly in the middle of screen
-
-      steps.forEach((step) => observer.observe(step));
-      steps[0].classList.add("active");
-
-      // --- ANIMATE 3D MODEL BASED ON SCROLL STEP ---
-      function update3DModel(step) {
-        // Camera position
-        let targetCamX = 0,
-          targetCamY = 0,
-          targetCamZ = 40;
-
-        if (step === 0) {
-          targetCamX = 0;
-          targetCamZ = 40;
-        } else if (step === 1) {
-          targetCamX = -10;
-          targetCamZ = 20;
-        } else if (step === 2) {
-          targetCamX = 0;
-          targetCamZ = 25;
-        } else if (step === 3) {
-          targetCamX = 10;
-          targetCamZ = 15;
-        } else if (step === 4) {
-          targetCamX = 0;
-          targetCamZ = 45;
-        }
-
-        gsap.to(camera.position, {
-          x: targetCamX,
-          y: targetCamY,
-          z: targetCamZ,
-          duration: 1.5,
-          ease: "power2.inOut",
-        });
-
-        // Highlight Nodes and Lines
-        layerMeshes.forEach((layer, idx) => {
-          layer.forEach((node) => {
-            let targetOpacity = 0.1;
-            if (step === 0 || step === 4) targetOpacity = 0.3;
-            if (step === 1 && idx === 0) targetOpacity = 1.0;
-            if (step === 2 && (idx === 1 || idx === 2)) targetOpacity = 1.0;
-            if (step === 3 && idx === 3) targetOpacity = 1.0;
-
-            gsap.to(node.material, {
-              opacity: targetOpacity,
-              duration: 1,
-            });
-          });
-        });
-
-        lines.forEach((obj) => {
-          let targetOpacity = 0.02;
-          if (step === 0 || step === 4) targetOpacity = 0.05;
-          if (step === 1 && obj.layerIndex === 0) targetOpacity = 0.3;
-          if (step === 2 && obj.layerIndex === 1) targetOpacity = 0.3;
-          if (step === 3 && obj.layerIndex === 2) targetOpacity = 0.3;
-
-          gsap.to(obj.line.material, {
-            opacity: targetOpacity,
-            duration: 1,
-          });
-        });
-      }
-
-      // --- RENDER LOOP ---
-      const clock = new THREE.Clock();
-
-      function animate() {
-        requestAnimationFrame(animate);
-        const elapsedTime = clock.getElapsedTime();
-
-        // Gentle rotation of the whole network
-        layerMeshes.forEach((layer) => {
-          layer.forEach((node) => {
-            node.position.y +=
-              Math.sin(elapsedTime * 2 + node.position.x) * 0.005;
-          });
-        });
-
-        particlesMesh.rotation.y = elapsedTime * 0.05;
-
-        renderer.render(scene, camera);
-      }
-      animate();
-
-      // Responsive
-      window.addEventListener("resize", () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
-      });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        container.appendChild(renderer.domElement);
+
+        // --- POST-PROCESSING (BLOOM) ---
+        const renderScene = new THREE.RenderPass(scene, camera);
+        const bloomPass = new THREE.UnrealBloomPass(
+            new THREE.Vector2(window.innerWidth, window.innerHeight),
+            2.0,  // strength
+            0.5,  // radius
+            0.1   // threshold
+        );
+        const composer = new THREE.EffectComposer(renderer);
+        composer.addPass(renderScene);
+        composer.addPass(bloomPass);
+
+        // --- NETWORK TOPOLOGY ---
+        const layers = [
+            { nodes: 16, x: -20, color: 0x00ffcc }, // Input
+            { nodes: 24, x: -6,  color: 0x00aa44 }, // Hidden 1
+            { nodes: 24, x: 6,   color: 0x00aa44 }, // Hidden 2
+            { nodes: 8,  x: 20,  color: 0xff0055 }  // Output
+        ];
+
+        const nodeGeometry = new THREE.SphereGeometry(0.5, 32, 32);
+        
+        const nodes = [];
+        const layerMeshes = [[], [], [], []];
+        const lines = [];
+
+        // Build Nodes
+        layers.forEach((layer, layerIdx) => {
+            for (let i = 0; i < layer.nodes; i++) {
+                const material = new THREE.MeshBasicMaterial({ 
+                    color: layer.color,
+                    transparent: true,
+                    opacity: 0.15 // Default low opacity
+                });
+                const mesh = new THREE.Mesh(nodeGeometry, material);
+                
+                // Spread nodes vertically
+                const yOffset = (i - layer.nodes / 2) * 1.8;
+                mesh.position.set(layer.x, yOffset, Math.random() * 4 - 2);
+                
+                // Save original base position and color for animations
+                mesh.userData = {
+                    baseY: yOffset,
+                    baseColor: layer.color,
+                    layerIndex: layerIdx
+                };
+
+                scene.add(mesh);
+                nodes.push(mesh);
+                layerMeshes[layerIdx].push(mesh);
+            }
+        });
+
+        // Build Connections (Synapses)
+        const lineMaterial = new THREE.LineBasicMaterial({ 
+            color: 0xffffff, 
+            transparent: true, 
+            opacity: 0.02,
+            blending: THREE.AdditiveBlending
+        });
+
+        for (let l = 0; l < layerMeshes.length - 1; l++) {
+            const currentLayer = layerMeshes[l];
+            const nextLayer = layerMeshes[l + 1];
+            
+            currentLayer.forEach(nodeA => {
+                nextLayer.forEach(nodeB => {
+                    if (Math.random() > 0.4) return; // Keep lines manageable
+                    
+                    const points = [nodeA.position, nodeB.position];
+                    const geometry = new THREE.BufferGeometry().setFromPoints(points);
+                    const line = new THREE.Line(geometry, lineMaterial.clone());
+                    
+                    scene.add(line);
+                    lines.push({
+                        line: line,
+                        nodeA: nodeA,
+                        nodeB: nodeB,
+                        layerIndex: l
+                    });
+                });
+            });
+        }
+
+        // --- DATA PACKET PARTICLES (Forward Propagation Simulation) ---
+        const packetGeometry = new THREE.SphereGeometry(0.15, 8, 8);
+        const packetMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+        const packets = [];
+
+        function spawnPacket(nodeA, nodeB) {
+            const packet = new THREE.Mesh(packetGeometry, packetMaterial);
+            packet.position.copy(nodeA.position);
+            scene.add(packet);
+            
+            gsap.to(packet.position, {
+                x: nodeB.position.x,
+                y: nodeB.position.y,
+                z: nodeB.position.z,
+                duration: 0.6 + Math.random() * 0.4,
+                ease: "power1.inOut",
+                onComplete: () => {
+                    scene.remove(packet);
+                    packet.geometry.dispose();
+                    packet.material.dispose();
+                }
+            });
+        }
+
+        // Background Ambient Dust
+        const dustGeo = new THREE.BufferGeometry();
+        const dustCount = 800;
+        const dustPos = new Float32Array(dustCount * 3);
+        for(let i=0; i<dustCount*3; i++) {
+            dustPos[i] = (Math.random() - 0.5) * 150;
+        }
+        dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
+        const dustMat = new THREE.PointsMaterial({
+            size: 0.15,
+            color: 0x00ffcc,
+            transparent: true,
+            opacity: 0.4,
+            blending: THREE.AdditiveBlending
+        });
+        const dustMesh = new THREE.Points(dustGeo, dustMat);
+        scene.add(dustMesh);
+
+        // --- INTERSECTION OBSERVER & SCROLL LOGIC ---
+        let currentStep = 0;
+        let propagationInterval;
+        const steps = document.querySelectorAll('.step');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const stepIndex = parseInt(entry.target.getAttribute('data-step'));
+                    if (currentStep !== stepIndex) {
+                        steps[currentStep].classList.remove('active');
+                        currentStep = stepIndex;
+                        entry.target.classList.add('active');
+                        update3DModel(currentStep);
+                    }
+                }
+            });
+        }, { rootMargin: '-40% 0px -60% 0px' });
+
+        steps.forEach(step => observer.observe(step));
+        setTimeout(() => steps[0].classList.add('active'), 500);
+
+        // --- ANIMATIONS & STATE MACHINE ---
+        function update3DModel(step) {
+            clearInterval(propagationInterval);
+
+            // Camera Transitions
+            let camX = 0, camY = 0, camZ = 50, rotY = 0;
+            
+            if (step === 0) { camX = 0; camZ = 55; }
+            else if (step === 1) { camX = -15; camZ = 30; rotY = -0.2; }
+            else if (step === 2) { camX = -10; camZ = 35; rotY = 0; }
+            else if (step === 3) { camX = 0; camZ = 30; rotY = 0; }
+            else if (step === 4) { camX = 0; camZ = 50; rotY = 0.2; }
+            else if (step === 5) { camX = 15; camZ = 25; rotY = 0.3; }
+            else if (step === 6) { camX = 0; camZ = 60; rotY = 0; }
+
+            gsap.to(camera.position, { x: camX, y: camY, z: camZ, duration: 2, ease: "power3.inOut" });
+            gsap.to(camera.rotation, { y: rotY, duration: 2, ease: "power3.inOut" });
+
+            // Reset all nodes
+            nodes.forEach(node => {
+                gsap.to(node.material, { opacity: 0.15, duration: 1 });
+                gsap.to(node.scale, { x: 1, y: 1, z: 1, duration: 1 });
+            });
+            lines.forEach(obj => {
+                gsap.to(obj.line.material, { opacity: 0.02, duration: 1 });
+            });
+
+            // Step Specific Logic
+            if (step === 1) {
+                // Highlight Input
+                layerMeshes[0].forEach(node => {
+                    gsap.to(node.material, { opacity: 1.0, duration: 0.5 });
+                    gsap.to(node.scale, { x: 1.5, y: 1.5, z: 1.5, duration: 0.5 });
+                });
+            } 
+            else if (step === 2) {
+                // Highlight connections between input and hidden
+                lines.forEach(obj => {
+                    if(obj.layerIndex === 0) gsap.to(obj.line.material, { opacity: 0.4, duration: 1 });
+                });
+                layerMeshes[0].forEach(n => n.material.opacity = 0.5);
+                layerMeshes[1].forEach(n => n.material.opacity = 0.5);
+            }
+            else if (step === 3) {
+                // Pulse Hidden Layers (Activation)
+                [1, 2].forEach(l => {
+                    layerMeshes[l].forEach(node => {
+                        gsap.to(node.material, { opacity: 1.0, duration: 0.3, yoyo: true, repeat: -1 });
+                        gsap.to(node.scale, { x: 1.8, y: 1.8, z: 1.8, duration: 0.3, yoyo: true, repeat: -1 });
+                    });
+                });
+            }
+            else if (step === 4) {
+                // Full Forward Propagation Data Packets
+                propagationInterval = setInterval(() => {
+                    const l = Math.floor(Math.random() * 3);
+                    const currentLayer = layerMeshes[l];
+                    const nextLayer = layerMeshes[l+1];
+                    const nodeA = currentLayer[Math.floor(Math.random() * currentLayer.length)];
+                    const nodeB = nextLayer[Math.floor(Math.random() * nextLayer.length)];
+                    spawnPacket(nodeA, nodeB);
+                }, 50); // Massive flow
+                
+                // Light up lines slightly
+                lines.forEach(obj => gsap.to(obj.line.material, { opacity: 0.1, duration: 1 }));
+                nodes.forEach(n => gsap.to(n.material, { opacity: 0.6, duration: 1 }));
+            }
+            else if (step === 5) {
+                // Output Layer Softmax Highlight
+                layerMeshes[3].forEach((node, i) => {
+                    const isWinner = i === 2; // Simulate a high probability class
+                    gsap.to(node.material, { 
+                        opacity: isWinner ? 1 : 0.2, 
+                        color: isWinner ? 0x00ffcc : 0xff0055,
+                        duration: 1 
+                    });
+                    gsap.to(node.scale, { 
+                        x: isWinner ? 2.5 : 0.8, 
+                        y: isWinner ? 2.5 : 0.8, 
+                        z: isWinner ? 2.5 : 0.8, 
+                        duration: 1 
+                    });
+                });
+            }
+            else if (step === 6 || step === 0) {
+                // Restore defaults
+                nodes.forEach(n => {
+                    n.material.color.setHex(n.userData.baseColor);
+                    gsap.to(n.material, { opacity: 0.3, duration: 1 });
+                });
+            }
+        }
+
+        // --- RENDER LOOP ---
+        const clock = new THREE.Clock();
+        let mouseX = 0;
+        let mouseY = 0;
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+        });
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            const elapsedTime = clock.getElapsedTime();
+
+            // Floating effect for nodes
+            nodes.forEach(node => {
+                node.position.y = node.userData.baseY + Math.sin(elapsedTime * 1.5 + node.position.x) * 0.3;
+            });
+            
+            // Subtle camera sway based on mouse
+            camera.position.x += (mouseX * 2 - camera.position.x) * 0.05;
+            camera.position.y += (mouseY * 2 - camera.position.y) * 0.05;
+            camera.lookAt(0, 0, 0);
+
+            // Rotate dust slowly
+            dustMesh.rotation.y = elapsedTime * 0.02;
+            
+            // Use composer for Bloom effect instead of raw renderer
+            composer.render();
+        }
+        animate();
+
+        // Responsive handling
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            composer.setSize(window.innerWidth, window.innerHeight);
+        });
     </script>
-  </body>
+</body>
 </html>
