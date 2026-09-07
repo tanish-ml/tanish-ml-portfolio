@@ -562,6 +562,7 @@
     <div id="sidebar">
       <a href="#about" onclick="toggleMenu()">// ABOUT</a>
       <a href="#projects" onclick="toggleMenu()">// PROJECTS</a>
+      <a href="#explore" onclick="toggleMenu()">// EXPLORE</a>
       <a href="#arcade" onclick="toggleMenu()">// ARCADE</a>
       <a
         href="https://github.com/tanish-ml"
@@ -1650,6 +1651,42 @@
       </div>
     </section>
 
+    <!-- Explore Section -->
+    <section
+      id="explore"
+      class="py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative z-10 border-t border-[var(--accent)]/30"
+    >
+      <div class="mb-16">
+        <h2
+          class="text-3xl font-mono font-bold text-white mb-2 tracking-widest"
+        >
+          > /vault/explore_scrollytelling
+        </h2>
+        <p class="text-[#00aa44] font-mono">
+          [ INTERACTIVE 3D DATA VISUALIZATIONS ]
+        </p>
+      </div>
+      <div class="grid-ui">
+        <a
+          href="world-explorer.html"
+          class="card interactive group"
+          style="text-decoration: none"
+        >
+          <span class="card-number" style="color: var(--accent)">EXP.02</span>
+          <h2>World Explorer</h2>
+          <p class="card-desc">
+            Geo-locational deduction riddle. Target locked. A 3D spatial
+            triangulation simulation.
+          </p>
+          <div
+            class="text-[var(--accent)] mt-4 font-mono font-bold group-hover:text-[#ff0055] transition-colors"
+          >
+            <i class="fas fa-eye"></i> EXPLORE
+          </div>
+        </a>
+      </div>
+    </section>
+
     <!-- Arcade Section -->
     <section
       id="arcade"
@@ -1667,24 +1704,6 @@
       </div>
 
       <div class="grid-ui">
-        <a
-          href="deep-learning-architecture.html"
-          class="card interactive group"
-          style="text-decoration: none"
-        >
-          <span class="card-number" style="color: var(--accent)">EXP.01</span>
-          <h2>Deep Learning Scrollytelling</h2>
-          <p class="card-desc">
-            A visually stunning 3D interactive breakdown of a custom Multi-Layer
-            Perceptron architecture.
-          </p>
-          <div
-            class="text-[var(--accent)] mt-4 font-mono font-bold group-hover:text-[#ff0055] transition-colors"
-          >
-            <i class="fas fa-eye"></i> EXPLORE
-          </div>
-        </a>
-
         <div
           class="card interactive"
           onclick="openGame('arcade/index.html#/stage-2')"
@@ -1719,20 +1738,6 @@
           <h2>Twist Puzzle</h2>
           <p class="card-desc">
             Spatial reasoning challenge. Rotate nodes to align.
-          </p>
-          <div class="text-[var(--accent)] mt-4 font-mono font-bold">
-            <i class="fas fa-play"></i> EXECUTE
-          </div>
-        </div>
-
-        <div
-          class="card interactive"
-          onclick="window.location.href='world-explorer.html'"
-        >
-          <span class="card-number">EXP.02</span>
-          <h2>World Explorer</h2>
-          <p class="card-desc">
-            Geo-locational deduction riddle. Target locked.
           </p>
           <div class="text-[var(--accent)] mt-4 font-mono font-bold">
             <i class="fas fa-play"></i> EXECUTE

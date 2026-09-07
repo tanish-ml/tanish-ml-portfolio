@@ -335,6 +335,7 @@
         setTimeout(() => steps[0].classList.add('active'), 500);
 
         // --- ANIMATIONS & STATE MACHINE ---
+        gsap.defaults({ overwrite: "auto" });
         let autoRotate = true;
         let baseRotationSpeed = 0.002;
 
@@ -347,26 +348,26 @@
             
             if (step === 0) {
                 autoRotate = true;
-                gsap.to(wireMat, { opacity: 0.1, duration: 1 });
-                gsap.to(citiesMat, { opacity: 0, duration: 1 });
-                rayGroup.children.forEach(r => gsap.to(r.material, { opacity: 0, duration: 0.5 }));
-                gsap.to(markerMat, { opacity: 0, duration: 0.5 });
+                gsap.to(wireMat, { opacity: 0.1, overwrite: true, duration: 1 });
+                gsap.to(citiesMat, { opacity: 0, overwrite: true, duration: 1 });
+                rayGroup.children.forEach(r => gsap.to(r.material, { opacity: 0, overwrite: true, duration: 0.5 }));
+                gsap.to(markerMat, { opacity: 0, overwrite: true, duration: 0.5 });
             }
             else if (step === 1) {
                 autoRotate = true;
-                gsap.to(wireMat, { opacity: 0.1, duration: 1 });
-                gsap.to(citiesMat, { opacity: 0, duration: 1 });
-                rayGroup.children.forEach(r => gsap.to(r.material, { opacity: 0, duration: 0.5 }));
-                gsap.to(markerMat, { opacity: 0, duration: 0.5 });
+                gsap.to(wireMat, { opacity: 0.1, overwrite: true, duration: 1 });
+                gsap.to(citiesMat, { opacity: 0, overwrite: true, duration: 1 });
+                rayGroup.children.forEach(r => gsap.to(r.material, { opacity: 0, overwrite: true, duration: 0.5 }));
+                gsap.to(markerMat, { opacity: 0, overwrite: true, duration: 0.5 });
                 camX = -15; // Shift to make room for text on right
             }
             else if (step === 2) {
                 autoRotate = true;
                 baseRotationSpeed = 0.008; // Spin faster
-                gsap.to(wireMat, { opacity: 0.6, duration: 1 }); // Wireframe glows
-                gsap.to(citiesMat, { opacity: 0.8, duration: 1 }); // Cities light up
-                rayGroup.children.forEach(r => gsap.to(r.material, { opacity: 0, duration: 0.5 }));
-                gsap.to(markerMat, { opacity: 0, duration: 0.5 });
+                gsap.to(wireMat, { opacity: 0.6, overwrite: true, duration: 1 }); // Wireframe glows
+                gsap.to(citiesMat, { opacity: 0.8, overwrite: true, duration: 1 }); // Cities light up
+                rayGroup.children.forEach(r => gsap.to(r.material, { opacity: 0, overwrite: true, duration: 0.5 }));
+                gsap.to(markerMat, { opacity: 0, overwrite: true, duration: 0.5 });
                 camZ = 60;
             }
             else if (step === 3) {
@@ -377,15 +378,15 @@
                     x: -targetLat + 0.2,
                     y: -targetLon - Math.PI/2,
                     z: 0,
-                    duration: 2,
+                    overwrite: true, duration: 2,
                     ease: "power2.out"
                 });
 
                 // Shoot lasers one by one
                 rayGroup.children.forEach((r, idx) => {
-                    gsap.to(r.material, { opacity: 0.8, duration: 0.5, delay: idx * 0.05 });
+                    gsap.to(r.material, { opacity: 0.8, overwrite: true, duration: 0.5, delay: idx * 0.05 });
                 });
-                gsap.to(markerMat, { opacity: 0, duration: 0.5 });
+                gsap.to(markerMat, { opacity: 0, overwrite: true, duration: 0.5 });
                 camX = -15;
                 camZ = 70;
             }
@@ -400,26 +401,26 @@
                     x: worldTarget.x * 1.5,
                     y: worldTarget.y * 1.5,
                     z: worldTarget.z * 1.5,
-                    duration: 2.5,
+                    overwrite: true, duration: 2.5,
                     ease: "power3.inOut"
                 });
 
-                gsap.to(markerMat, { opacity: 1, duration: 1, delay: 1 });
+                gsap.to(markerMat, { opacity: 1, overwrite: true, duration: 1, delay: 1 });
                 // Pulse the marker
-                gsap.to(marker.scale, { x: 1.5, y: 1.5, duration: 0.5, yoyo: true, repeat: -1 });
+                gsap.to(marker.scale, { x: 1.5, y: 1.5, overwrite: true, duration: 0.5, yoyo: true, repeat: -1 });
             }
             else if (step === 5) {
                 autoRotate = true;
                 baseRotationSpeed = 0.001; // Slow spin
                 camX = -10;
                 camZ = 90;
-                rayGroup.children.forEach(r => gsap.to(r.material, { opacity: 0, duration: 1 }));
-                gsap.to(markerMat, { opacity: 0, duration: 1 });
+                rayGroup.children.forEach(r => gsap.to(r.material, { opacity: 0, overwrite: true, duration: 1 }));
+                gsap.to(markerMat, { opacity: 0, overwrite: true, duration: 1 });
             }
 
             // Only move camera if not zooming manually in step 4
             if (step !== 4) {
-                gsap.to(camera.position, { x: camX, y: camY, z: camZ, duration: 2, ease: "power2.inOut" });
+                gsap.to(camera.position, { x: camX, y: camY, z: camZ, overwrite: true, duration: 2, ease: "power2.inOut" });
             }
         }
 
