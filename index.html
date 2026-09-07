@@ -1727,7 +1727,7 @@
           progress = 1;
         }
 
-        const maxZ = 11800;
+        const maxZ = 11100;
         const currentZ = progress * maxZ;
 
         const camX = Math.sin(progress * Math.PI * 10) * 100;
@@ -1743,7 +1743,7 @@
         const ctx = canvas.getContext("2d");
 
         const img = new Image();
-        img.crossOrigin = "Anonymous";
+        
         img.onload = () => {
           const cols = 150;
           const aspect = img.height / img.width;
