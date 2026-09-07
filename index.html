@@ -4,6 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tanish Mittal | Neural Architecture</title>
+    
+    <!-- Performance & SEO: Preconnect to CDNs -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+
     <!-- SEO Meta Tags -->
     <meta
       name="description"
@@ -132,6 +138,14 @@
         color: var(--text);
         font-family: "Inter", sans-serif;
         overflow-x: hidden;
+      }
+
+      
+      /* Hide AI Orb on Touch Devices (Mobile) */
+      @media (hover: none) and (pointer: coarse) {
+        #ai-companion {
+          display: none !important;
+        }
       }
 
       /* --- AI COMPANION CURSOR --- */
