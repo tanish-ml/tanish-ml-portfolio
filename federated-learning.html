@@ -329,11 +329,11 @@
             let camX = 0, camY = 20, camZ = 80;
             
             // Reset colors and opacity
-            gsap.to(serverCoreMat, { color: 0x0044ff, opacity: 0.5, duration: 1 });
-            gsap.to(serverMat, { color: 0x00aaff, duration: 1 });
+            serverCoreMat.color.setHex(0x0044ff); gsap.to(serverCoreMat, { opacity: 0.5, duration: 1 });
+            serverMat.color.setHex(0x00aaff);
             edgeNodes.forEach(node => {
-                gsap.killTweensOf(node.material);
-                gsap.to(node.material, { color: 0x00ffcc, opacity: 0.2, duration: 1 });
+                gsap.killTweensOf(node.material); gsap.killTweensOf(node.scale);
+                node.material.color.setHex(0x00ffcc); gsap.to(node.material, { opacity: 0.2, duration: 1 });
                 gsap.to(node.scale, { x: 1, y: 1, z: 1, duration: 1 });
             });
             lines.forEach(line => gsap.to(line.material, { opacity: 0.05, duration: 1 }));
@@ -344,9 +344,9 @@
             else if (step === 1) {
                 // Cloud Paradigm: Heavy red data packets from edge to server
                 camX = -15; camZ = 60;
-                gsap.to(serverCoreMat, { color: 0xff1111, opacity: 0.9, duration: 2 }); // Overloaded server
-                gsap.to(serverMat, { color: 0xff3333, duration: 2 });
-                lines.forEach(line => gsap.to(line.material, { opacity: 0.2, color: 0xff3333, duration: 1 }));
+                serverCoreMat.color.setHex(0xff1111); gsap.to(serverCoreMat, { opacity: 0.9, duration: 2 }); // Overloaded server
+                serverMat.color.setHex(0xff3333);
+                lines.forEach(line => { line.material.color.setHex(0xff3333); gsap.to(line.material, { opacity: 0.2, overwrite: true, duration: 1 }); });
                 
                 packetInterval = setInterval(() => {
                     spawnPacket(false, 0xff1111, 2.0); // Slow, heavy red packets
@@ -355,8 +355,8 @@
             else if (step === 2) {
                 // Edge Deployment: Models fly from server to edge
                 camX = 0; camY = 30; camZ = 50;
-                gsap.to(serverCoreMat, { color: 0x00ffcc, opacity: 0.8, duration: 1 });
-                gsap.to(serverMat, { color: 0x00ffcc, duration: 1 });
+                serverCoreMat.color.setHex(0x00ffcc); gsap.to(serverCoreMat, { opacity: 0.8, duration: 1 });
+                serverMat.color.setHex(0x00ffcc);
                 
                 // Models (cyan packets) deploying
                 packetInterval = setInterval(() => {
@@ -381,9 +381,9 @@
             else if (step === 4) {
                 // Global Aggregation: Fast green gradients to server
                 camX = 0; camY = 0; camZ = 60;
-                gsap.to(serverCoreMat, { color: 0x00ff44, opacity: 1, duration: 0.5, yoyo: true, repeat: -1 });
+                serverCoreMat.color.setHex(0x00ff44); gsap.to(serverCoreMat, { opacity: 1, duration: 0.5, yoyo: true, repeat: -1 });
                 
-                lines.forEach(line => gsap.to(line.material, { opacity: 0.3, color: 0x00ffcc, duration: 1 }));
+                lines.forEach(line => { line.material.color.setHex(0x00ffcc); gsap.to(line.material, { opacity: 0.3, overwrite: true, duration: 1 }); });
                 edgeNodes.forEach(node => gsap.to(node.material, { opacity: 0.6, duration: 1 }));
 
                 // Fast gradient updates
@@ -394,7 +394,7 @@
             else if (step === 5) {
                 // Complete
                 camX = -10; camY = 20; camZ = 90;
-                gsap.to(serverCoreMat, { color: 0x00ffcc, opacity: 0.6, duration: 2 });
+                serverCoreMat.color.setHex(0x00ffcc); gsap.to(serverCoreMat, { opacity: 0.6, duration: 2 });
                 edgeNodes.forEach(node => gsap.to(node.material, { opacity: 0.4, duration: 2 }));
             }
 

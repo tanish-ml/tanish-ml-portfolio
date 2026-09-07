@@ -432,9 +432,9 @@
                 // Output Layer Softmax Highlight
                 layerMeshes[3].forEach((node, i) => {
                     const isWinner = i === 2; // Simulate a high probability class
+                    node.material.color.setHex(isWinner ? 0x00ffcc : 0xff0055);
                     gsap.to(node.material, { 
                         opacity: isWinner ? 1 : 0.2, 
-                        color: isWinner ? 0x00ffcc : 0xff0055,
                         overwrite: true, duration: 1 
                     });
                     gsap.to(node.scale, { 
