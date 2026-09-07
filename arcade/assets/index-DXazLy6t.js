@@ -1,4 +1,4 @@
-import{f as _,s as P,i as A,t as F,g as R,u as D}from"./index-5fDyiRRX.js";let g,a,m,u,s=30,d=[],h={r:0,c:0},T=!1,E=!1,b,M,z=!1,v=1e4,S=0;function C(){_("/music/hauntsync-dark-synthwave-instrumental-electronic-warfare-comes-235884.mp3"),P(.3);const n=document.getElementById("app");n.innerHTML=`
+import{f as _,s as P,i as A,t as F,g as R,u as D}from"./index-BVPy5qiT.js";let g,a,m,u,s=30,d=[],h={r:0,c:0},T=!1,E=!1,b,M,z=!1,v=1e4,S=0;function C(){_("/music/hauntsync-dark-synthwave-instrumental-electronic-warfare-comes-235884.mp3"),P(.3);const n=document.getElementById("app");n.innerHTML=`
         <div class="stage2-container">
             <canvas id="maze-canvas"></canvas>
             <div id="warning-overlay" class="warning-overlay">CONTROLS JUMBLED</div>

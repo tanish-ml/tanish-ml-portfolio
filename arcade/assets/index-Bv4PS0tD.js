@@ -1,4 +1,4 @@
-import{f as P,s as M,g as C,t as F,u as N}from"./index-5fDyiRRX.js";import{a as D}from"./ui-MGXCfiiX.js";let v,i,o,l,r,y=0,T=0,m=!1,c=!1,E=!1,u=!1,B=!1,f=!1,k=!1,S,L,R,z,h,A;function H(){P("/music/hitslab-cyberpunk-cyberpunk-music-542589.mp3"),M(.3);const s=document.getElementById("app");s.innerHTML=`
+import{f as P,s as M,g as C,t as F,u as N}from"./index-BVPy5qiT.js";import{a as D}from"./ui-MGXCfiiX.js";let v,i,o,l,r,y=0,T=0,m=!1,c=!1,E=!1,u=!1,B=!1,f=!1,k=!1,S,L,R,z,h,A;function H(){P("/music/hitslab-cyberpunk-cyberpunk-music-542589.mp3"),M(.3);const s=document.getElementById("app");s.innerHTML=`
         <div class="stage3-flappy-container">
             <div class="flappy-score" id="flappy-score">0</div>
             <div class="flappy-warning" id="flappy-warning">GRAVITY INVERTED</div>

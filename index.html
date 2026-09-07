@@ -396,6 +396,12 @@
             document.getElementById('game-frame').src = '';
             document.body.style.overflow = 'auto';
         }
+
+        window.addEventListener('message', (event) => {
+            if (event.data === 'game_won') {
+                closeGame();
+            }
+        });
     </script>
 </body>
 </html>
