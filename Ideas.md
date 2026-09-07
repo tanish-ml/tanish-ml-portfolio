@@ -68,3 +68,38 @@ Given your focus as a **Machine Learning Engineer** (Edge AI, Computer Vision, G
 *   **Inspiration / See it in action:**
     *   [The Pudding](https://pudding.cool/) (The absolute masters of visual, interactive scrollytelling)
     *   [Apple Product Pages](https://www.apple.com/macbook-pro/) (How the 3D model rotates and explodes as you scroll down)
+
+## 10. 🕸️ WebGPU Accelerated Physics Sandbox
+**Concept:** Show off extreme performance optimization by building a physics sandbox (e.g., thousands of colliding particles or a cloth simulation) running entirely in the browser using the bleeding-edge WebGPU API.
+*   **Execution:** Create a page where users can interact with millions of particles computing in parallel. It serves as a testament to your understanding of low-level hardware optimization and parallel computing—skills highly sought after in Edge AI.
+*   **Inspiration / See it in action:**
+    *   [WebGPU Samples](https://webgpu.github.io/webgpu-samples/) (High-performance browser compute)
+    *   [Fluid Simulation WebGPU](https://github.com/austinEng/WebGL-Fluid-Simulation)
+
+## 11. 📄 Interactive Research Paper Explainer
+**Concept:** Take a famous ML paper (e.g., "Attention is All You Need") or your own research and turn it into a dynamic, interactive explainer page. 
+*   **Execution:** Break down the complex math into interactive widgets. For example, allow the user to drag sliders to adjust "Query" and "Key" weights and visually see how the "Attention Score" changes in real-time.
+*   **Inspiration / See it in action:**
+    *   [Distill.pub](https://distill.pub/) (The ultimate standard for interactive machine learning articles)
+    *   [CNN Explainer](https://poloclub.github.io/cnn-explainer/) (Interactive Convolutional Neural Network breakdown)
+
+## 12. 💻 Terminal-Based Resume (CLI)
+**Concept:** For recruiters who really appreciate hacker culture, offer your resume not just as a PDF, but as a fully functional Command Line Interface (CLI).
+*   **Execution:** Build an interactive terminal window (using Xterm.js) or provide an actual SSH command (`ssh cv.tanish.ml`) that recruiters can run in their own terminal. They can type `cat experience.txt` or `./run_skills.sh` to see your background.
+*   **Inspiration / See it in action:**
+    *   [Xterm.js](https://xtermjs.org/) (The terminal component used in VS Code)
+    *   [SSH Resume](https://github.com/arturnt/ssh-resume) (A resume accessible via SSH)
+
+## 13. 🛸 AI Companion Cursor (Orb)
+**Concept:** Instead of a standard cursor, give the user an AI "companion" that follows them around the site, providing contextual information.
+*   **Execution:** A glowing 3D orb (or small drone) floats toward the mouse. When the user hovers over a project like "Cyber Maze", the orb expands and displays a small tooltip: "I notice you're looking at Cyber Maze. Tanish built this using grid physics mapping!" This could be scripted or powered by a tiny LLM.
+*   **Inspiration / See it in action:**
+    *   [Awwwards Custom Cursors](https://www.awwwards.com/websites/custom-cursor/) (Creative cursor interactions)
+    *   [Halo Guilty Spark](https://halo.fandom.com/wiki/343_Guilty_Spark) (For visual/aesthetic inspiration of a companion orb)
+
+## 14. 🎵 Procedural Generative Audio Track
+**Concept:** A subtle, evolving background track that is procedurally generated in real-time based on how the user interacts with your site.
+*   **Execution:** Use the Web Audio API connected to a lightweight generative model. If the user scrolls fast, the tempo increases. If they stop to read, the music shifts to ambient, atmospheric cyberpunk synth pads. 
+*   **Inspiration / See it in action:**
+    *   [Generative.fm](https://generative.fm/) (Ambient generative music in the browser)
+    *   [Tone.js](https://tonejs.github.io/) (A Web Audio framework for creating interactive music)

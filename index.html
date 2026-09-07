@@ -476,10 +476,7 @@
       "
     ></canvas>
 
-    <!-- Sidebar & Menu Button -->
-    <div class="menu-btn interactive" onclick="toggleMenu()">
-      <i class="fas fa-bars"></i>
-    </div>
+    <!-- Sidebar -->
     <div id="sidebar">
       <a href="#about" onclick="toggleMenu()">// ABOUT</a>
       <a href="#projects" onclick="toggleMenu()">// PROJECTS</a>
@@ -528,7 +525,9 @@
           class="text-xl font-bold tracking-widest text-[var(--accent)] text-shadow-sm"
           >TANISH_</span
         >
-        <div class="flex space-x-6 text-sm font-mono text-[var(--accent)]">
+        <div
+          class="flex space-x-6 items-center text-sm font-mono text-[var(--accent)]"
+        >
           <a href="#projects" class="hover:text-[#ff0055] transition"
             >/projects</a
           >
@@ -539,6 +538,14 @@
             class="hover:text-[#ff0055] transition"
             ><i class="fab fa-github text-lg"></i
           ></a>
+
+          <!-- Toggle Menu Button -->
+          <div
+            class="interactive hover:text-[#ff0055] transition cursor-pointer text-xl ml-4"
+            onclick="toggleMenu()"
+          >
+            <i class="fas fa-bars"></i>
+          </div>
         </div>
       </div>
     </nav>
@@ -1566,6 +1573,24 @@
       </div>
 
       <div class="grid-ui">
+        <a
+          href="deep-learning-architecture.html"
+          class="card interactive group"
+          style="text-decoration: none"
+        >
+          <span class="card-number" style="color: var(--accent)">EXP.01</span>
+          <h2>Deep Learning Scrollytelling</h2>
+          <p class="card-desc">
+            A visually stunning 3D interactive breakdown of a custom Multi-Layer
+            Perceptron architecture.
+          </p>
+          <div
+            class="text-[var(--accent)] mt-4 font-mono font-bold group-hover:text-[#ff0055] transition-colors"
+          >
+            <i class="fas fa-eye"></i> EXPLORE
+          </div>
+        </a>
+
         <div
           class="card interactive"
           onclick="openGame('arcade/index.html#/stage-2')"
