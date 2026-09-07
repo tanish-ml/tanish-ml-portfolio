@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tanish Mittal | Neural Architecture</title>
-    
+
     <!-- Performance & SEO: Preconnect to CDNs -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -140,7 +140,6 @@
         overflow-x: hidden;
       }
 
-      
       /* Hide AI Orb on Touch Devices (Mobile) */
       @media (hover: none) and (pointer: coarse) {
         #ai-companion {
@@ -148,6 +147,25 @@
         }
       }
 
+      /* Accessibility Focus States */
+      :focus-visible {
+        outline: 2px dashed var(--accent) !important;
+        outline-offset: 4px;
+        transition: outline-offset 0.1s ease;
+      }
+      .skip-link {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background: var(--bg);
+        color: var(--accent);
+        padding: 8px;
+        z-index: 100000000;
+        transition: top 0.2s ease;
+      }
+      .skip-link:focus {
+        top: 0;
+      }
       /* --- AI COMPANION CURSOR --- */
       #ai-companion {
         position: fixed;
@@ -556,36 +574,35 @@
         text-shadow: 0 0 10px #ff0055;
       }
     </style>
-  
+
     <!-- JSON-LD Structured Data for SEO -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Tanish Mittal",
-      "jobTitle": "Machine Learning Engineer",
-      "url": "https://tanish-ml.github.io/tanish-ml-portfolio/",
-      "sameAs": [
-        "https://github.com/tanish-ml"
-      ],
-      "knowsAbout": [
-        "Machine Learning",
-        "Edge AI",
-        "Computer Vision",
-        "Generative NLP",
-        "Deep Learning",
-        "Federated Learning",
-        "Artificial Intelligence"
-      ],
-      "image": "https://tanish-ml.github.io/tanish-ml-portfolio/rsz_image.png",
-      "description": "Portfolio of Tanish Mittal, an ML Engineer specializing in Edge AI and Computer Vision."
-    }
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Tanish Mittal",
+        "jobTitle": "Machine Learning Engineer",
+        "url": "https://tanish-ml.github.io/tanish-ml-portfolio/",
+        "sameAs": ["https://github.com/tanish-ml"],
+        "knowsAbout": [
+          "Machine Learning",
+          "Edge AI",
+          "Computer Vision",
+          "Generative NLP",
+          "Deep Learning",
+          "Federated Learning",
+          "Artificial Intelligence"
+        ],
+        "image": "https://tanish-ml.github.io/tanish-ml-portfolio/rsz_image.png",
+        "description": "Portfolio of Tanish Mittal, an ML Engineer specializing in Edge AI and Computer Vision."
+      }
     </script>
-</head>
+  </head>
   <body class="antialiased">
     <!-- Generative Particle Flow Field Background -->
     <canvas
       id="bg-canvas"
+      aria-hidden="true"
       style="
         position: fixed;
         top: 0;
@@ -618,7 +635,7 @@
     </style>
 
     <!-- AI Companion Cursor -->
-    <div id="ai-companion">
+    <div id="ai-companion" aria-hidden="true">
       <div class="orb-core"></div>
       <div id="ai-tooltip">Greetings.</div>
     </div>
@@ -641,11 +658,11 @@
       <div class="hud-reticle"></div>
     </div>
 
-    <div class="crt-overlay"></div>
-    <div class="crt-vignette"></div>
+    <div class="crt-overlay" aria-hidden="true"></div>
+    <div class="crt-vignette" aria-hidden="true"></div>
 
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
+    <div class="blob blob-1" aria-hidden="true"></div>
+    <div class="blob blob-2" aria-hidden="true"></div>
 
     <!-- Nav -->
     <nav
@@ -670,13 +687,18 @@
             href="https://github.com/tanish-ml"
             target="_blank"
             class="hover:text-[#ff0055] transition"
-            ><i class="fab fa-github text-lg"></i
+            aria-label="GitHub Profile"
+            ><i class="fab fa-github text-lg" aria-hidden="true"></i
           ></a>
 
           <!-- Toggle Menu Button -->
           <div
             class="interactive hover:text-[#ff0055] transition cursor-pointer text-xl ml-4"
             onclick="toggleMenu()"
+            role="button"
+            tabindex="0"
+            aria-label="Toggle Menu"
+            onkeydown="if(event.key===\'Enter\'||event.key===\' \') this.click();"
           >
             <i class="fas fa-bars"></i>
           </div>
@@ -684,1580 +706,1612 @@
       </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section
-      class="min-h-screen flex flex-col justify-center items-start px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto pt-20"
-    >
-      <p class="text-[#00aa44] font-mono mb-4 tracking-widest">
-        > SYSTEM_INITIALIZATION_COMPLETE
-      </p>
-      <h1 class="decode-title" id="decoder" data-value="TANISH MITTAL">
-        TANISH MITTAL
-      </h1>
-      <p
-        class="text-lg md:text-xl text-[#00aa44] mt-6 max-w-2xl leading-relaxed font-mono"
+    <main id="main-content">
+      <!-- Hero Section -->
+      <section
+        class="min-h-screen flex flex-col justify-center items-start px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto pt-20"
       >
-        [ ROLE: MACHINE_LEARNING_ENGINEER ] <br />
-        [ FOCUS: EDGE_AI | COMPUTER_VISION | GENERATIVE_NLP ]
-      </p>
-      <div class="flex gap-4 mt-12 font-mono">
-        <a
-          href="#projects"
-          class="border border-[var(--accent)] text-black bg-[var(--accent)] hover:bg-[#ff0055] hover:border-[#ff0055] hover:text-white px-8 py-3 transition font-bold tracking-widest shadow-[0_0_15px_rgba(0,255,204,0.4)]"
-          >ACCESS_MAINFRAME</a
+        <p class="text-[#00aa44] font-mono mb-4 tracking-widest">
+          > SYSTEM_INITIALIZATION_COMPLETE
+        </p>
+        <h1 class="decode-title" id="decoder" data-value="TANISH MITTAL">
+          TANISH MITTAL
+        </h1>
+        <p
+          class="text-lg md:text-xl text-[#00aa44] mt-6 max-w-2xl leading-relaxed font-mono"
         >
-      </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" style="height: 800vh; position: relative">
-      <div style="position: sticky; top: 0; height: 100vh; overflow: hidden">
-        <div
-          style="
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            perspective: 1200px;
-          "
-        >
-          <div
-            style="
-              position: absolute;
-              top: 15%;
-              left: 5%;
-              z-index: 10;
-              pointer-events: none;
-            "
+          [ ROLE: MACHINE_LEARNING_ENGINEER ] <br />
+          [ FOCUS: EDGE_AI | COMPUTER_VISION | GENERATIVE_NLP ]
+        </p>
+        <div class="flex gap-4 mt-12 font-mono">
+          <a
+            href="#projects"
+            class="border border-[var(--accent)] text-black bg-[var(--accent)] hover:bg-[#ff0055] hover:border-[#ff0055] hover:text-white px-8 py-3 transition font-bold tracking-widest shadow-[0_0_15px_rgba(0,255,204,0.4)]"
+            >ACCESS_MAINFRAME</a
           >
-            <h2
-              class="text-3xl font-mono font-bold text-white mb-2 tracking-widest"
-            >
-              > /sys/active_nodes
-            </h2>
-            <p class="text-[#00aa44] font-mono">[ DEPLOYED ARCHITECTURES ]</p>
-            <div class="w-20 h-1 bg-[var(--accent)] mt-4"></div>
-          </div>
+        </div>
+      </section>
 
+      <!-- Projects Section -->
+      <section id="projects" style="height: 800vh; position: relative">
+        <div style="position: sticky; top: 0; height: 100vh; overflow: hidden">
           <div
-            id="depth-world"
             style="
               position: absolute;
-              top: 50%;
-              left: 50%;
-              width: 0;
-              height: 0;
-              transform-style: preserve-3d;
-              will-change: transform;
+              width: 100%;
+              height: 100%;
+              perspective: 1200px;
             "
           >
             <div
               style="
                 position: absolute;
-                transform: translate3d(
-                  329.731299141762px,
-                  -17.863162263665288px,
-                  -400px
-                );
-                margin-left: -175px;
-                margin-top: -150px;
-                width: 350px;
-                height: 300px;
+                top: 15%;
+                left: 5%;
+                z-index: 10;
+                pointer-events: none;
               "
             >
-              <a
-                href="https://github.com/tanish-ml/ResViT-Tiny"
-                target="_blank"
-                class="card interactive"
-                style="
-                  width: 100%;
-                  height: 100%;
-                  text-decoration: none;
-                  display: flex;
-                "
+              <h2
+                class="text-3xl font-mono font-bold text-white mb-2 tracking-widest"
               >
-                <span class="card-number">SYS.01</span>
-                <h2
-                  style="
-                    font-size: 1.25rem;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    margin-bottom: 0.5rem;
-                  "
-                  title="ResViT-Tiny"
-                >
-                  ResViT-Tiny
-                </h2>
-                <p
-                  class="card-desc"
-                  style="
-                    overflow: hidden;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 4;
-                    -webkit-box-orient: vertical;
-                    line-height: 1.4;
-                  "
-                >
-                  Lightweight Hybrid Segmentation using FastResUNet on Pascal
-                  VOC 2012, optimized for integrated graphics.
-                </p>
-                <div
-                  class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
-                >
-                  <span>[EXPLORE REPO]</span>
-                </div>
-              </a>
+                > /sys/active_nodes
+              </h2>
+              <p class="text-[#00aa44] font-mono">[ DEPLOYED ARCHITECTURES ]</p>
+              <div class="w-20 h-1 bg-[var(--accent)] mt-4"></div>
             </div>
 
             <div
+              id="depth-world"
               style="
                 position: absolute;
-                transform: translate3d(
-                  -160.59926773802997px,
-                  -87.20959528121614px,
-                  -1000px
-                );
-                margin-left: -175px;
-                margin-top: -150px;
-                width: 350px;
-                height: 300px;
+                top: 50%;
+                left: 50%;
+                width: 0;
+                height: 0;
+                transform-style: preserve-3d;
+                will-change: transform;
               "
             >
-              <a
-                href="https://github.com/tanish-ml/DocuMind"
-                target="_blank"
-                class="card interactive"
+              <div
                 style="
-                  width: 100%;
-                  height: 100%;
-                  text-decoration: none;
-                  display: flex;
+                  position: absolute;
+                  transform: translate3d(
+                    329.731299141762px,
+                    -17.863162263665288px,
+                    -400px
+                  );
+                  margin-left: -175px;
+                  margin-top: -150px;
+                  width: 350px;
+                  height: 300px;
                 "
               >
-                <span class="card-number">SYS.02</span>
-                <h2
+                <a
+                  href="https://github.com/tanish-ml/ResViT-Tiny"
+                  target="_blank"
+                  class="card interactive"
                   style="
-                    font-size: 1.25rem;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    margin-bottom: 0.5rem;
-                  "
-                  title="DocuMind"
-                >
-                  DocuMind
-                </h2>
-                <p
-                  class="card-desc"
-                  style="
-                    overflow: hidden;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 4;
-                    -webkit-box-orient: vertical;
-                    line-height: 1.4;
+                    width: 100%;
+                    height: 100%;
+                    text-decoration: none;
+                    display: flex;
                   "
                 >
-                  Local Document Analyst Chatbot (RAG). Interactively query PDFs
-                  using LangChain and local ChromaDB.
-                </p>
-                <div
-                  class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
-                >
-                  <span>[EXPLORE REPO]</span>
-                </div>
-              </a>
-            </div>
+                  <span class="card-number">SYS.01</span>
+                  <h2
+                    style="
+                      font-size: 1.25rem;
+                      text-overflow: ellipsis;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      margin-bottom: 0.5rem;
+                    "
+                    title="ResViT-Tiny"
+                  >
+                    ResViT-Tiny
+                  </h2>
+                  <p
+                    class="card-desc"
+                    style="
+                      overflow: hidden;
+                      display: -webkit-box;
+                      -webkit-line-clamp: 4;
+                      -webkit-box-orient: vertical;
+                      line-height: 1.4;
+                    "
+                  >
+                    Lightweight Hybrid Segmentation using FastResUNet on Pascal
+                    VOC 2012, optimized for integrated graphics.
+                  </p>
+                  <div
+                    class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
+                  >
+                    <span>[EXPLORE REPO]</span>
+                  </div>
+                </a>
+              </div>
 
-            <div
-              style="
-                position: absolute;
-                transform: translate3d(
-                  235.1003275382509px,
-                  -63.11086830485391px,
-                  -1600px
-                );
-                margin-left: -175px;
-                margin-top: -150px;
-                width: 350px;
-                height: 300px;
-              "
-            >
-              <a
-                href="https://github.com/tanish-ml/TubeIntel"
-                target="_blank"
-                class="card interactive"
+              <div
                 style="
-                  width: 100%;
-                  height: 100%;
-                  text-decoration: none;
-                  display: flex;
+                  position: absolute;
+                  transform: translate3d(
+                    -160.59926773802997px,
+                    -87.20959528121614px,
+                    -1000px
+                  );
+                  margin-left: -175px;
+                  margin-top: -150px;
+                  width: 350px;
+                  height: 300px;
                 "
               >
-                <span class="card-number">SYS.03</span>
-                <h2
+                <a
+                  href="https://github.com/tanish-ml/DocuMind"
+                  target="_blank"
+                  class="card interactive"
                   style="
-                    font-size: 1.25rem;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    margin-bottom: 0.5rem;
-                  "
-                  title="TubeIntel"
-                >
-                  TubeIntel
-                </h2>
-                <p
-                  class="card-desc"
-                  style="
-                    overflow: hidden;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 4;
-                    -webkit-box-orient: vertical;
-                    line-height: 1.4;
+                    width: 100%;
+                    height: 100%;
+                    text-decoration: none;
+                    display: flex;
                   "
                 >
-                  AI YouTube Summarizer & Researcher - A Streamlit app using
-                  OpenAI to extract transcripts and generate multi-video
-                  insights.
-                </p>
-                <div
-                  class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
-                >
-                  <span>[EXPLORE REPO]</span>
-                </div>
-              </a>
-            </div>
+                  <span class="card-number">SYS.02</span>
+                  <h2
+                    style="
+                      font-size: 1.25rem;
+                      text-overflow: ellipsis;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      margin-bottom: 0.5rem;
+                    "
+                    title="DocuMind"
+                  >
+                    DocuMind
+                  </h2>
+                  <p
+                    class="card-desc"
+                    style="
+                      overflow: hidden;
+                      display: -webkit-box;
+                      -webkit-line-clamp: 4;
+                      -webkit-box-orient: vertical;
+                      line-height: 1.4;
+                    "
+                  >
+                    Local Document Analyst Chatbot (RAG). Interactively query
+                    PDFs using LangChain and local ChromaDB.
+                  </p>
+                  <div
+                    class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
+                  >
+                    <span>[EXPLORE REPO]</span>
+                  </div>
+                </a>
+              </div>
 
-            <div
-              style="
-                position: absolute;
-                transform: translate3d(
-                  -184.6939667778734px,
-                  89.40131526335936px,
-                  -2200px
-                );
-                margin-left: -175px;
-                margin-top: -150px;
-                width: 350px;
-                height: 300px;
-              "
-            >
-              <a
-                href="https://github.com/tanish-ml/GIFT"
-                target="_blank"
-                class="card interactive"
+              <div
                 style="
-                  width: 100%;
-                  height: 100%;
-                  text-decoration: none;
-                  display: flex;
+                  position: absolute;
+                  transform: translate3d(
+                    235.1003275382509px,
+                    -63.11086830485391px,
+                    -1600px
+                  );
+                  margin-left: -175px;
+                  margin-top: -150px;
+                  width: 350px;
+                  height: 300px;
                 "
               >
-                <span class="card-number">SYS.04</span>
-                <h2
+                <a
+                  href="https://github.com/tanish-ml/TubeIntel"
+                  target="_blank"
+                  class="card interactive"
                   style="
-                    font-size: 1.25rem;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    margin-bottom: 0.5rem;
-                  "
-                  title="GIFT"
-                >
-                  GIFT
-                </h2>
-                <p
-                  class="card-desc"
-                  style="
-                    overflow: hidden;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 4;
-                    -webkit-box-orient: vertical;
-                    line-height: 1.4;
+                    width: 100%;
+                    height: 100%;
+                    text-decoration: none;
+                    display: flex;
                   "
                 >
-                  A multi-stage digital escape room and puzzle game with a retro
-                  CRT aesthetic.
-                </p>
-                <div
-                  class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
-                >
-                  <span>[EXPLORE REPO]</span>
-                </div>
-              </a>
-            </div>
+                  <span class="card-number">SYS.03</span>
+                  <h2
+                    style="
+                      font-size: 1.25rem;
+                      text-overflow: ellipsis;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      margin-bottom: 0.5rem;
+                    "
+                    title="TubeIntel"
+                  >
+                    TubeIntel
+                  </h2>
+                  <p
+                    class="card-desc"
+                    style="
+                      overflow: hidden;
+                      display: -webkit-box;
+                      -webkit-line-clamp: 4;
+                      -webkit-box-orient: vertical;
+                      line-height: 1.4;
+                    "
+                  >
+                    AI YouTube Summarizer & Researcher - A Streamlit app using
+                    OpenAI to extract transcripts and generate multi-video
+                    insights.
+                  </p>
+                  <div
+                    class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
+                  >
+                    <span>[EXPLORE REPO]</span>
+                  </div>
+                </a>
+              </div>
 
-            <div
-              style="
-                position: absolute;
-                transform: translate3d(
-                  235.22118805655253px,
-                  16.909218846872708px,
-                  -2800px
-                );
-                margin-left: -175px;
-                margin-top: -150px;
-                width: 350px;
-                height: 300px;
-              "
-            >
-              <a
-                href="https://github.com/tanish-ml/quantum-circuit-extraction"
-                target="_blank"
-                class="card interactive"
+              <div
                 style="
-                  width: 100%;
-                  height: 100%;
-                  text-decoration: none;
-                  display: flex;
+                  position: absolute;
+                  transform: translate3d(
+                    -184.6939667778734px,
+                    89.40131526335936px,
+                    -2200px
+                  );
+                  margin-left: -175px;
+                  margin-top: -150px;
+                  width: 350px;
+                  height: 300px;
                 "
               >
-                <span class="card-number">SYS.05</span>
-                <h2
+                <a
+                  href="https://github.com/tanish-ml/GIFT"
+                  target="_blank"
+                  class="card interactive"
                   style="
-                    font-size: 1.25rem;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    margin-bottom: 0.5rem;
-                  "
-                  title="Quantum Circuit Extractor"
-                >
-                  Quantum Circuit Extractor
-                </h2>
-                <p
-                  class="card-desc"
-                  style="
-                    overflow: hidden;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 4;
-                    -webkit-box-orient: vertical;
-                    line-height: 1.4;
+                    width: 100%;
+                    height: 100%;
+                    text-decoration: none;
+                    display: flex;
                   "
                 >
-                  Extraction pipeline for Quantum Circuit Datasets from
-                  Scientific Literature.
-                </p>
-                <div
-                  class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
-                >
-                  <span>[EXPLORE REPO]</span>
-                </div>
-              </a>
-            </div>
+                  <span class="card-number">SYS.04</span>
+                  <h2
+                    style="
+                      font-size: 1.25rem;
+                      text-overflow: ellipsis;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      margin-bottom: 0.5rem;
+                    "
+                    title="GIFT"
+                  >
+                    GIFT
+                  </h2>
+                  <p
+                    class="card-desc"
+                    style="
+                      overflow: hidden;
+                      display: -webkit-box;
+                      -webkit-line-clamp: 4;
+                      -webkit-box-orient: vertical;
+                      line-height: 1.4;
+                    "
+                  >
+                    A multi-stage digital escape room and puzzle game with a
+                    retro CRT aesthetic.
+                  </p>
+                  <div
+                    class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
+                  >
+                    <span>[EXPLORE REPO]</span>
+                  </div>
+                </a>
+              </div>
 
-            <div
-              style="
-                position: absolute;
-                transform: translate3d(
-                  -268.4349878840945px,
-                  78.45387219852601px,
-                  -3400px
-                );
-                margin-left: -175px;
-                margin-top: -150px;
-                width: 350px;
-                height: 300px;
-              "
-            >
-              <a
-                href="https://github.com/tanish-ml/edge-device-ml-regression"
-                target="_blank"
-                class="card interactive"
+              <div
                 style="
-                  width: 100%;
-                  height: 100%;
-                  text-decoration: none;
-                  display: flex;
+                  position: absolute;
+                  transform: translate3d(
+                    235.22118805655253px,
+                    16.909218846872708px,
+                    -2800px
+                  );
+                  margin-left: -175px;
+                  margin-top: -150px;
+                  width: 350px;
+                  height: 300px;
                 "
               >
-                <span class="card-number">SYS.06</span>
-                <h2
+                <a
+                  href="https://github.com/tanish-ml/quantum-circuit-extraction"
+                  target="_blank"
+                  class="card interactive"
                   style="
-                    font-size: 1.25rem;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    margin-bottom: 0.5rem;
-                  "
-                  title="Edge ML Regression"
-                >
-                  Edge ML Regression
-                </h2>
-                <p
-                  class="card-desc"
-                  style="
-                    overflow: hidden;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 4;
-                    -webkit-box-orient: vertical;
-                    line-height: 1.4;
+                    width: 100%;
+                    height: 100%;
+                    text-decoration: none;
+                    display: flex;
                   "
                 >
-                  Machine Learning Regression and Rule-Based Edge Device models.
-                </p>
-                <div
-                  class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
-                >
-                  <span>[EXPLORE REPO]</span>
-                </div>
-              </a>
-            </div>
+                  <span class="card-number">SYS.05</span>
+                  <h2
+                    style="
+                      font-size: 1.25rem;
+                      text-overflow: ellipsis;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      margin-bottom: 0.5rem;
+                    "
+                    title="Quantum Circuit Extractor"
+                  >
+                    Quantum Circuit Extractor
+                  </h2>
+                  <p
+                    class="card-desc"
+                    style="
+                      overflow: hidden;
+                      display: -webkit-box;
+                      -webkit-line-clamp: 4;
+                      -webkit-box-orient: vertical;
+                      line-height: 1.4;
+                    "
+                  >
+                    Extraction pipeline for Quantum Circuit Datasets from
+                    Scientific Literature.
+                  </p>
+                  <div
+                    class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
+                  >
+                    <span>[EXPLORE REPO]</span>
+                  </div>
+                </a>
+              </div>
 
-            <div
-              style="
-                position: absolute;
-                transform: translate3d(
-                  274.48055563980495px,
-                  -88.73056272752355px,
-                  -4000px
-                );
-                margin-left: -175px;
-                margin-top: -150px;
-                width: 350px;
-                height: 300px;
-              "
-            >
-              <a
-                href="https://github.com/tanish-ml/Strategies-for-the-Class-Imbalance-Problem-on-CNN-and-ViT-Tiny-Architectures"
-                target="_blank"
-                class="card interactive"
+              <div
                 style="
-                  width: 100%;
-                  height: 100%;
-                  text-decoration: none;
-                  display: flex;
+                  position: absolute;
+                  transform: translate3d(
+                    -268.4349878840945px,
+                    78.45387219852601px,
+                    -3400px
+                  );
+                  margin-left: -175px;
+                  margin-top: -150px;
+                  width: 350px;
+                  height: 300px;
                 "
               >
-                <span class="card-number">SYS.07</span>
-                <h2
+                <a
+                  href="https://github.com/tanish-ml/edge-device-ml-regression"
+                  target="_blank"
+                  class="card interactive"
                   style="
-                    font-size: 1.25rem;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    margin-bottom: 0.5rem;
-                  "
-                  title="ViT-Tiny Imbalance"
-                >
-                  ViT-Tiny Imbalance
-                </h2>
-                <p
-                  class="card-desc"
-                  style="
-                    overflow: hidden;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 4;
-                    -webkit-box-orient: vertical;
-                    line-height: 1.4;
+                    width: 100%;
+                    height: 100%;
+                    text-decoration: none;
+                    display: flex;
                   "
                 >
-                  Strategies for the Class Imbalance Problem on CNN and ViT-Tiny
-                  Architectures.
-                </p>
-                <div
-                  class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
-                >
-                  <span>[EXPLORE REPO]</span>
-                </div>
-              </a>
-            </div>
+                  <span class="card-number">SYS.06</span>
+                  <h2
+                    style="
+                      font-size: 1.25rem;
+                      text-overflow: ellipsis;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      margin-bottom: 0.5rem;
+                    "
+                    title="Edge ML Regression"
+                  >
+                    Edge ML Regression
+                  </h2>
+                  <p
+                    class="card-desc"
+                    style="
+                      overflow: hidden;
+                      display: -webkit-box;
+                      -webkit-line-clamp: 4;
+                      -webkit-box-orient: vertical;
+                      line-height: 1.4;
+                    "
+                  >
+                    Machine Learning Regression and Rule-Based Edge Device
+                    models.
+                  </p>
+                  <div
+                    class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
+                  >
+                    <span>[EXPLORE REPO]</span>
+                  </div>
+                </a>
+              </div>
 
-            <div
-              style="
-                position: absolute;
-                transform: translate3d(
-                  -291.8714557429523px,
-                  58.35720163543894px,
-                  -4600px
-                );
-                margin-left: -175px;
-                margin-top: -150px;
-                width: 350px;
-                height: 300px;
-              "
-            >
-              <a
-                href="https://github.com/tanish-ml/Cross-Device-BLE-Localization-System"
-                target="_blank"
-                class="card interactive"
+              <div
                 style="
-                  width: 100%;
-                  height: 100%;
-                  text-decoration: none;
-                  display: flex;
+                  position: absolute;
+                  transform: translate3d(
+                    274.48055563980495px,
+                    -88.73056272752355px,
+                    -4000px
+                  );
+                  margin-left: -175px;
+                  margin-top: -150px;
+                  width: 350px;
+                  height: 300px;
                 "
               >
-                <span class="card-number">SYS.08</span>
-                <h2
+                <a
+                  href="https://github.com/tanish-ml/Strategies-for-the-Class-Imbalance-Problem-on-CNN-and-ViT-Tiny-Architectures"
+                  target="_blank"
+                  class="card interactive"
                   style="
-                    font-size: 1.25rem;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    margin-bottom: 0.5rem;
-                  "
-                  title="BLE Localization"
-                >
-                  BLE Localization
-                </h2>
-                <p
-                  class="card-desc"
-                  style="
-                    overflow: hidden;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 4;
-                    -webkit-box-orient: vertical;
-                    line-height: 1.4;
+                    width: 100%;
+                    height: 100%;
+                    text-decoration: none;
+                    display: flex;
                   "
                 >
-                  Cross-Device BLE Localization System.
-                </p>
-                <div
-                  class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
-                >
-                  <span>[EXPLORE REPO]</span>
-                </div>
-              </a>
-            </div>
+                  <span class="card-number">SYS.07</span>
+                  <h2
+                    style="
+                      font-size: 1.25rem;
+                      text-overflow: ellipsis;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      margin-bottom: 0.5rem;
+                    "
+                    title="ViT-Tiny Imbalance"
+                  >
+                    ViT-Tiny Imbalance
+                  </h2>
+                  <p
+                    class="card-desc"
+                    style="
+                      overflow: hidden;
+                      display: -webkit-box;
+                      -webkit-line-clamp: 4;
+                      -webkit-box-orient: vertical;
+                      line-height: 1.4;
+                    "
+                  >
+                    Strategies for the Class Imbalance Problem on CNN and
+                    ViT-Tiny Architectures.
+                  </p>
+                  <div
+                    class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
+                  >
+                    <span>[EXPLORE REPO]</span>
+                  </div>
+                </a>
+              </div>
 
-            <div
-              style="
-                position: absolute;
-                transform: translate3d(
-                  251.17530810354785px,
-                  18.203612835968542px,
-                  -5200px
-                );
-                margin-left: -175px;
-                margin-top: -150px;
-                width: 350px;
-                height: 300px;
-              "
-            >
-              <a
-                href="https://github.com/tanish-ml/MNIST-Classifier"
-                target="_blank"
-                class="card interactive"
+              <div
                 style="
-                  width: 100%;
-                  height: 100%;
-                  text-decoration: none;
-                  display: flex;
+                  position: absolute;
+                  transform: translate3d(
+                    -291.8714557429523px,
+                    58.35720163543894px,
+                    -4600px
+                  );
+                  margin-left: -175px;
+                  margin-top: -150px;
+                  width: 350px;
+                  height: 300px;
                 "
               >
-                <span class="card-number">SYS.09</span>
-                <h2
+                <a
+                  href="https://github.com/tanish-ml/Cross-Device-BLE-Localization-System"
+                  target="_blank"
+                  class="card interactive"
                   style="
-                    font-size: 1.25rem;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    margin-bottom: 0.5rem;
-                  "
-                  title="MNIST Classifier"
-                >
-                  MNIST Classifier
-                </h2>
-                <p
-                  class="card-desc"
-                  style="
-                    overflow: hidden;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 4;
-                    -webkit-box-orient: vertical;
-                    line-height: 1.4;
+                    width: 100%;
+                    height: 100%;
+                    text-decoration: none;
+                    display: flex;
                   "
                 >
-                  Handwritten digit classification model.
-                </p>
-                <div
-                  class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
-                >
-                  <span>[EXPLORE REPO]</span>
-                </div>
-              </a>
-            </div>
+                  <span class="card-number">SYS.08</span>
+                  <h2
+                    style="
+                      font-size: 1.25rem;
+                      text-overflow: ellipsis;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      margin-bottom: 0.5rem;
+                    "
+                    title="BLE Localization"
+                  >
+                    BLE Localization
+                  </h2>
+                  <p
+                    class="card-desc"
+                    style="
+                      overflow: hidden;
+                      display: -webkit-box;
+                      -webkit-line-clamp: 4;
+                      -webkit-box-orient: vertical;
+                      line-height: 1.4;
+                    "
+                  >
+                    Cross-Device BLE Localization System.
+                  </p>
+                  <div
+                    class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
+                  >
+                    <span>[EXPLORE REPO]</span>
+                  </div>
+                </a>
+              </div>
 
-            <div
-              style="
-                position: absolute;
-                transform: translate3d(
-                  -331.795906880508px,
-                  -7.886075032798234px,
-                  -5800px
-                );
-                margin-left: -175px;
-                margin-top: -150px;
-                width: 350px;
-                height: 300px;
-              "
-            >
-              <a
-                href="https://github.com/tanish-ml/Titanic-Survival-Data-Analytics-Project"
-                target="_blank"
-                class="card interactive"
+              <div
                 style="
-                  width: 100%;
-                  height: 100%;
-                  text-decoration: none;
-                  display: flex;
+                  position: absolute;
+                  transform: translate3d(
+                    251.17530810354785px,
+                    18.203612835968542px,
+                    -5200px
+                  );
+                  margin-left: -175px;
+                  margin-top: -150px;
+                  width: 350px;
+                  height: 300px;
                 "
               >
-                <span class="card-number">SYS.10</span>
-                <h2
+                <a
+                  href="https://github.com/tanish-ml/MNIST-Classifier"
+                  target="_blank"
+                  class="card interactive"
                   style="
-                    font-size: 1.25rem;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    margin-bottom: 0.5rem;
-                  "
-                  title="Titanic Analytics"
-                >
-                  Titanic Analytics
-                </h2>
-                <p
-                  class="card-desc"
-                  style="
-                    overflow: hidden;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 4;
-                    -webkit-box-orient: vertical;
-                    line-height: 1.4;
+                    width: 100%;
+                    height: 100%;
+                    text-decoration: none;
+                    display: flex;
                   "
                 >
-                  Titanic Survival Data Analytics Project.
-                </p>
-                <div
-                  class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
-                >
-                  <span>[EXPLORE REPO]</span>
-                </div>
-              </a>
-            </div>
+                  <span class="card-number">SYS.09</span>
+                  <h2
+                    style="
+                      font-size: 1.25rem;
+                      text-overflow: ellipsis;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      margin-bottom: 0.5rem;
+                    "
+                    title="MNIST Classifier"
+                  >
+                    MNIST Classifier
+                  </h2>
+                  <p
+                    class="card-desc"
+                    style="
+                      overflow: hidden;
+                      display: -webkit-box;
+                      -webkit-line-clamp: 4;
+                      -webkit-box-orient: vertical;
+                      line-height: 1.4;
+                    "
+                  >
+                    Handwritten digit classification model.
+                  </p>
+                  <div
+                    class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
+                  >
+                    <span>[EXPLORE REPO]</span>
+                  </div>
+                </a>
+              </div>
 
-            <div
-              style="
-                position: absolute;
-                transform: translate3d(
-                  179.76130799411885px,
-                  33.971905011292435px,
-                  -6400px
-                );
-                margin-left: -175px;
-                margin-top: -150px;
-                width: 350px;
-                height: 300px;
-              "
-            >
-              <a
-                href="https://github.com/tanish-ml/Customer-Churn-Prediction-using-Artificial-Neural-Network-ANN-"
-                target="_blank"
-                class="card interactive"
+              <div
                 style="
-                  width: 100%;
-                  height: 100%;
-                  text-decoration: none;
-                  display: flex;
+                  position: absolute;
+                  transform: translate3d(
+                    -331.795906880508px,
+                    -7.886075032798234px,
+                    -5800px
+                  );
+                  margin-left: -175px;
+                  margin-top: -150px;
+                  width: 350px;
+                  height: 300px;
                 "
               >
-                <span class="card-number">SYS.11</span>
-                <h2
+                <a
+                  href="https://github.com/tanish-ml/Titanic-Survival-Data-Analytics-Project"
+                  target="_blank"
+                  class="card interactive"
                   style="
-                    font-size: 1.25rem;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    margin-bottom: 0.5rem;
-                  "
-                  title="Customer Churn ANN"
-                >
-                  Customer Churn ANN
-                </h2>
-                <p
-                  class="card-desc"
-                  style="
-                    overflow: hidden;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 4;
-                    -webkit-box-orient: vertical;
-                    line-height: 1.4;
+                    width: 100%;
+                    height: 100%;
+                    text-decoration: none;
+                    display: flex;
                   "
                 >
-                  Customer Churn Prediction using Artificial Neural Network
-                  (ANN).
-                </p>
-                <div
-                  class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
-                >
-                  <span>[EXPLORE REPO]</span>
-                </div>
-              </a>
-            </div>
+                  <span class="card-number">SYS.10</span>
+                  <h2
+                    style="
+                      font-size: 1.25rem;
+                      text-overflow: ellipsis;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      margin-bottom: 0.5rem;
+                    "
+                    title="Titanic Analytics"
+                  >
+                    Titanic Analytics
+                  </h2>
+                  <p
+                    class="card-desc"
+                    style="
+                      overflow: hidden;
+                      display: -webkit-box;
+                      -webkit-line-clamp: 4;
+                      -webkit-box-orient: vertical;
+                      line-height: 1.4;
+                    "
+                  >
+                    Titanic Survival Data Analytics Project.
+                  </p>
+                  <div
+                    class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
+                  >
+                    <span>[EXPLORE REPO]</span>
+                  </div>
+                </a>
+              </div>
 
-            <div
-              style="
-                position: absolute;
-                transform: translate3d(
-                  -184.07847052343033px,
-                  -55.21763025637127px,
-                  -7000px
-                );
-                margin-left: -175px;
-                margin-top: -150px;
-                width: 350px;
-                height: 300px;
-              "
-            >
-              <a
-                href="https://github.com/tanish-ml/Binary-Image-Classification-Project"
-                target="_blank"
-                class="card interactive"
+              <div
                 style="
-                  width: 100%;
-                  height: 100%;
-                  text-decoration: none;
-                  display: flex;
+                  position: absolute;
+                  transform: translate3d(
+                    179.76130799411885px,
+                    33.971905011292435px,
+                    -6400px
+                  );
+                  margin-left: -175px;
+                  margin-top: -150px;
+                  width: 350px;
+                  height: 300px;
                 "
               >
-                <span class="card-number">SYS.12</span>
-                <h2
+                <a
+                  href="https://github.com/tanish-ml/Customer-Churn-Prediction-using-Artificial-Neural-Network-ANN-"
+                  target="_blank"
+                  class="card interactive"
                   style="
-                    font-size: 1.25rem;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    margin-bottom: 0.5rem;
-                  "
-                  title="Binary Image Class"
-                >
-                  Binary Image Class
-                </h2>
-                <p
-                  class="card-desc"
-                  style="
-                    overflow: hidden;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 4;
-                    -webkit-box-orient: vertical;
-                    line-height: 1.4;
+                    width: 100%;
+                    height: 100%;
+                    text-decoration: none;
+                    display: flex;
                   "
                 >
-                  Binary Image Classification Project.
-                </p>
-                <div
-                  class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
-                >
-                  <span>[EXPLORE REPO]</span>
-                </div>
-              </a>
-            </div>
+                  <span class="card-number">SYS.11</span>
+                  <h2
+                    style="
+                      font-size: 1.25rem;
+                      text-overflow: ellipsis;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      margin-bottom: 0.5rem;
+                    "
+                    title="Customer Churn ANN"
+                  >
+                    Customer Churn ANN
+                  </h2>
+                  <p
+                    class="card-desc"
+                    style="
+                      overflow: hidden;
+                      display: -webkit-box;
+                      -webkit-line-clamp: 4;
+                      -webkit-box-orient: vertical;
+                      line-height: 1.4;
+                    "
+                  >
+                    Customer Churn Prediction using Artificial Neural Network
+                    (ANN).
+                  </p>
+                  <div
+                    class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
+                  >
+                    <span>[EXPLORE REPO]</span>
+                  </div>
+                </a>
+              </div>
 
-            <div
-              style="
-                position: absolute;
-                transform: translate3d(
-                  259.9423556084679px,
-                  36.452200567627344px,
-                  -7600px
-                );
-                margin-left: -175px;
-                margin-top: -150px;
-                width: 350px;
-                height: 300px;
-              "
-            >
-              <a
-                href="https://github.com/tanish-ml/Pepper_scripts"
-                target="_blank"
-                class="card interactive"
+              <div
                 style="
-                  width: 100%;
-                  height: 100%;
-                  text-decoration: none;
-                  display: flex;
+                  position: absolute;
+                  transform: translate3d(
+                    -184.07847052343033px,
+                    -55.21763025637127px,
+                    -7000px
+                  );
+                  margin-left: -175px;
+                  margin-top: -150px;
+                  width: 350px;
+                  height: 300px;
                 "
               >
-                <span class="card-number">SYS.13</span>
-                <h2
+                <a
+                  href="https://github.com/tanish-ml/Binary-Image-Classification-Project"
+                  target="_blank"
+                  class="card interactive"
                   style="
-                    font-size: 1.25rem;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    margin-bottom: 0.5rem;
-                  "
-                  title="Pepper Scripts"
-                >
-                  Pepper Scripts
-                </h2>
-                <p
-                  class="card-desc"
-                  style="
-                    overflow: hidden;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 4;
-                    -webkit-box-orient: vertical;
-                    line-height: 1.4;
+                    width: 100%;
+                    height: 100%;
+                    text-decoration: none;
+                    display: flex;
                   "
                 >
-                  Different functionalities on Pepper.
-                </p>
-                <div
-                  class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
-                >
-                  <span>[EXPLORE REPO]</span>
-                </div>
-              </a>
-            </div>
+                  <span class="card-number">SYS.12</span>
+                  <h2
+                    style="
+                      font-size: 1.25rem;
+                      text-overflow: ellipsis;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      margin-bottom: 0.5rem;
+                    "
+                    title="Binary Image Class"
+                  >
+                    Binary Image Class
+                  </h2>
+                  <p
+                    class="card-desc"
+                    style="
+                      overflow: hidden;
+                      display: -webkit-box;
+                      -webkit-line-clamp: 4;
+                      -webkit-box-orient: vertical;
+                      line-height: 1.4;
+                    "
+                  >
+                    Binary Image Classification Project.
+                  </p>
+                  <div
+                    class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
+                  >
+                    <span>[EXPLORE REPO]</span>
+                  </div>
+                </a>
+              </div>
 
-            <div
-              style="
-                position: absolute;
-                transform: translate3d(
-                  -345.9804736818819px,
-                  -95.00812719857217px,
-                  -8200px
-                );
-                margin-left: -175px;
-                margin-top: -150px;
-                width: 350px;
-                height: 300px;
-              "
-            >
-              <a
-                href="https://github.com/tanish-ml/netmambaplus_xai"
-                target="_blank"
-                class="card interactive"
+              <div
                 style="
-                  width: 100%;
-                  height: 100%;
-                  text-decoration: none;
-                  display: flex;
+                  position: absolute;
+                  transform: translate3d(
+                    259.9423556084679px,
+                    36.452200567627344px,
+                    -7600px
+                  );
+                  margin-left: -175px;
+                  margin-top: -150px;
+                  width: 350px;
+                  height: 300px;
                 "
               >
-                <span class="card-number">SYS.14</span>
-                <h2
+                <a
+                  href="https://github.com/tanish-ml/Pepper_scripts"
+                  target="_blank"
+                  class="card interactive"
                   style="
-                    font-size: 1.25rem;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    margin-bottom: 0.5rem;
-                  "
-                  title="Netmamba+ XAI"
-                >
-                  Netmamba+ XAI
-                </h2>
-                <p
-                  class="card-desc"
-                  style="
-                    overflow: hidden;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 4;
-                    -webkit-box-orient: vertical;
-                    line-height: 1.4;
+                    width: 100%;
+                    height: 100%;
+                    text-decoration: none;
+                    display: flex;
                   "
                 >
-                  Explainable AI techniques applied to Netmamba+.
-                </p>
-                <div
-                  class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
-                >
-                  <span>[EXPLORE REPO]</span>
-                </div>
-              </a>
-            </div>
+                  <span class="card-number">SYS.13</span>
+                  <h2
+                    style="
+                      font-size: 1.25rem;
+                      text-overflow: ellipsis;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      margin-bottom: 0.5rem;
+                    "
+                    title="Pepper Scripts"
+                  >
+                    Pepper Scripts
+                  </h2>
+                  <p
+                    class="card-desc"
+                    style="
+                      overflow: hidden;
+                      display: -webkit-box;
+                      -webkit-line-clamp: 4;
+                      -webkit-box-orient: vertical;
+                      line-height: 1.4;
+                    "
+                  >
+                    Different functionalities on Pepper.
+                  </p>
+                  <div
+                    class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
+                  >
+                    <span>[EXPLORE REPO]</span>
+                  </div>
+                </a>
+              </div>
 
-            <div
-              style="
-                position: absolute;
-                transform: translate3d(
-                  321.24376665162094px,
-                  76.72680014772486px,
-                  -8800px
-                );
-                margin-left: -175px;
-                margin-top: -150px;
-                width: 350px;
-                height: 300px;
-              "
-            >
-              <a
-                href="https://github.com/tanish-ml/English-to-Hinglish-Neural-Machine-Translation"
-                target="_blank"
-                class="card interactive"
+              <div
                 style="
-                  width: 100%;
-                  height: 100%;
-                  text-decoration: none;
-                  display: flex;
+                  position: absolute;
+                  transform: translate3d(
+                    -345.9804736818819px,
+                    -95.00812719857217px,
+                    -8200px
+                  );
+                  margin-left: -175px;
+                  margin-top: -150px;
+                  width: 350px;
+                  height: 300px;
                 "
               >
-                <span class="card-number">SYS.15</span>
-                <h2
+                <a
+                  href="https://github.com/tanish-ml/netmambaplus_xai"
+                  target="_blank"
+                  class="card interactive"
                   style="
-                    font-size: 1.25rem;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    margin-bottom: 0.5rem;
-                  "
-                  title="EN-Hinglish NMT"
-                >
-                  EN-Hinglish NMT
-                </h2>
-                <p
-                  class="card-desc"
-                  style="
-                    overflow: hidden;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 4;
-                    -webkit-box-orient: vertical;
-                    line-height: 1.4;
+                    width: 100%;
+                    height: 100%;
+                    text-decoration: none;
+                    display: flex;
                   "
                 >
-                  English to Hinglish Neural Machine Translation.
-                </p>
-                <div
-                  class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
-                >
-                  <span>[EXPLORE REPO]</span>
-                </div>
-              </a>
-            </div>
+                  <span class="card-number">SYS.14</span>
+                  <h2
+                    style="
+                      font-size: 1.25rem;
+                      text-overflow: ellipsis;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      margin-bottom: 0.5rem;
+                    "
+                    title="Netmamba+ XAI"
+                  >
+                    Netmamba+ XAI
+                  </h2>
+                  <p
+                    class="card-desc"
+                    style="
+                      overflow: hidden;
+                      display: -webkit-box;
+                      -webkit-line-clamp: 4;
+                      -webkit-box-orient: vertical;
+                      line-height: 1.4;
+                    "
+                  >
+                    Explainable AI techniques applied to Netmamba+.
+                  </p>
+                  <div
+                    class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
+                  >
+                    <span>[EXPLORE REPO]</span>
+                  </div>
+                </a>
+              </div>
 
-            <div
-              style="
-                position: absolute;
-                transform: translate3d(
-                  -345.1366127245806px,
-                  -49.342909907559054px,
-                  -9400px
-                );
-                margin-left: -175px;
-                margin-top: -150px;
-                width: 350px;
-                height: 300px;
-              "
-            >
-              <a
-                href="https://github.com/tanish-ml/Stock-Market-Analysis"
-                target="_blank"
-                class="card interactive"
+              <div
                 style="
-                  width: 100%;
-                  height: 100%;
-                  text-decoration: none;
-                  display: flex;
+                  position: absolute;
+                  transform: translate3d(
+                    321.24376665162094px,
+                    76.72680014772486px,
+                    -8800px
+                  );
+                  margin-left: -175px;
+                  margin-top: -150px;
+                  width: 350px;
+                  height: 300px;
                 "
               >
-                <span class="card-number">SYS.16</span>
-                <h2
+                <a
+                  href="https://github.com/tanish-ml/English-to-Hinglish-Neural-Machine-Translation"
+                  target="_blank"
+                  class="card interactive"
                   style="
-                    font-size: 1.25rem;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    margin-bottom: 0.5rem;
-                  "
-                  title="Stock Market Analysis"
-                >
-                  Stock Market Analysis
-                </h2>
-                <p
-                  class="card-desc"
-                  style="
-                    overflow: hidden;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 4;
-                    -webkit-box-orient: vertical;
-                    line-height: 1.4;
+                    width: 100%;
+                    height: 100%;
+                    text-decoration: none;
+                    display: flex;
                   "
                 >
-                  Stock Market Analysis and prediction.
-                </p>
-                <div
-                  class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
+                  <span class="card-number">SYS.15</span>
+                  <h2
+                    style="
+                      font-size: 1.25rem;
+                      text-overflow: ellipsis;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      margin-bottom: 0.5rem;
+                    "
+                    title="EN-Hinglish NMT"
+                  >
+                    EN-Hinglish NMT
+                  </h2>
+                  <p
+                    class="card-desc"
+                    style="
+                      overflow: hidden;
+                      display: -webkit-box;
+                      -webkit-line-clamp: 4;
+                      -webkit-box-orient: vertical;
+                      line-height: 1.4;
+                    "
+                  >
+                    English to Hinglish Neural Machine Translation.
+                  </p>
+                  <div
+                    class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
+                  >
+                    <span>[EXPLORE REPO]</span>
+                  </div>
+                </a>
+              </div>
+
+              <div
+                style="
+                  position: absolute;
+                  transform: translate3d(
+                    -345.1366127245806px,
+                    -49.342909907559054px,
+                    -9400px
+                  );
+                  margin-left: -175px;
+                  margin-top: -150px;
+                  width: 350px;
+                  height: 300px;
+                "
+              >
+                <a
+                  href="https://github.com/tanish-ml/Stock-Market-Analysis"
+                  target="_blank"
+                  class="card interactive"
+                  style="
+                    width: 100%;
+                    height: 100%;
+                    text-decoration: none;
+                    display: flex;
+                  "
                 >
-                  <span>[EXPLORE REPO]</span>
-                </div>
-              </a>
+                  <span class="card-number">SYS.16</span>
+                  <h2
+                    style="
+                      font-size: 1.25rem;
+                      text-overflow: ellipsis;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      margin-bottom: 0.5rem;
+                    "
+                    title="Stock Market Analysis"
+                  >
+                    Stock Market Analysis
+                  </h2>
+                  <p
+                    class="card-desc"
+                    style="
+                      overflow: hidden;
+                      display: -webkit-box;
+                      -webkit-line-clamp: 4;
+                      -webkit-box-orient: vertical;
+                      line-height: 1.4;
+                    "
+                  >
+                    Stock Market Analysis and prediction.
+                  </p>
+                  <div
+                    class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
+                  >
+                    <span>[EXPLORE REPO]</span>
+                  </div>
+                </a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Explore Section -->
-    <section
-      id="explore"
-      class="py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative z-10 border-t border-[var(--accent)]/30"
-    >
-      <div class="mb-16">
-        <h2
-          class="text-3xl font-mono font-bold text-white mb-2 tracking-widest"
-        >
-          > /vault/explore_scrollytelling
-        </h2>
-        <p class="text-[#00aa44] font-mono">
-          [ INTERACTIVE 3D DATA VISUALIZATIONS ]
-        </p>
-      </div>
-      <div class="grid-ui">
-        
-          <a href="deep-learning-architecture.html" class="card interactive group" style="text-decoration: none">
+      <!-- Explore Section -->
+      <section
+        id="explore"
+        class="py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative z-10 border-t border-[var(--accent)]/30"
+      >
+        <div class="mb-16">
+          <h2
+            class="text-3xl font-mono font-bold text-white mb-2 tracking-widest"
+          >
+            > /vault/explore_scrollytelling
+          </h2>
+          <p class="text-[#00aa44] font-mono">
+            [ INTERACTIVE 3D DATA VISUALIZATIONS ]
+          </p>
+        </div>
+        <div class="grid-ui">
+          <a
+            href="deep-learning-architecture.html"
+            class="card interactive group"
+            style="text-decoration: none"
+          >
             <span class="card-number" style="color: var(--accent)">EXP.01</span>
             <h2>Deep Learning Scrollytelling</h2>
             <p class="card-desc">
-              A visually stunning 3D interactive breakdown of a custom Multi-Layer Perceptron architecture.
+              A visually stunning 3D interactive breakdown of a custom
+              Multi-Layer Perceptron architecture.
             </p>
-            <div class="text-[var(--accent)] mt-4 font-mono font-bold group-hover:text-[#ff0055] transition-colors">
+            <div
+              class="text-[var(--accent)] mt-4 font-mono font-bold group-hover:text-[#ff0055] transition-colors"
+            >
               <i class="fas fa-eye"></i> EXPLORE
             </div>
           </a>
 
           <a
-          href="federated-learning.html"
-          class="card interactive group"
-          style="text-decoration: none"
-        >
-          <span class="card-number" style="color: var(--accent)">EXP.02</span>
-          <h2>Federated Edge AI</h2>
-          <p class="card-desc">
-              A 3D simulation of Federated Learning and decentralized Edge AI model deployment across the globe.
-            </p>
-          <div
-            class="text-[var(--accent)] mt-4 font-mono font-bold group-hover:text-[#ff0055] transition-colors"
+            href="federated-learning.html"
+            class="card interactive group"
+            style="text-decoration: none"
           >
-            <i class="fas fa-eye"></i> EXPLORE
-          </div>
-        </a>
-      </div>
-    </section>
+            <span class="card-number" style="color: var(--accent)">EXP.02</span>
+            <h2>Federated Edge AI</h2>
+            <p class="card-desc">
+              A 3D simulation of Federated Learning and decentralized Edge AI
+              model deployment across the globe.
+            </p>
+            <div
+              class="text-[var(--accent)] mt-4 font-mono font-bold group-hover:text-[#ff0055] transition-colors"
+            >
+              <i class="fas fa-eye"></i> EXPLORE
+            </div>
+          </a>
+        </div>
+      </section>
 
-    <!-- Arcade Section -->
-    <section
-      id="arcade"
-      class="py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative z-10 border-t border-[var(--accent)]/30"
-    >
-      <div class="mb-16">
-        <h2
-          class="text-3xl font-mono font-bold text-white mb-2 tracking-widest"
-        >
-          > /vault/arcade_games
-        </h2>
-        <p class="text-[#00aa44] font-mono">
-          [ SELECT A MODULE TO INITIATE SIMULATION ]
-        </p>
-      </div>
-
-      <div class="grid-ui">
-        <div
-          class="card interactive"
-          onclick="openGame('arcade/index.html#/stage-2')"
-        >
-          <span class="card-number">GAME.01</span>
-          <h2>Cyber Maze</h2>
-          <p class="card-desc">
-            Navigate the digital labyrinth. Grid physics mapping.
+      <!-- Arcade Section -->
+      <section
+        id="arcade"
+        class="py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative z-10 border-t border-[var(--accent)]/30"
+      >
+        <div class="mb-16">
+          <h2
+            class="text-3xl font-mono font-bold text-white mb-2 tracking-widest"
+          >
+            > /vault/arcade_games
+          </h2>
+          <p class="text-[#00aa44] font-mono">
+            [ SELECT A MODULE TO INITIATE SIMULATION ]
           </p>
-          <div class="text-[var(--accent)] mt-4 font-mono font-bold">
-            <i class="fas fa-play"></i> EXECUTE
-          </div>
         </div>
 
-        <div
-          class="card interactive"
-          onclick="openGame('arcade/index.html#/stage-3')"
-        >
-          <span class="card-number">GAME.02</span>
-          <h2>Flappy Terminal</h2>
-          <p class="card-desc">A retro avoidance clone inside the mainframe.</p>
-          <div class="text-[var(--accent)] mt-4 font-mono font-bold">
-            <i class="fas fa-play"></i> EXECUTE
+        <div class="grid-ui">
+          <div
+            class="card interactive"
+            onclick="openGame('arcade/index.html#/stage-2')"
+            role="button"
+            tabindex="0"
+            onkeydown="if(event.key===\'Enter\'||event.key===\' \') this.click();"
+          >
+            <span class="card-number">GAME.01</span>
+            <h2>Cyber Maze</h2>
+            <p class="card-desc">
+              Navigate the digital labyrinth. Grid physics mapping.
+            </p>
+            <div class="text-[var(--accent)] mt-4 font-mono font-bold">
+              <i class="fas fa-play"></i> EXECUTE
+            </div>
           </div>
-        </div>
 
-        <div
-          class="card interactive"
-          onclick="openGame('arcade/index.html#/stage-4')"
-        >
-          <span class="card-number">GAME.03</span>
-          <h2>Twist Puzzle</h2>
-          <p class="card-desc">
-            Spatial reasoning challenge. Rotate nodes to align.
-          </p>
-          <div class="text-[var(--accent)] mt-4 font-mono font-bold">
-            <i class="fas fa-play"></i> EXECUTE
+          <div
+            class="card interactive"
+            onclick="openGame('arcade/index.html#/stage-3')"
+            role="button"
+            tabindex="0"
+            onkeydown="if(event.key===\'Enter\'||event.key===\' \') this.click();"
+          >
+            <span class="card-number">GAME.02</span>
+            <h2>Flappy Terminal</h2>
+            <p class="card-desc">
+              A retro avoidance clone inside the mainframe.
+            </p>
+            <div class="text-[var(--accent)] mt-4 font-mono font-bold">
+              <i class="fas fa-play"></i> EXECUTE
+            </div>
           </div>
-        </div>
 
-        <div
-          class="card interactive"
-          onclick="openGame('arcade/index.html#/stage-6')"
-        >
-          <span class="card-number">GAME.05</span>
-          <h2>Devil's Challenge</h2>
-          <p class="card-desc">The ultimate logical showdown simulation.</p>
-          <div class="text-[var(--accent)] mt-4 font-mono font-bold">
-            <i class="fas fa-play"></i> EXECUTE
+          <div
+            class="card interactive"
+            onclick="openGame('arcade/index.html#/stage-4')"
+            role="button"
+            tabindex="0"
+            onkeydown="if(event.key===\'Enter\'||event.key===\' \') this.click();"
+          >
+            <span class="card-number">GAME.03</span>
+            <h2>Twist Puzzle</h2>
+            <p class="card-desc">
+              Spatial reasoning challenge. Rotate nodes to align.
+            </p>
+            <div class="text-[var(--accent)] mt-4 font-mono font-bold">
+              <i class="fas fa-play"></i> EXECUTE
+            </div>
+          </div>
+
+          <div
+            class="card interactive"
+            onclick="openGame('arcade/index.html#/stage-6')"
+            role="button"
+            tabindex="0"
+            onkeydown="if(event.key===\'Enter\'||event.key===\' \') this.click();"
+          >
+            <span class="card-number">GAME.05</span>
+            <h2>Devil's Challenge</h2>
+            <p class="card-desc">The ultimate logical showdown simulation.</p>
+            <div class="text-[var(--accent)] mt-4 font-mono font-bold">
+              <i class="fas fa-play"></i> EXECUTE
+            </div>
           </div>
         </div>
+      </section>
+
+      <!-- Game Modal -->
+      <div id="game-modal">
+        <div class="close-btn interactive" onclick="closeGame()">
+          [ SHUTDOWN_SIMULATION ]
+        </div>
+        <iframe id="game-frame" src=""></iframe>
       </div>
-    </section>
 
-    <!-- Game Modal -->
-    <div id="game-modal">
-      <div class="close-btn interactive" onclick="closeGame()">
-        [ SHUTDOWN_SIMULATION ]
-      </div>
-      <iframe id="game-frame" src=""></iframe>
-    </div>
+      <!-- Scripts -->
+      <script>
+        // --- CYBER TEXT DECODER ---
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*!¿§";
+        const el = document.getElementById("decoder");
+        let interval = null;
 
-    <!-- Scripts -->
-    <script>
-      // --- CYBER TEXT DECODER ---
-      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*!¿§";
-      const el = document.getElementById("decoder");
-      let interval = null;
+        function scramble() {
+          let iteration = 0;
+          clearInterval(interval);
 
-      function scramble() {
-        let iteration = 0;
-        clearInterval(interval);
+          interval = setInterval(() => {
+            el.innerText = el.dataset.value
+              .split("")
+              .map((letter, index) => {
+                if (index < iteration) {
+                  return el.dataset.value[index];
+                }
+                return letters[Math.floor(Math.random() * letters.length)];
+              })
+              .join("");
 
-        interval = setInterval(() => {
-          el.innerText = el.dataset.value
-            .split("")
-            .map((letter, index) => {
-              if (index < iteration) {
-                return el.dataset.value[index];
-              }
-              return letters[Math.floor(Math.random() * letters.length)];
-            })
-            .join("");
+            if (iteration >= el.dataset.value.length) {
+              clearInterval(interval);
+            }
+            iteration += 1 / 3;
+          }, 30);
+        }
 
-          if (iteration >= el.dataset.value.length) {
-            clearInterval(interval);
+        scramble();
+        el.addEventListener("mouseenter", scramble);
+
+        // --- AI COMPANION LOGIC ---
+        const aiCompanion = document.getElementById("ai-companion");
+        const aiTooltip = document.getElementById("ai-tooltip");
+
+        let mouseX = 0,
+          mouseY = 0;
+        let orbX = 0,
+          orbY = 0;
+
+        // Smooth follow logic
+        window.addEventListener("mousemove", (e) => {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+        });
+
+        function animateOrb() {
+          // Lerp orb towards mouse
+          orbX += (mouseX - orbX) * 0.25;
+          orbY += (mouseY - orbY) * 0.25;
+          aiCompanion.style.transform = `translate3d(${orbX}px, ${orbY}px, 0)`;
+          requestAnimationFrame(animateOrb);
+        }
+        animateOrb();
+
+        const aiLines = {
+          "Cyber Maze": [
+            "Analyzing Cyber Maze... Tanish built this using grid physics mapping.",
+            "A digital labyrinth. Can your pathfinding algorithm beat this?",
+            "I've run 14 million simulations of this maze. You're going to get lost.",
+            "Fascinating grid physics in this one. Watch your step.",
+            "Cyber Maze initialized. Are you ready to dive into the grid?",
+            "Tanish coded some tricky wall-collisions here. Good luck.",
+            "Grid mapping active. Navigating this will require precision.",
+          ],
+          "Deep Learning Scrollytelling": [
+            "Ah, the neural network visualizer! A beautiful Multi-Layer Perceptron.",
+            "Forward propagation in real-time. Tanish optimized this perfectly.",
+            "Want to see how I think? Step into the Deep Learning architecture.",
+            "This 3D WebGL representation is highly accurate to my own neural pathways.",
+            "Observe the flow of data packets through the hidden layers.",
+            "A masterful breakdown of weights, biases, and ReLU activations.",
+            "This is where the magic happens. Pure matrix multiplication.",
+          ],
+          github: [
+            "Accessing Tanish's central repository...",
+            "Warning: High concentrations of clean, optimized code ahead.",
+            "Let's check the commit history. Tanish is always pushing updates.",
+            "Open-source intelligence gathered here. Proceed to GitHub?",
+            "I see you like reading source code. Excellent choice.",
+            "Connecting to the mainframe... GitHub uplink established.",
+            "Pull requests and repositories. A developer's true home.",
+          ],
+          default: [
+            "Target locked. Ready to execute.",
+            "Awaiting your command, user.",
+            "This element is fully interactive.",
+            "I am detecting a clickable node.",
+            "Hovering over an active module.",
+            "Shall we proceed with this execution?",
+            "Interaction detected. Standing by.",
+          ],
+        };
+
+        document.querySelectorAll(".interactive, a").forEach((el) => {
+          el.addEventListener("mouseenter", () => {
+            // Determine context
+            let context = "default";
+            const text = el.innerText.toLowerCase() || "";
+            const href = el.getAttribute("href") || "";
+
+            if (text.includes("maze")) context = "Cyber Maze";
+            else if (
+              text.includes("deep learning") ||
+              text.includes("scrollytelling") ||
+              href.includes("deep-learning")
+            )
+              context = "Deep Learning Scrollytelling";
+            else if (href.includes("github") || text.includes("github"))
+              context = "github";
+
+            // Pick a random line from the pool
+            const pool = aiLines[context];
+            const randomLine = pool[Math.floor(Math.random() * pool.length)];
+
+            aiTooltip.innerText = randomLine;
+            aiCompanion.classList.add("talking");
+          });
+          el.addEventListener("mouseleave", () => {
+            aiCompanion.classList.remove("talking");
+          });
+        });
+
+        // --- GHOST CURSOR KINEMATICS ---
+        const mainCursor = document.getElementById("cursor-main");
+        const hudText = document.getElementById("hud-text");
+        const ghosts = [
+          document.getElementById("ghost-1"),
+          document.getElementById("ghost-2"),
+          document.getElementById("ghost-3"),
+          document.getElementById("ghost-4"),
+        ];
+
+        const mouse = { x: -100, y: -100 };
+        const points = [
+          { x: -100, y: -100 },
+          { x: -100, y: -100 },
+          { x: -100, y: -100 },
+          { x: -100, y: -100 },
+          { x: -100, y: -100 },
+        ];
+        const lerpSpeeds = [1.0, 0.42, 0.28, 0.18, 0.1];
+
+        window.addEventListener("mousemove", (e) => {
+          mouse.x = e.clientX;
+          mouse.y = e.clientY;
+
+          const isTarget = e.target.closest(".interactive, a, button, input");
+          if (isTarget) {
+            document.body.classList.add("target-locked");
+            hudText.innerText = "LOCK // ENGAGED";
+          } else {
+            document.body.classList.remove("target-locked");
+            hudText.innerText =
+              "TRK // [" +
+              Math.round(mouse.x) +
+              "," +
+              Math.round(mouse.y) +
+              "]";
           }
-          iteration += 1 / 3;
-        }, 30);
-      }
-
-      scramble();
-      el.addEventListener("mouseenter", scramble);
-
-      // --- AI COMPANION LOGIC ---
-      const aiCompanion = document.getElementById("ai-companion");
-      const aiTooltip = document.getElementById("ai-tooltip");
-
-      let mouseX = 0,
-        mouseY = 0;
-      let orbX = 0,
-        orbY = 0;
-
-      // Smooth follow logic
-      window.addEventListener("mousemove", (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-      });
-
-      function animateOrb() {
-        // Lerp orb towards mouse
-        orbX += (mouseX - orbX) * 0.25;
-        orbY += (mouseY - orbY) * 0.25;
-        aiCompanion.style.transform = `translate3d(${orbX}px, ${orbY}px, 0)`;
-        requestAnimationFrame(animateOrb);
-      }
-      animateOrb();
-
-      const aiLines = {
-        "Cyber Maze": [
-          "Analyzing Cyber Maze... Tanish built this using grid physics mapping.",
-          "A digital labyrinth. Can your pathfinding algorithm beat this?",
-          "I've run 14 million simulations of this maze. You're going to get lost.",
-          "Fascinating grid physics in this one. Watch your step.",
-          "Cyber Maze initialized. Are you ready to dive into the grid?",
-          "Tanish coded some tricky wall-collisions here. Good luck.",
-          "Grid mapping active. Navigating this will require precision.",
-        ],
-        "Deep Learning Scrollytelling": [
-          "Ah, the neural network visualizer! A beautiful Multi-Layer Perceptron.",
-          "Forward propagation in real-time. Tanish optimized this perfectly.",
-          "Want to see how I think? Step into the Deep Learning architecture.",
-          "This 3D WebGL representation is highly accurate to my own neural pathways.",
-          "Observe the flow of data packets through the hidden layers.",
-          "A masterful breakdown of weights, biases, and ReLU activations.",
-          "This is where the magic happens. Pure matrix multiplication.",
-        ],
-        github: [
-          "Accessing Tanish's central repository...",
-          "Warning: High concentrations of clean, optimized code ahead.",
-          "Let's check the commit history. Tanish is always pushing updates.",
-          "Open-source intelligence gathered here. Proceed to GitHub?",
-          "I see you like reading source code. Excellent choice.",
-          "Connecting to the mainframe... GitHub uplink established.",
-          "Pull requests and repositories. A developer's true home.",
-        ],
-        default: [
-          "Target locked. Ready to execute.",
-          "Awaiting your command, user.",
-          "This element is fully interactive.",
-          "I am detecting a clickable node.",
-          "Hovering over an active module.",
-          "Shall we proceed with this execution?",
-          "Interaction detected. Standing by.",
-        ],
-      };
-
-      document.querySelectorAll(".interactive, a").forEach((el) => {
-        el.addEventListener("mouseenter", () => {
-          // Determine context
-          let context = "default";
-          const text = el.innerText.toLowerCase() || "";
-          const href = el.getAttribute("href") || "";
-
-          if (text.includes("maze")) context = "Cyber Maze";
-          else if (
-            text.includes("deep learning") ||
-            text.includes("scrollytelling") ||
-            href.includes("deep-learning")
-          )
-            context = "Deep Learning Scrollytelling";
-          else if (href.includes("github") || text.includes("github"))
-            context = "github";
-
-          // Pick a random line from the pool
-          const pool = aiLines[context];
-          const randomLine = pool[Math.floor(Math.random() * pool.length)];
-
-          aiTooltip.innerText = randomLine;
-          aiCompanion.classList.add("talking");
-        });
-        el.addEventListener("mouseleave", () => {
-          aiCompanion.classList.remove("talking");
-        });
-      });
-
-      // --- GHOST CURSOR KINEMATICS ---
-      const mainCursor = document.getElementById("cursor-main");
-      const hudText = document.getElementById("hud-text");
-      const ghosts = [
-        document.getElementById("ghost-1"),
-        document.getElementById("ghost-2"),
-        document.getElementById("ghost-3"),
-        document.getElementById("ghost-4"),
-      ];
-
-      const mouse = { x: -100, y: -100 };
-      const points = [
-        { x: -100, y: -100 },
-        { x: -100, y: -100 },
-        { x: -100, y: -100 },
-        { x: -100, y: -100 },
-        { x: -100, y: -100 },
-      ];
-      const lerpSpeeds = [1.0, 0.42, 0.28, 0.18, 0.1];
-
-      window.addEventListener("mousemove", (e) => {
-        mouse.x = e.clientX;
-        mouse.y = e.clientY;
-
-        const isTarget = e.target.closest(".interactive, a, button, input");
-        if (isTarget) {
-          document.body.classList.add("target-locked");
-          hudText.innerText = "LOCK // ENGAGED";
-        } else {
-          document.body.classList.remove("target-locked");
-          hudText.innerText =
-            "TRK // [" + Math.round(mouse.x) + "," + Math.round(mouse.y) + "]";
-        }
-      });
-
-      function renderAnimation() {
-        points[0].x = mouse.x;
-        points[0].y = mouse.y;
-        mainCursor.style.transform =
-          "translate3d(" + points[0].x + "px, " + points[0].y + "px, 0)";
-
-        for (let i = 1; i < points.length; i++) {
-          const prev = points[i - 1];
-          const current = points[i];
-          current.x += (prev.x - current.x) * lerpSpeeds[i];
-          current.y += (prev.y - current.y) * lerpSpeeds[i];
-          ghosts[i - 1].style.transform =
-            "translate3d(" + current.x + "px, " + current.y + "px, 0)";
-        }
-        requestAnimationFrame(renderAnimation);
-      }
-      renderAnimation();
-
-      // --- GAME MODAL LOGIC ---
-      function openGame(url) {
-        document.getElementById("game-frame").src = url;
-        document.getElementById("game-modal").style.display = "block";
-        document.body.style.overflow = "hidden";
-        // Show native cursor for iframe, hide ghost cursor
-        document.body.classList.add("modal-active");
-        document
-          .querySelectorAll(".cursor-node")
-          .forEach((node) => (node.style.opacity = "0"));
-      }
-      function closeGame() {
-        document.getElementById("game-modal").style.display = "none";
-        document.getElementById("game-frame").src = "";
-        document.body.style.overflow = "auto";
-        // Restore ghost cursor, hide native
-        document.body.classList.remove("modal-active");
-        document
-          .querySelectorAll(".cursor-node")
-          .forEach((node) => (node.style.opacity = "1"));
-      }
-
-      window.addEventListener("message", (event) => {
-        if (event.data === "game_won") {
-          closeGame();
-        }
-      });
-
-      // --- SIDEBAR MENU LOGIC ---
-      function toggleMenu() {
-        document.getElementById("sidebar").classList.toggle("open");
-      }
-      // --- 3D DEPTH SCROLL ---
-      window.addEventListener("scroll", () => {
-        const container = document.getElementById("projects");
-        const world = document.getElementById("depth-world");
-        if (!container || !world) return;
-
-        const rect = container.getBoundingClientRect();
-        let progress = 0;
-        if (rect.top <= 0 && rect.bottom >= window.innerHeight) {
-          progress = Math.abs(rect.top) / (rect.height - window.innerHeight);
-        } else if (rect.bottom < window.innerHeight) {
-          progress = 1;
-        }
-
-        const maxZ = 11100;
-        const currentZ = progress * maxZ;
-
-        const camX = Math.sin(progress * Math.PI * 10) * 100;
-        const camY = Math.cos(progress * Math.PI * 6) * 50;
-
-        world.style.transform = `translate3d(${camX}px, ${camY}px, ${currentZ}px)`;
-      });
-
-      // --- ASCII ART RENDERING (absolute top-right) ---
-      const renderASCII = () => {
-        // Absolute container in top-right corner of the page (scrolls normally)
-        const container = document.createElement("div");
-        container.id = "ascii-floating";
-
-        Object.assign(container.style, {
-          position: "absolute",
-          top: "120px",
-          right: "40px",
-          overflow: "hidden",
-          borderRadius: "20px",
-          background: "var(--bg)",
-          boxShadow: "0 0 30px rgba(0,255,102,0.4)",
-          zIndex: "-1",
-          border: "2px solid rgba(0, 255, 102, 0.5)",
         });
 
-        document.body.appendChild(container);
+        function renderAnimation() {
+          points[0].x = mouse.x;
+          points[0].y = mouse.y;
+          mainCursor.style.transform =
+            "translate3d(" + points[0].x + "px, " + points[0].y + "px, 0)";
 
-        // Overlay for the blurred inner edges effect
-        const overlay = document.createElement("div");
-        Object.assign(overlay.style, {
-          position: "absolute",
-          top: "0",
-          left: "0",
-          width: "100%",
-          height: "100%",
-          boxShadow: "inset 0 0 35px rgba(0,0,0,1)",
-          pointerEvents: "none",
-          borderRadius: "20px",
+          for (let i = 1; i < points.length; i++) {
+            const prev = points[i - 1];
+            const current = points[i];
+            current.x += (prev.x - current.x) * lerpSpeeds[i];
+            current.y += (prev.y - current.y) * lerpSpeeds[i];
+            ghosts[i - 1].style.transform =
+              "translate3d(" + current.x + "px, " + current.y + "px, 0)";
+          }
+          requestAnimationFrame(renderAnimation);
+        }
+        renderAnimation();
+
+        // --- GAME MODAL LOGIC ---
+        function openGame(url) {
+          document.getElementById("game-frame").src = url;
+          document.getElementById("game-modal").style.display = "block";
+          document.body.style.overflow = "hidden";
+          // Show native cursor for iframe, hide ghost cursor
+          document.body.classList.add("modal-active");
+          document
+            .querySelectorAll(".cursor-node")
+            .forEach((node) => (node.style.opacity = "0"));
+        }
+        function closeGame() {
+          document.getElementById("game-modal").style.display = "none";
+          document.getElementById("game-frame").src = "";
+          document.body.style.overflow = "auto";
+          // Restore ghost cursor, hide native
+          document.body.classList.remove("modal-active");
+          document
+            .querySelectorAll(".cursor-node")
+            .forEach((node) => (node.style.opacity = "1"));
+        }
+
+        window.addEventListener("message", (event) => {
+          if (event.data === "game_won") {
+            closeGame();
+          }
         });
 
-        const canvas = document.createElement("canvas");
-        canvas.style.display = "block";
-        canvas.style.width = "100%";
-        canvas.style.height = "100%";
-        canvas.style.filter = "contrast(1.4) brightness(1.3)";
+        // --- SIDEBAR MENU LOGIC ---
+        function toggleMenu() {
+          document.getElementById("sidebar").classList.toggle("open");
+        }
+        // --- 3D DEPTH SCROLL ---
+        window.addEventListener("scroll", () => {
+          const container = document.getElementById("projects");
+          const world = document.getElementById("depth-world");
+          if (!container || !world) return;
 
-        container.appendChild(canvas);
-        container.appendChild(overlay);
+          const rect = container.getBoundingClientRect();
+          let progress = 0;
+          if (rect.top <= 0 && rect.bottom >= window.innerHeight) {
+            progress = Math.abs(rect.top) / (rect.height - window.innerHeight);
+          } else if (rect.bottom < window.innerHeight) {
+            progress = 1;
+          }
 
-        const ctx = canvas.getContext("2d");
-        const offCanvas = document.createElement("canvas");
-        const offCtx = offCanvas.getContext("2d", { willReadFrequently: true });
+          const maxZ = 11100;
+          const currentZ = progress * maxZ;
 
-        const img = new Image();
-        img.onload = () => {
-          const aspect = img.height / img.width;
+          const camX = Math.sin(progress * Math.PI * 10) * 100;
+          const camY = Math.cos(progress * Math.PI * 6) * 50;
 
-          const cols = 250;
-          const rows = Math.floor(cols * aspect * 0.55);
+          world.style.transform = `translate3d(${camX}px, ${camY}px, ${currentZ}px)`;
+        });
 
-          offCanvas.width = cols;
-          offCanvas.height = rows;
-          offCtx.drawImage(img, 0, 0, cols, rows);
-          const imgData = offCtx.getImageData(0, 0, cols, rows).data;
+        // --- ASCII ART RENDERING (absolute top-right) ---
+        const renderASCII = () => {
+          // Absolute container in top-right corner of the page (scrolls normally)
+          const container = document.createElement("div");
+          container.id = "ascii-floating";
 
-          const baseWidth = 450; // visual size on screen
-          const fontSize = baseWidth / (cols * 0.6);
-          const charWidth = fontSize * 0.6;
-          const charHeight = fontSize;
+          Object.assign(container.style, {
+            position: "absolute",
+            top: "120px",
+            right: "40px",
+            overflow: "hidden",
+            borderRadius: "20px",
+            background: "var(--bg)",
+            boxShadow: "0 0 30px rgba(0,255,102,0.4)",
+            zIndex: "-1",
+            border: "2px solid rgba(0, 255, 102, 0.5)",
+          });
 
-          // Native canvas resolution
-          canvas.width = cols * charWidth;
-          canvas.height = rows * charHeight;
+          document.body.appendChild(container);
 
-          // Container size matches aspect ratio perfectly without distortion
-          container.style.width = canvas.width + "px";
-          container.style.height = canvas.height + "px";
+          // Overlay for the blurred inner edges effect
+          const overlay = document.createElement("div");
+          Object.assign(overlay.style, {
+            position: "absolute",
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "100%",
+            boxShadow: "inset 0 0 35px rgba(0,0,0,1)",
+            pointerEvents: "none",
+            borderRadius: "20px",
+          });
 
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          ctx.font = `bold ${fontSize}px "Courier New", monospace`;
-          ctx.textBaseline = "top";
+          const canvas = document.createElement("canvas");
+          canvas.style.display = "block";
+          canvas.style.width = "100%";
+          canvas.style.height = "100%";
+          canvas.style.filter = "contrast(1.4) brightness(1.3)";
 
-          const asciiChars =
-            ' .\\`^",:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$';
+          container.appendChild(canvas);
+          container.appendChild(overlay);
 
-          for (let y = 0; y < rows; y++) {
-            for (let x = 0; x < cols; x++) {
-              const idx = (y * cols + x) * 4;
-              const r = imgData[idx];
-              const g = imgData[idx + 1];
-              const b = imgData[idx + 2];
-              const brightness = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
-              const charIdx = Math.floor(brightness * (asciiChars.length - 1));
-              const char = asciiChars[charIdx];
+          const ctx = canvas.getContext("2d");
+          const offCanvas = document.createElement("canvas");
+          const offCtx = offCanvas.getContext("2d", {
+            willReadFrequently: true,
+          });
 
-              if (char !== " ") {
-                ctx.fillStyle =
-                  brightness > 0.6
-                    ? "#ffffff"
-                    : brightness > 0.3
-                      ? "#00ff66"
-                      : "#008800";
-                ctx.fillText(char, x * charWidth, y * charHeight);
+          const img = new Image();
+          img.onload = () => {
+            const aspect = img.height / img.width;
+
+            const cols = 250;
+            const rows = Math.floor(cols * aspect * 0.55);
+
+            offCanvas.width = cols;
+            offCanvas.height = rows;
+            offCtx.drawImage(img, 0, 0, cols, rows);
+            const imgData = offCtx.getImageData(0, 0, cols, rows).data;
+
+            const baseWidth = 450; // visual size on screen
+            const fontSize = baseWidth / (cols * 0.6);
+            const charWidth = fontSize * 0.6;
+            const charHeight = fontSize;
+
+            // Native canvas resolution
+            canvas.width = cols * charWidth;
+            canvas.height = rows * charHeight;
+
+            // Container size matches aspect ratio perfectly without distortion
+            container.style.width = canvas.width + "px";
+            container.style.height = canvas.height + "px";
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.font = `bold ${fontSize}px "Courier New", monospace`;
+            ctx.textBaseline = "top";
+
+            const asciiChars =
+              ' .\\`^",:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$';
+
+            for (let y = 0; y < rows; y++) {
+              for (let x = 0; x < cols; x++) {
+                const idx = (y * cols + x) * 4;
+                const r = imgData[idx];
+                const g = imgData[idx + 1];
+                const b = imgData[idx + 2];
+                const brightness = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+                const charIdx = Math.floor(
+                  brightness * (asciiChars.length - 1),
+                );
+                const char = asciiChars[charIdx];
+
+                if (char !== " ") {
+                  ctx.fillStyle =
+                    brightness > 0.6
+                      ? "#ffffff"
+                      : brightness > 0.3
+                        ? "#00ff66"
+                        : "#008800";
+                  ctx.fillText(char, x * charWidth, y * charHeight);
+                }
               }
             }
-          }
+          };
+          img.src = "rsz_image.png";
         };
-        img.src = "rsz_image.png";
-      };
-      renderASCII();
+        renderASCII();
 
-      // --- GENERATIVE PARTICLE FLOW FIELD ---
-      const bgCanvas = document.getElementById("bg-canvas");
-      const bgCtx = bgCanvas.getContext("2d");
-      let width, height;
-      let particles = [];
-      const numParticles = 800; // Density
-      const mouseBg = { x: -1000, y: -1000, radius: 150 };
+        // --- GENERATIVE PARTICLE FLOW FIELD ---
+        const bgCanvas = document.getElementById("bg-canvas");
+        const bgCtx = bgCanvas.getContext("2d");
+        let width, height;
+        let particles = [];
+        const numParticles = 800; // Density
+        const mouseBg = { x: -1000, y: -1000, radius: 150 };
 
-      function resizeBg() {
-        width = bgCanvas.width = window.innerWidth;
-        height = bgCanvas.height = window.innerHeight;
-      }
-      window.addEventListener("resize", resizeBg);
-      resizeBg();
-
-      window.addEventListener("mousemove", (e) => {
-        mouseBg.x = e.clientX;
-        mouseBg.y = e.clientY;
-      });
-
-      window.addEventListener("mouseleave", () => {
-        mouseBg.x = -1000;
-        mouseBg.y = -1000;
-      });
-
-      class Particle {
-        constructor() {
-          this.x = Math.random() * width;
-          this.y = Math.random() * height;
-          this.vx = (Math.random() - 0.5) * 1;
-          this.vy = (Math.random() - 0.5) * 1;
-          this.baseSize = Math.random() * 2 + 0.5;
-          this.size = this.baseSize;
-          this.color = `rgba(0, 255, 204, ${Math.random() * 0.5 + 0.1})`;
+        function resizeBg() {
+          width = bgCanvas.width = window.innerWidth;
+          height = bgCanvas.height = window.innerHeight;
         }
+        window.addEventListener("resize", resizeBg);
+        resizeBg();
 
-        update() {
-          // Flow field pseudo-randomness based on position (Sine wave field)
-          const angle =
-            (Math.sin(this.x * 0.005) + Math.cos(this.y * 0.005)) * Math.PI;
-          this.vx += Math.cos(angle) * 0.02;
-          this.vy += Math.sin(angle) * 0.02;
+        window.addEventListener("mousemove", (e) => {
+          mouseBg.x = e.clientX;
+          mouseBg.y = e.clientY;
+        });
 
-          // Mouse interaction (Repel and glow)
-          const dx = mouseBg.x - this.x;
-          const dy = mouseBg.y - this.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
+        window.addEventListener("mouseleave", () => {
+          mouseBg.x = -1000;
+          mouseBg.y = -1000;
+        });
 
-          if (distance < mouseBg.radius) {
-            const forceDirectionX = dx / distance;
-            const forceDirectionY = dy / distance;
-            const force = (mouseBg.radius - distance) / mouseBg.radius;
-            // Repel
-            this.vx -= forceDirectionX * force * 0.5;
-            this.vy -= forceDirectionY * force * 0.5;
-            // Glow
-            this.size = this.baseSize * 3;
-            this.color = `rgba(0, 255, 102, 0.8)`;
-          } else {
+        class Particle {
+          constructor() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            this.vx = (Math.random() - 0.5) * 1;
+            this.vy = (Math.random() - 0.5) * 1;
+            this.baseSize = Math.random() * 2 + 0.5;
             this.size = this.baseSize;
             this.color = `rgba(0, 255, 204, ${Math.random() * 0.5 + 0.1})`;
           }
 
-          // Friction limit speed
-          this.vx *= 0.95;
-          this.vy *= 0.95;
+          update() {
+            // Flow field pseudo-randomness based on position (Sine wave field)
+            const angle =
+              (Math.sin(this.x * 0.005) + Math.cos(this.y * 0.005)) * Math.PI;
+            this.vx += Math.cos(angle) * 0.02;
+            this.vy += Math.sin(angle) * 0.02;
 
-          this.x += this.vx;
-          this.y += this.vy;
+            // Mouse interaction (Repel and glow)
+            const dx = mouseBg.x - this.x;
+            const dy = mouseBg.y - this.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
 
-          // Wrap around edges
-          if (this.x < 0) this.x = width;
-          if (this.x > width) this.x = 0;
-          if (this.y < 0) this.y = height;
-          if (this.y > height) this.y = 0;
+            if (distance < mouseBg.radius) {
+              const forceDirectionX = dx / distance;
+              const forceDirectionY = dy / distance;
+              const force = (mouseBg.radius - distance) / mouseBg.radius;
+              // Repel
+              this.vx -= forceDirectionX * force * 0.5;
+              this.vy -= forceDirectionY * force * 0.5;
+              // Glow
+              this.size = this.baseSize * 3;
+              this.color = `rgba(0, 255, 102, 0.8)`;
+            } else {
+              this.size = this.baseSize;
+              this.color = `rgba(0, 255, 204, ${Math.random() * 0.5 + 0.1})`;
+            }
+
+            // Friction limit speed
+            this.vx *= 0.95;
+            this.vy *= 0.95;
+
+            this.x += this.vx;
+            this.y += this.vy;
+
+            // Wrap around edges
+            if (this.x < 0) this.x = width;
+            if (this.x > width) this.x = 0;
+            if (this.y < 0) this.y = height;
+            if (this.y > height) this.y = 0;
+          }
+
+          draw() {
+            bgCtx.beginPath();
+            bgCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            bgCtx.fillStyle = this.color;
+            bgCtx.fill();
+          }
         }
 
-        draw() {
-          bgCtx.beginPath();
-          bgCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-          bgCtx.fillStyle = this.color;
-          bgCtx.fill();
+        function initParticles() {
+          particles = [];
+          for (let i = 0; i < numParticles; i++) {
+            particles.push(new Particle());
+          }
         }
-      }
+        initParticles();
 
-      function initParticles() {
-        particles = [];
-        for (let i = 0; i < numParticles; i++) {
-          particles.push(new Particle());
+        function animateBg() {
+          // Trail effect by filling with low opacity black
+          bgCtx.fillStyle = "rgba(2, 5, 4, 0.2)";
+          bgCtx.fillRect(0, 0, width, height);
+
+          particles.forEach((p) => {
+            p.update();
+            p.draw();
+          });
+
+          requestAnimationFrame(animateBg);
         }
-      }
-      initParticles();
-
-      function animateBg() {
-        // Trail effect by filling with low opacity black
-        bgCtx.fillStyle = "rgba(2, 5, 4, 0.2)";
-        bgCtx.fillRect(0, 0, width, height);
-
-        particles.forEach((p) => {
-          p.update();
-          p.draw();
-        });
-
-        requestAnimationFrame(animateBg);
-      }
-      animateBg();
-    </script>
+        animateBg();
+      </script>
+    </main>
   </body>
 </html>
