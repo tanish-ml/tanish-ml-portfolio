@@ -136,9 +136,22 @@
       }
 
       /* Hide AI Orb on Touch Devices (Mobile) */
+      /* Touch Devices (Phones & Tablets) */
       @media (hover: none) and (pointer: coarse) {
-        #ai-companion {
+        #ai-companion,
+        #arcade,
+        .arcade-link {
           display: none !important;
+        }
+      }
+
+      /* Strictly Small Phones */
+      @media (max-width: 768px) {
+        #ascii-floating {
+          top: 60vh !important;
+          right: 50% !important;
+          transform: translateX(50%) !important;
+          opacity: 0.3 !important;
         }
       }
 
@@ -615,9 +628,7 @@
       <a href="#about" onclick="toggleMenu()">// ABOUT</a>
       <a href="#projects" onclick="toggleMenu()">// PROJECTS</a>
       <a href="#explore" onclick="toggleMenu()">// EXPLORE</a>
-      <a href="#arcade" onclick="toggleMenu()" class="hidden md:block"
-        >// ARCADE</a
-      >
+      <a href="#arcade" onclick="toggleMenu()" class="arcade-link">// ARCADE</a>
       <a
         href="https://github.com/tanish-ml"
         target="_blank"
@@ -1786,7 +1797,7 @@
       <!-- Arcade Section -->
       <section
         id="arcade"
-        class="hidden md:block py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative z-10 border-t border-[var(--accent)]/30"
+        class="py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative z-10 border-t border-[var(--accent)]/30"
       >
         <div class="mb-16">
           <h2
