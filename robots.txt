@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://tanish-ml.github.io/tanish-ml-portfolio/sitemap.xml
+Sitemap: https://tanish-ml.github.io/sitemap.xml
