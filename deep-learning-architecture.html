@@ -178,6 +178,50 @@
         }
       }
     </style>
+
+    <!-- Vanilla Page Fade Logic (Zero Overhead, Zero SPA Bugs) -->
+    <style>
+      html {
+        background-color: #030504 !important;
+      }
+      body {
+        opacity: 0;
+        transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        background-color: #030504 !important;
+      }
+      body.fade-in-loaded {
+        opacity: 1;
+      }
+    </style>
+    <script>
+      // Fade in when everything is fully rendered
+      window.addEventListener("load", () => {
+        requestAnimationFrame(() => {
+          document.body.classList.add("fade-in-loaded");
+        });
+      });
+
+      // Intercept clicks to fade out
+      document.addEventListener("DOMContentLoaded", () => {
+        document.body.addEventListener("click", (e) => {
+          const link = e.target.closest("a");
+          if (
+            link &&
+            link.hostname === window.location.hostname &&
+            link.target !== "_blank" &&
+            link.href.includes(".html")
+          ) {
+            // Ignore hash links
+            if (link.hash && link.pathname === window.location.pathname) return;
+            e.preventDefault();
+            document.body.classList.remove("fade-in-loaded");
+            setTimeout(() => {
+              window.location.href = link.href;
+            }, 500); // Navigate exactly when opacity hits 0
+          }
+        });
+      });
+    </script>
   </head>
   <body>
     <nav>
