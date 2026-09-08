@@ -34,7 +34,19 @@
         font-family: "Inter", sans-serif;
         overflow: hidden; /* Prevent native scroll, D3 handles panning */
       }
+      #particle-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 0;
+      }
       #tree-container {
+        position: relative;
+        z-index: 1;
+      }
         width: 100vw;
         height: 100vh;
         cursor: grab;
@@ -163,6 +175,9 @@
     </style>
   </head>
   <body>
+    <!-- Particle Canvas -->
+    <canvas id="particle-canvas"></canvas>
+
     <!-- 2D SVG Canvas Container -->
     <div id="tree-container"></div>
 
@@ -695,6 +710,114 @@
 
         terminal.classList.add("visible");
       }
+
+      // --- PARTICLE FIELD LOGIC (Reacts to D3 Nodes) ---
+      const canvas = document.getElementById("particle-canvas");
+      const ctx = canvas.getContext("2d");
+      let pWidth = (canvas.width = window.innerWidth);
+      let pHeight = (canvas.height = window.innerHeight);
+
+      const particles = [];
+      const numParticles = 150;
+
+      for (let i = 0; i < numParticles; i++) {
+        particles.push({
+          x: Math.random() * pWidth,
+          y: Math.random() * pHeight,
+          vx: (Math.random() - 0.5) * 0.5,
+          vy: (Math.random() - 0.5) * 0.5,
+          baseRadius: Math.random() * 2 + 1,
+        });
+      }
+
+      function animateParticles() {
+        ctx.clearRect(0, 0, pWidth, pHeight);
+
+        // Get current D3 zoom transform
+        const transform = d3.zoomTransform(svg.node());
+        const scale = transform.k;
+        const tx = transform.x;
+        const ty = transform.y;
+
+        // Extract visible node screen coordinates purely from memory
+        const visibleNodes = root.descendants().filter((d) => {
+          // Ensure it's currently rendered (not collapsed away)
+          // Actually, d3 tree doesn't remove descendants from root.descendants(),
+          // wait, root.descendants() gets all. D3 standard update(root) only creates DOM for linked nodes.
+          // Let's grab the actual DOM nodes bound data using D3!
+          return true;
+        });
+
+        // To be perfectly accurate with what's visible, we grab the currently bound data array from the SVG:
+        const activeNodesData = [];
+        svg.selectAll("g.node").each(function (d) {
+          activeNodesData.push(d);
+        });
+
+        particles.forEach((p) => {
+          // Normal wandering movement
+          p.x += p.vx;
+          p.y += p.vy;
+
+          // Wrap around edges
+          if (p.x < 0) p.x = pWidth;
+          if (p.x > pWidth) p.x = 0;
+          if (p.y < 0) p.y = pHeight;
+          if (p.y > pHeight) p.y = 0;
+
+          // Repel from D3 Nodes
+          let repulseX = 0;
+          let repulseY = 0;
+
+          activeNodesData.forEach((d) => {
+            // Calculate screen position of the D3 node
+            const screenX = d.y * scale + tx;
+            const screenY = d.x * scale + ty;
+
+            const dx = p.x - screenX;
+            const dy = p.y - screenY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            const repelRadius = 80 * scale; // Repulsion field scales with zoom
+
+            if (distance < repelRadius && distance > 0) {
+              const force = (repelRadius - distance) / repelRadius;
+              repulseX += (dx / distance) * force * 2;
+              repulseY += (dy / distance) * force * 2;
+
+              // Draw connecting energy tether if very close
+              if (distance < repelRadius * 0.5) {
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(screenX, screenY);
+                ctx.strokeStyle = `rgba(0, 255, 204, ${0.3 * force})`;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+              }
+            }
+          });
+
+          // Apply forces
+          p.x += repulseX;
+          p.y += repulseY;
+
+          // Draw Particle
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.baseRadius, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
+          ctx.fill();
+        });
+
+        requestAnimationFrame(animateParticles);
+      }
+
+      animateParticles();
+
+      // Update canvas resize handler
+      window.addEventListener("resize", () => {
+        pWidth = canvas.width = window.innerWidth;
+        pHeight = canvas.height = window.innerHeight;
+      });
 
       // Handle Window Resize properly
       window.addEventListener("resize", () => {
