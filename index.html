@@ -2103,7 +2103,11 @@
           const camX = Math.sin(progress * Math.PI * 10) * 100;
           const camY = Math.cos(progress * Math.PI * 6) * 50;
 
-          world.style.transform = `translate3d(${camX}px, ${camY}px, ${currentZ}px)`;
+          // ADDED DYNAMIC CAMERA ANGLES FOR THE FOREGROUND CARDS
+          const rotZ = Math.sin(progress * Math.PI * 6) * 15; // Aggressive banking
+          const rotX = Math.cos(progress * Math.PI * 4) * 10; // Pitching up and down
+
+          world.style.transform = `translate3d(${camX}px, ${camY}px, ${currentZ}px) rotateX(${rotX}deg) rotateZ(${rotZ}deg) rotateY(${camX * 0.05}deg)`;
         });
 
         // --- ASCII ART RENDERING (absolute top-right) ---
@@ -2439,6 +2443,36 @@
         });
 
         // --- GSAP SCROLLTRIGGER FOR HTML UI ELEMENTS ---
+
+        // Make the entire sections physically bank and tilt in 3D space to match the background camera
+        gsap.to("#explore", {
+          scrollTrigger: {
+            trigger: "#explore",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+          },
+          transformPerspective: 1500,
+          rotationY: -15, // Twist right
+          rotationZ: 2, // Tilt slightly
+          x: -50,
+          ease: "power2.inOut",
+        });
+
+        gsap.to("#arcade", {
+          scrollTrigger: {
+            trigger: "#arcade",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+          },
+          transformPerspective: 1500,
+          rotationY: 15, // Twist left
+          rotationZ: -2, // Tilt slightly
+          x: 50,
+          ease: "power3.inOut",
+        });
+
         // Make the UI cards fly in dynamically as you scroll
         gsap.utils.toArray(".card, .mb-16").forEach((element) => {
           gsap.from(element, {
