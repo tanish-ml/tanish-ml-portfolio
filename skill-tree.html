@@ -514,12 +514,6 @@
         // Use Left-to-Right tree mode for a proper, structured "RPG Skill Tree" look
         .dagMode("lr")
         .dagLevelDistance(100)
-        // INCREASE RIGIDITY to stop the "flying everywhere" wobble
-        .d3Force(
-          "collide",
-          d3.forceCollide((node) => Math.cbrt(node.val) * 6),
-        )
-        .d3Force("charge", d3.forceManyBody().strength(-150)) // Push nodes apart strictly
         .nodeColor("color")
         .nodeRelSize(5)
         .nodeVal("val")
@@ -562,6 +556,9 @@
 
           terminal.classList.add("visible");
         });
+
+      // Access the built-in force engine safely without requiring external D3 imports
+      Graph.d3Force("charge").strength(-250);
 
       // Render the structured tree
       Graph.graphData(getPrunedTree());
