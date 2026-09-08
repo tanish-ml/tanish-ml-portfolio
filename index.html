@@ -124,6 +124,14 @@
         cursor: pointer !important;
       }
 
+      /* Hide scrollbar for an immersive Awwwards-tier experience */
+      ::-webkit-scrollbar {
+        display: none;
+      }
+      html {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+      }
       body {
         background-color: var(--bg);
         color: var(--text);
