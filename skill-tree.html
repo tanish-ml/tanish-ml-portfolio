@@ -6,7 +6,7 @@
     <title>Interactive Skill Tree | Tanish Mittal</title>
     <meta
       name="description"
-      content="Explore Tanish Mittal's skills in Machine Learning, Deep Learning, and Data Engineering through an interactive 3D node network."
+      content="Explore Tanish Mittal's skills in Machine Learning, Deep Learning, and Data Engineering through an interactive 2D node network."
     />
     <script src="https://cdn.tailwindcss.com"></script>
     <link
@@ -18,8 +18,8 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
 
-    <!-- 3D Force Graph Library -->
-    <script src="https://unpkg.com/3d-force-graph"></script>
+    <!-- D3.js Library -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
 
     <style>
       :root {
@@ -32,18 +32,43 @@
         background-color: var(--bg);
         color: var(--text);
         font-family: "Inter", sans-serif;
-        overflow: hidden;
+        overflow: hidden; /* Prevent native scroll, D3 handles panning */
       }
-      #3d-graph {
+      #tree-container {
         width: 100vw;
         height: 100vh;
-        cursor: crosshair;
+        cursor: grab;
         background: radial-gradient(circle at center, #05100a 0%, #000000 100%);
       }
-      #3d-graph:active {
+      #tree-container:active {
         cursor: grabbing;
       }
 
+      /* SVG Styling for Cyberpunk D3 Tree */
+      .node circle {
+        cursor: pointer;
+        stroke-width: 2px;
+        transition: filter 0.3s ease;
+      }
+      .node circle:hover {
+        filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
+      }
+      .node text {
+        font-family: "Courier New", monospace;
+        font-size: 14px;
+        fill: #e0e0e0;
+        text-shadow:
+          0 0 8px rgba(0, 0, 0, 1),
+          0 0 3px rgba(0, 0, 0, 1);
+        pointer-events: none;
+      }
+      .link {
+        fill: none;
+        stroke-width: 1.5px;
+        opacity: 0.6;
+      }
+
+      /* Overlay UI */
       .ui-overlay {
         position: fixed;
         top: 0;
@@ -58,7 +83,6 @@
         padding: 2rem;
       }
       .ui-header,
-      .ui-footer,
       #terminal-popup {
         pointer-events: auto;
       }
@@ -77,6 +101,7 @@
         font-size: clamp(0.8rem, 2vw, 1rem);
       }
 
+      /* Terminal Popup */
       #terminal-popup {
         position: absolute;
         bottom: 2rem;
@@ -111,6 +136,17 @@
         line-height: 1.5;
       }
 
+      /* Minimap / Navigation Helper */
+      #nav-helper {
+        position: absolute;
+        bottom: 2rem;
+        left: 2rem;
+        color: rgba(255, 255, 255, 0.5);
+        font-family: "Courier New", monospace;
+        font-size: 0.8rem;
+        pointer-events: none;
+      }
+
       @media (max-width: 768px) {
         .ui-overlay {
           padding: 1rem;
@@ -119,19 +155,24 @@
           bottom: 1rem;
           right: 1rem;
           width: calc(100vw - 2rem);
-          max-width: none;
+        }
+        #nav-helper {
+          display: none;
         }
       }
     </style>
   </head>
   <body>
-    <div id="3d-graph" aria-hidden="true"></div>
+    <!-- 2D SVG Canvas Container -->
+    <div id="tree-container"></div>
 
     <div class="ui-overlay">
       <div class="ui-header flex justify-between items-start">
         <div>
           <h1>> /sys/skill_tree.exe</h1>
-          <p class="subtitle">Click nodes to unlock specific skill branches.</p>
+          <p class="subtitle">
+            Click nodes to expand branches. Drag to pan. Scroll to zoom.
+          </p>
         </div>
         <a
           href="index.html"
@@ -139,6 +180,12 @@
         >
           <i class="fas fa-arrow-left mr-2"></i>MAIN_FRAME
         </a>
+      </div>
+
+      <div id="nav-helper">
+        > Mouse Scroll: Zoom<br />
+        > Click & Drag: Pan Camera<br />
+        > Node Click: Expand / Collapse branch
       </div>
 
       <div id="terminal-popup">
@@ -150,432 +197,510 @@
     </div>
 
     <script>
-      // --- STRUCTURED RPG-STYLE SKILL TREE DATA ---
-      const rootData = {
-        id: "Tanish Mittal",
+      // --- STRUCTURED D3 DATA ---
+      const treeData = {
+        name: "Tanish Mittal",
         desc: "Core System. Architecting Intelligence at the Edge.",
         color: "#ffffff",
-        val: 30,
         children: [
           {
-            id: "Technical Skills",
+            name: "Technical Skills",
             desc: "The engineering core. High-performance software and AI systems.",
-            color: "#00ffcc", // Neon Cyan
-            val: 22,
+            color: "#00ffcc",
             children: [
               {
-                id: "Artificial Intelligence",
+                name: "Artificial Intelligence",
                 desc: "The computational brain. Neural networks and classical learning.",
-                color: "#ff0055", // Neon Pink
-                val: 18,
+                color: "#ff0055",
                 children: [
                   {
-                    id: "Deep Learning",
+                    name: "Deep Learning",
                     desc: "High-dimensional neural architectures.",
                     color: "#ff3377",
-                    val: 14,
                     children: [
                       {
-                        id: "PyTorch",
+                        name: "PyTorch",
                         desc: "Advanced tensor computation and dynamic neural networks.",
                         color: "#ff6699",
-                        val: 10,
                       },
                       {
-                        id: "Computer Vision",
+                        name: "Computer Vision",
                         desc: "Giving machines the ability to see and parse visual data.",
                         color: "#ff6699",
-                        val: 10,
                         children: [
                           {
-                            id: "CNN",
+                            name: "CNN",
                             desc: "Convolutional Neural Networks for spatial feature extraction.",
                             color: "#ff99bb",
-                            val: 8,
                           },
                         ],
                       },
                       {
-                        id: "NLP",
+                        name: "NLP",
                         desc: "Natural Language Processing. Teaching machines to read and generate text.",
                         color: "#ff6699",
-                        val: 10,
                         children: [
                           {
-                            id: "Transformers",
+                            name: "Transformers",
                             desc: "Attention is all you need. State-of-the-art sequence models.",
                             color: "#ff99bb",
-                            val: 8,
                           },
                           {
-                            id: "RNN",
+                            name: "RNN",
                             desc: "Recurrent Neural Networks for temporal and sequential data.",
                             color: "#ff99bb",
-                            val: 8,
                           },
                         ],
                       },
                     ],
                   },
                   {
-                    id: "Machine Learning",
+                    name: "Machine Learning",
                     desc: "Classical predictive modeling and statistical inference.",
                     color: "#ff3377",
-                    val: 14,
                     children: [
                       {
-                        id: "Scikit-Learn",
+                        name: "Scikit-Learn",
                         desc: "The standard library for baseline models and clustering.",
                         color: "#ff6699",
-                        val: 10,
                       },
                       {
-                        id: "Federated Learning",
+                        name: "Federated Learning",
                         desc: "Decentralized, privacy-preserving AI trained across edge devices.",
                         color: "#ff6699",
-                        val: 10,
                       },
                     ],
                   },
                 ],
               },
               {
-                id: "Data Systems",
+                name: "Data Systems",
                 desc: "The circulatory system. Pipelines, processing, and persistence.",
-                color: "#0055ff", // Electric Blue
-                val: 18,
+                color: "#0055ff",
                 children: [
                   {
-                    id: "Databases",
+                    name: "Databases",
                     desc: "High-performance storage architectures.",
                     color: "#3377ff",
-                    val: 14,
                     children: [
                       {
-                        id: "SQL",
+                        name: "SQL",
                         desc: "Relational data structuring and complex querying.",
                         color: "#6699ff",
-                        val: 10,
                       },
                       {
-                        id: "MongoDB",
+                        name: "MongoDB",
                         desc: "NoSQL document storage for unstructured data.",
                         color: "#6699ff",
-                        val: 10,
                       },
                       {
-                        id: "Redis",
+                        name: "Redis",
                         desc: "In-memory data structure store for extreme speed caching.",
                         color: "#6699ff",
-                        val: 10,
                       },
                       {
-                        id: "Influx",
+                        name: "Influx",
                         desc: "Time-series database built for high-frequency telemetry.",
                         color: "#6699ff",
-                        val: 10,
                       },
                     ],
                   },
                   {
-                    id: "Data Processing",
+                    name: "Data Processing",
                     desc: "Wrangling and streaming massive datasets.",
                     color: "#3377ff",
-                    val: 14,
                     children: [
                       {
-                        id: "Pandas & NumPy",
+                        name: "Pandas & NumPy",
                         desc: "Vectorized matrix operations and data manipulation.",
                         color: "#6699ff",
-                        val: 10,
                       },
                       {
-                        id: "Kafka",
+                        name: "Kafka",
                         desc: "High-throughput distributed event streaming platform.",
                         color: "#6699ff",
-                        val: 10,
                       },
                       {
-                        id: "MQTT",
+                        name: "MQTT",
                         desc: "Lightweight messaging protocol optimized for IoT and Edge devices.",
                         color: "#6699ff",
-                        val: 10,
                       },
                     ],
                   },
                 ],
               },
               {
-                id: "System Design",
+                name: "System Design",
                 desc: "Architecting scalable, resilient, and highly available backends.",
-                color: "#aa00ff", // Purple
-                val: 18,
+                color: "#aa00ff",
                 children: [
                   {
-                    id: "Microservices",
+                    name: "Microservices",
                     desc: "Decoupling monolithic architectures into independent, scalable services.",
                     color: "#cc66ff",
-                    val: 14,
                   },
                   {
-                    id: "Distributed Systems",
+                    name: "Distributed Systems",
                     desc: "Designing for fault tolerance, consensus, and horizontal scaling.",
                     color: "#cc66ff",
-                    val: 14,
                   },
                   {
-                    id: "Load Balancing",
+                    name: "Load Balancing",
                     desc: "Efficiently routing traffic across multiple server instances.",
                     color: "#cc66ff",
-                    val: 14,
                   },
                   {
-                    id: "API Gateways",
+                    name: "API Gateways",
                     desc: "Managing authentication, rate limiting, and routing for external clients.",
                     color: "#cc66ff",
-                    val: 14,
                   },
                 ],
               },
               {
-                id: "Software & Web",
+                name: "Software & Web",
                 desc: "The interface. Bridging complex models to human interaction.",
-                color: "#00ffcc", // Neon Cyan
-                val: 18,
+                color: "#00ffcc",
                 children: [
                   {
-                    id: "Backend APIs",
+                    name: "Backend APIs",
                     desc: "Serving ML models to the web securely and rapidly.",
                     color: "#33ffdd",
-                    val: 14,
                     children: [
                       {
-                        id: "Flask & FastAPI",
+                        name: "Flask & FastAPI",
                         desc: "High-performance Python routing and inference serving.",
                         color: "#66ffee",
-                        val: 10,
                       },
                       {
-                        id: "Firebase",
+                        name: "Firebase",
                         desc: "Real-time backend-as-a-service and authentication.",
                         color: "#66ffee",
-                        val: 10,
                       },
                     ],
                   },
                   {
-                    id: "Frontend",
+                    name: "Frontend",
                     desc: "User-facing architecture and visualizations.",
                     color: "#33ffdd",
-                    val: 14,
                     children: [
                       {
-                        id: "WebDev",
+                        name: "WebDev",
                         desc: "HTML, CSS, JavaScript, and modern WebGL.",
                         color: "#66ffee",
-                        val: 10,
                       },
                       {
-                        id: "Streamlit",
+                        name: "Streamlit",
                         desc: "Rapid dashboarding and data-app prototyping.",
                         color: "#66ffee",
-                        val: 10,
                       },
                       {
-                        id: "UI/UX",
+                        name: "UI/UX",
                         desc: "Designing intuitive, cyberpunk-inspired user experiences.",
                         color: "#66ffee",
-                        val: 10,
                       },
                     ],
                   },
                 ],
               },
               {
-                id: "DevOps & Cloud",
+                name: "DevOps & Cloud",
                 desc: "The infrastructure. Scalability and version control.",
-                color: "#ffaa00", // Bright Orange/Yellow
-                val: 18,
+                color: "#ffaa00",
                 children: [
                   {
-                    id: "AWS",
+                    name: "AWS",
                     desc: "Amazon Web Services. Cloud compute, S3, and scalable ML deployment.",
                     color: "#ffbb33",
-                    val: 14,
                   },
                   {
-                    id: "Docker",
+                    name: "Docker",
                     desc: "Containerizing environments to ensure 'it works on my machine' works everywhere.",
                     color: "#ffbb33",
-                    val: 14,
                   },
                   {
-                    id: "Git",
+                    name: "Git",
                     desc: "Distributed version control and collaborative repository management.",
                     color: "#ffbb33",
-                    val: 14,
                   },
                 ],
               },
             ],
           },
           {
-            id: "Non-Technical Skills",
+            name: "Non-Technical Skills",
             desc: "The human element. Strategy, leadership, and execution.",
-            color: "#ffff00", // Yellow
-            val: 22,
+            color: "#ffff00",
             children: [
               {
-                id: "Communication",
+                name: "Communication",
                 desc: "Translating complex mathematical concepts into clear business value for stakeholders.",
                 color: "#ffff66",
-                val: 16,
               },
               {
-                id: "Dedication",
+                name: "Dedication",
                 desc: "Relentless pursuit of optimization and seeing complex projects through to completion.",
                 color: "#ffff66",
-                val: 16,
               },
               {
-                id: "Problem Solving",
+                name: "Problem Solving",
                 desc: "Analytical mindset to break down seemingly impossible architectures into viable steps.",
                 color: "#ffff66",
-                val: 16,
               },
               {
-                id: "Cross-functional Leadership",
+                name: "Cross-functional Leadership",
                 desc: "Bridging the gap between Data Scientists, Backend Engineers, and Product Managers.",
                 color: "#ffff66",
-                val: 16,
               },
               {
-                id: "Agile Execution",
+                name: "Agile Execution",
                 desc: "Iterative development, sprint planning, and rapid prototyping in fast-paced environments.",
                 color: "#ffff66",
-                val: 16,
               },
             ],
           },
         ],
       };
 
-      // --- GRAPH LOGIC ---
-      const nodesById = {};
-      const links = [];
+      // --- D3.js 2D TREE LOGIC ---
 
-      function traverseTree(node, parent = null) {
-        const n = {
-          id: node.id,
-          desc: node.desc,
-          color: node.color,
-          val: node.val,
-          // Initially show only the two main branches: Tech and Non-Tech
-          collapsed: parent !== null && parent.id !== "Tanish Mittal",
-          childLinks: [],
-        };
-        nodesById[node.id] = n;
+      const container = document.getElementById("tree-container");
+      const width = container.clientWidth;
+      const height = container.clientHeight;
 
-        if (node.children) {
-          node.children.forEach((child) => {
-            traverseTree(child, n);
-            const link = { source: n.id, target: child.id };
-            n.childLinks.push(link);
-          });
-        }
-      }
+      // Node sizing (vertical and horizontal spacing)
+      const dy = width / 6; // Horizontal distance between levels
+      const dx = 40; // Vertical distance between nodes
+      const margin = { top: 20, right: 120, bottom: 20, left: 100 };
 
-      traverseTree(rootData);
-
-      function getPrunedTree() {
-        const visibleNodes = [];
-        const visibleLinks = [];
-
-        function traverseVisible(nodeId) {
-          const node = nodesById[nodeId];
-          if (!node) return;
-          visibleNodes.push(node);
-
-          if (!node.collapsed && node.childLinks) {
-            node.childLinks.forEach((link) => {
-              visibleLinks.push(link);
-              traverseVisible(link.target.id || link.target);
-            });
-          }
-        }
-
-        traverseVisible(rootData.id);
-        return { nodes: visibleNodes, links: visibleLinks };
-      }
-
-      const elem = document.getElementById("3d-graph");
-      const Graph = ForceGraph3D()(elem)
-        .backgroundColor("rgba(0,0,0,0)")
-        // Use Left-to-Right tree mode for a proper, structured "RPG Skill Tree" look
-        .dagMode("lr")
-        .dagLevelDistance(100)
-        .nodeColor("color")
-        .nodeRelSize(5)
-        .nodeVal("val")
-        .nodeLabel("id")
-        .nodeResolution(16)
-        .linkWidth(2.5)
-        .linkColor(() => "rgba(255, 255, 255, 0.2)")
-        .linkDirectionalParticles(2)
-        .linkDirectionalParticleWidth(2)
-        .linkDirectionalParticleSpeed(0.005)
-        .onNodeClick((node) => {
-          // Toggle collapse state
-          if (node.childLinks.length > 0) {
-            node.collapsed = !node.collapsed;
-            Graph.graphData(getPrunedTree());
-          }
-
-          // Aim camera at node but keep the perspective clean
-          const distance = 250;
-          const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
-          Graph.cameraPosition(
-            {
-              x: node.x * distRatio,
-              y: node.y * distRatio,
-              z: node.z * distRatio,
-            },
-            node,
-            1500,
-          );
-
-          // Update UI Terminal
-          const terminal = document.getElementById("terminal-popup");
-          document.getElementById("terminal-title").innerText = "> " + node.id;
-          document.getElementById("terminal-desc").innerText = node.desc;
-          terminal.style.borderColor = node.color;
-          terminal.style.borderLeftColor = node.color;
-          document.getElementById("terminal-title").style.color = node.color;
-          document.getElementById("terminal-title").style.textShadow =
-            `0 0 10px ${node.color}80`;
-
-          terminal.classList.add("visible");
+      // Initialize Zoom behavior
+      const zoom = d3
+        .zoom()
+        .scaleExtent([0.3, 3])
+        .on("zoom", (event) => {
+          g.attr("transform", event.transform);
         });
 
-      // Access the built-in force engine safely without requiring external D3 imports
-      Graph.d3Force("charge").strength(-250);
+      const svg = d3
+        .select("#tree-container")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .call(zoom)
+        .on("click", () => {
+          // Close terminal if clicking empty space
+          document.getElementById("terminal-popup").classList.remove("visible");
+        });
 
-      // Render the structured tree
-      Graph.graphData(getPrunedTree());
+      const g = svg.append("g");
 
-      // Remove the auto-spin completely so it remains a rigid, readable skill tree
-      // Set initial camera position to look at the whole tree from the side
-      setTimeout(() => {
-        Graph.cameraPosition({ x: 0, y: 0, z: 600 });
-      }, 500);
+      // Center the root node on load
+      const initialTransform = d3.zoomIdentity
+        .translate(margin.left, height / 2)
+        .scale(1);
+      svg.call(zoom.transform, initialTransform);
 
-      window.addEventListener("resize", () => {
-        Graph.width(window.innerWidth);
-        Graph.height(window.innerHeight);
+      const tree = d3.tree().nodeSize([dx, dy]);
+      const root = d3.hierarchy(treeData);
+
+      root.x0 = 0;
+      root.y0 = 0;
+
+      // Collapse all nodes except the absolute root on initial load
+      root.descendants().forEach((d, i) => {
+        d.id = i;
+        d._children = d.children; // Save children state
+        if (
+          d.depth &&
+          d.name !== "Technical Skills" &&
+          d.name !== "Non-Technical Skills"
+        ) {
+          d.children = null; // Collapse nodes deeper than level 1
+        }
       });
 
-      Graph.onBackgroundClick(() => {
-        document.getElementById("terminal-popup").classList.remove("visible");
+      update(root);
+
+      function update(source) {
+        const duration = 500;
+        const nodes = root.descendants().reverse();
+        const links = root.links();
+
+        // Compute the new tree layout
+        tree(root);
+
+        // Normalize for fixed-depth
+        nodes.forEach((d) => {
+          d.y = d.depth * dy;
+        });
+
+        // --- NODES ---
+        const node = g.selectAll("g.node").data(nodes, (d) => d.id);
+
+        // Enter any new nodes at the parent's previous position
+        const nodeEnter = node
+          .enter()
+          .append("g")
+          .attr("class", "node")
+          .attr("transform", (d) => `translate(${source.y0},${source.x0})`)
+          .on("click", (event, d) => {
+            event.stopPropagation(); // Prevent background click from closing UI immediately
+
+            // Toggle children
+            if (d.children) {
+              d._children = d.children;
+              d.children = null;
+            } else {
+              d.children = d._children;
+            }
+            update(d);
+            centerNode(d);
+            updateTerminal(d);
+          });
+
+        // Add Circle
+        nodeEnter
+          .append("circle")
+          .attr("r", 1e-6)
+          .style("fill", (d) => (d._children ? d.data.color : "#010302"))
+          .style("stroke", (d) => d.data.color);
+
+        // Add Text labels
+        nodeEnter
+          .append("text")
+          .attr("dy", ".35em")
+          .attr("x", (d) => (d._children && !d.children ? -13 : 13)) // Left if closed, Right if open
+          .attr("text-anchor", (d) =>
+            d._children && !d.children ? "end" : "start",
+          )
+          .text((d) => d.data.name)
+          .style("fill-opacity", 1e-6)
+          .style("fill", (d) =>
+            d.data.color === "#ffffff" ? "#ffffff" : "#e0e0e0",
+          );
+
+        const nodeUpdate = nodeEnter.merge(node);
+
+        // Transition to the proper position for the node
+        nodeUpdate
+          .transition()
+          .duration(duration)
+          .attr("transform", (d) => `translate(${d.y},${d.x})`);
+
+        // Update the node attributes and style
+        nodeUpdate
+          .select("circle")
+          .attr("r", 6)
+          .style("fill", (d) =>
+            d._children && !d.children ? d.data.color : "#010302",
+          )
+          .style("stroke", (d) => d.data.color)
+          .style("stroke-width", (d) =>
+            d._children && !d.children ? "0px" : "2px",
+          ); // Solid if closed, hollow if open
+
+        nodeUpdate
+          .select("text")
+          .attr("x", (d) => (d._children && !d.children ? -13 : 13))
+          .attr("text-anchor", (d) =>
+            d._children && !d.children ? "end" : "start",
+          )
+          .style("fill-opacity", 1);
+
+        // Remove exiting nodes
+        const nodeExit = node
+          .exit()
+          .transition()
+          .duration(duration)
+          .attr("transform", (d) => `translate(${source.y},${source.x})`)
+          .remove();
+
+        nodeExit.select("circle").attr("r", 1e-6);
+        nodeExit.select("text").style("fill-opacity", 1e-6);
+
+        // --- LINKS ---
+        const link = g.selectAll("path.link").data(links, (d) => d.target.id);
+
+        // Enter any new links at the parent's previous position
+        const linkEnter = link
+          .enter()
+          .insert("path", "g")
+          .attr("class", "link")
+          .style("stroke", (d) => d.target.data.color)
+          .attr("d", (d) => {
+            const o = { x: source.x0, y: source.y0 };
+            return diagonal(o, o);
+          });
+
+        const linkUpdate = linkEnter.merge(link);
+
+        // Transition back to the parent element position
+        linkUpdate
+          .transition()
+          .duration(duration)
+          .attr("d", (d) => diagonal(d.source, d.target));
+
+        // Remove any exiting links
+        link
+          .exit()
+          .transition()
+          .duration(duration)
+          .attr("d", (d) => {
+            const o = { x: source.x, y: source.y };
+            return diagonal(o, o);
+          })
+          .remove();
+
+        // Store the old positions for transition
+        nodes.forEach((d) => {
+          d.x0 = d.x;
+          d.y0 = d.y;
+        });
+      }
+
+      // Smooth curved path generation
+      function diagonal(s, d) {
+        return `M ${s.y} ${s.x}
+                C ${(s.y + d.y) / 2} ${s.x},
+                  ${(s.y + d.y) / 2} ${d.x},
+                  ${d.y} ${d.x}`;
+      }
+
+      // Smooth Camera Movement (Pan to center the clicked node)
+      function centerNode(source) {
+        const scale = d3.zoomTransform(svg.node()).k;
+        let x = -source.y0;
+        let y = -source.x0;
+
+        // Offset slightly to the left so the expanded children appear in the center
+        x = x * scale + width / 4;
+        y = y * scale + height / 2;
+
+        svg
+          .transition()
+          .duration(750)
+          .call(zoom.transform, d3.zoomIdentity.translate(x, y).scale(scale));
+      }
+
+      function updateTerminal(d) {
+        const terminal = document.getElementById("terminal-popup");
+        document.getElementById("terminal-title").innerText =
+          "> " + d.data.name;
+        document.getElementById("terminal-desc").innerText = d.data.desc;
+
+        terminal.style.borderColor = d.data.color;
+        terminal.style.borderLeftColor = d.data.color;
+        document.getElementById("terminal-title").style.color = d.data.color;
+        document.getElementById("terminal-title").style.textShadow =
+          `0 0 10px ${d.data.color}80`;
+
+        terminal.classList.add("visible");
+      }
+
+      // Handle Window Resize properly
+      window.addEventListener("resize", () => {
+        const newWidth = container.clientWidth;
+        const newHeight = container.clientHeight;
+        svg.attr("width", newWidth).attr("height", newHeight);
       });
     </script>
   </body>
