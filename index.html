@@ -674,10 +674,20 @@
         <div
           class="flex space-x-6 items-center text-sm font-mono text-[var(--accent)]"
         >
-          <a href="#projects" class="hover:text-[#ff0055] transition"
-            >/projects</a
-          >
-          <a href="#arcade" class="hover:text-[#ff0055] transition">/arcade</a>
+          <a
+            href="https://www.linkedin.com/in/tanish-mittal-42318924a/"
+            target="_blank"
+            class="hover:text-[#ff0055] transition"
+            aria-label="LinkedIn Profile"
+            ><i class="fab fa-linkedin text-lg" aria-hidden="true"></i
+          ></a>
+          <a
+            href="https://www.instagram.com/nottanishmittal/"
+            target="_blank"
+            class="hover:text-[#ff0055] transition"
+            aria-label="Instagram Profile"
+            ><i class="fab fa-instagram text-lg" aria-hidden="true"></i
+          ></a>
           <a
             href="https://github.com/tanish-ml"
             target="_blank"
@@ -2144,7 +2154,7 @@
           canvas.style.display = "block";
           canvas.style.width = "100%";
           canvas.style.height = "100%";
-          canvas.style.filter = "contrast(1.4) brightness(1.3)";
+          canvas.style.filter = "contrast(1.1) brightness(1.1)";
 
           container.appendChild(canvas);
           container.appendChild(overlay);
@@ -2159,7 +2169,7 @@
           img.onload = () => {
             const aspect = img.height / img.width;
 
-            const cols = 250;
+            const cols = 400; // Increased resolution for much sharper detail
             const rows = Math.floor(cols * aspect * 0.55);
 
             offCanvas.width = cols;
