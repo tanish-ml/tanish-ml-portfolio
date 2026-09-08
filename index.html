@@ -2100,14 +2100,11 @@
           const maxZ = 11100;
           const currentZ = progress * maxZ;
 
-          const camX = Math.sin(progress * Math.PI * 10) * 100;
-          const camY = Math.cos(progress * Math.PI * 6) * 50;
+          const camX = Math.sin(progress * Math.PI * 2) * 80; // Sweeping curve
+          const camY = Math.cos(progress * Math.PI * 2) * 30; // Sweeping curve
 
           // ADDED DYNAMIC CAMERA ANGLES FOR THE FOREGROUND CARDS
-          const rotZ = Math.sin(progress * Math.PI * 6) * 15; // Aggressive banking
-          const rotX = Math.cos(progress * Math.PI * 4) * 10; // Pitching up and down
-
-          world.style.transform = `translate3d(${camX}px, ${camY}px, ${currentZ}px) rotateX(${rotX}deg) rotateZ(${rotZ}deg) rotateY(${camX * 0.05}deg)`;
+          world.style.transform = `translate3d(${camX}px, ${camY}px, ${currentZ}px)`;
         });
 
         // --- ASCII ART RENDERING (absolute top-right) ---
@@ -2400,8 +2397,8 @@
             end: "bottom top",
             scrub: 1,
           },
-          x: 40,
-          z: -150,
+          x: 10,
+          z: -30,
           ease: "power2.inOut",
         });
         gsap.to(camera.rotation, {
@@ -2411,8 +2408,8 @@
             end: "bottom top",
             scrub: 1,
           },
-          y: 0.4,
-          z: -0.2, // Bank right
+          y: 0.15,
+          z: -0.02, // Bank right
           ease: "power2.inOut",
         });
 
@@ -2424,9 +2421,9 @@
             end: "bottom top",
             scrub: 1,
           },
-          x: -40,
-          y: 35,
-          z: -300, // Deepest dive
+          x: -10,
+          y: 20,
+          z: -80, // Deepest dive
           ease: "power3.inOut",
         });
         gsap.to(camera.rotation, {
@@ -2436,9 +2433,9 @@
             end: "bottom top",
             scrub: 1,
           },
-          x: 0.1,
-          y: -0.5,
-          z: 0.3, // Bank left
+          x: 0.05,
+          y: -0.15,
+          z: 0.02, // Bank left
           ease: "power3.inOut",
         });
 
@@ -2453,9 +2450,8 @@
             scrub: 1,
           },
           transformPerspective: 1500,
-          rotationY: -15, // Twist right
-          rotationZ: 2, // Tilt slightly
-          x: -50,
+          rotationY: -3, // Subtle twist right
+          rotationX: 1, // Subtle tilt
           ease: "power2.inOut",
         });
 
@@ -2467,9 +2463,8 @@
             scrub: 1,
           },
           transformPerspective: 1500,
-          rotationY: 15, // Twist left
-          rotationZ: -2, // Tilt slightly
-          x: 50,
+          rotationY: 3, // Subtle twist left
+          rotationX: 1, // Subtle tilt
           ease: "power3.inOut",
         });
 
