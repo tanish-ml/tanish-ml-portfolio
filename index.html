@@ -675,6 +675,12 @@
           class="flex space-x-6 items-center text-sm font-mono text-[var(--accent)]"
         >
           <a
+            href="mailto:tanishmittal2212@gmail.com"
+            class="hover:text-[#ff0055] transition"
+            aria-label="Email Me"
+            ><i class="fas fa-envelope text-lg" aria-hidden="true"></i
+          ></a>
+          <a
             href="https://www.linkedin.com/in/tanish-mittal-42318924a/"
             target="_blank"
             class="hover:text-[#ff0055] transition"
@@ -1882,6 +1888,45 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
       <script>
+        // --- BOOT SEQUENCE LOGIC ---
+        const bootLines = [
+          "> INITIATING NEURAL LINK...",
+          "> LOADING TENSORFLOW KERNELS...",
+          "> ESTABLISHING SECURE CONNECTION...",
+          "> BYPASSING MAINFRAME SECURITY... [OK]",
+          "> ACCESS GRANTED. WELCOME, USER.",
+        ];
+
+        const bootContainer = document.getElementById("boot-text-container");
+        const bootScreen = document.getElementById("boot-sequence");
+
+        let lineIndex = 0;
+
+        function typeLine() {
+          if (lineIndex < bootLines.length) {
+            const lineEl = document.createElement("div");
+            lineEl.className = "boot-line";
+            lineEl.innerText = bootLines[lineIndex];
+            lineEl.style.opacity = 1;
+            bootContainer.appendChild(lineEl);
+
+            lineIndex++;
+            // Type next line rapidly
+            setTimeout(typeLine, 300 + Math.random() * 200);
+          } else {
+            // Done typing, wait a moment then glitch out
+            setTimeout(() => {
+              bootScreen.classList.add("glitch-out");
+              setTimeout(() => {
+                bootScreen.style.display = "none";
+              }, 500);
+            }, 600);
+          }
+        }
+
+        // Start boot sequence immediately
+        setTimeout(typeLine, 200);
+
         // --- CYBER TEXT DECODER ---
         const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*!¿§";
         const el = document.getElementById("decoder");
@@ -2066,11 +2111,14 @@
           document.getElementById("game-frame").src = url;
           document.getElementById("game-modal").style.display = "block";
           document.body.style.overflow = "hidden";
-          // Show native cursor for iframe, hide ghost cursor
           document.body.classList.add("modal-active");
           document
             .querySelectorAll(".cursor-node")
             .forEach((node) => (node.style.opacity = "0"));
+
+          // Hide AI Orb so it doesn't float over the game
+          const orb = document.getElementById("ai-companion");
+          if (orb) orb.style.display = "none";
         }
         function closeGame() {
           document.getElementById("game-modal").style.display = "none";
@@ -2081,6 +2129,10 @@
           document
             .querySelectorAll(".cursor-node")
             .forEach((node) => (node.style.opacity = "1"));
+
+          // Restore AI Orb
+          const orb = document.getElementById("ai-companion");
+          if (orb) orb.style.display = "block";
         }
 
         window.addEventListener("message", (event) => {
