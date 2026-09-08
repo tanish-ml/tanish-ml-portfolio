@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Skill Tree | Tanish Mittal</title>
+    <meta
+      name="description"
+      content="Explore Tanish Mittal's skills in Machine Learning, Deep Learning, and Data Engineering through an interactive 3D node network."
+    />
+    <meta name="author" content="Tanish Mittal" />
+    <meta
+      property="og:title"
+      content="Interactive Skill Tree | Tanish Mittal"
+    />
+    <meta
+      property="og:description"
+      content="Explore Tanish Mittal's skills in Machine Learning, Deep Learning, and Data Engineering through an interactive 3D node network."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://tanish-ml.github.io/skill-tree.html"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Interactive Skill Tree | Tanish Mittal"
+    />
+    <meta
+      name="twitter:description"
+      content="Explore Tanish Mittal's skills in an interactive 3D WebGL format."
+    />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Courier+New:wght@400;700&family=Inter:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- 3D Force Graph Library -->
+    <script src="https://unpkg.com/3d-force-graph"></script>
+
+    <style>
+      :root {
+        --bg: #010302;
+        --text: #ffffff;
+        --accent: #00ffcc;
+      }
+      body {
+        margin: 0;
+        background-color: var(--bg);
+        color: var(--text);
+        font-family: "Inter", sans-serif;
+        overflow: hidden; /* Prevent scrolling, graph takes full screen */
+      }
+      #3d-graph {
+        width: 100vw;
+        height: 100vh;
+        cursor: grab;
+      }
+      #3d-graph:active {
+        cursor: grabbing;
+      }
+
+      /* Overlay UI */
+      .ui-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none; /* Let clicks pass through to graph */
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 2rem;
+      }
+      .ui-header,
+      .ui-footer,
+      #terminal-popup {
+        pointer-events: auto; /* Re-enable clicks for UI elements */
+      }
+
+      h1 {
+        font-family: "Courier New", monospace;
+        color: var(--accent);
+        font-size: clamp(1.2rem, 3vw, 2rem);
+        text-shadow: 0 0 10px rgba(0, 255, 204, 0.4);
+        margin: 0;
+      }
+      p.subtitle {
+        font-family: "Courier New", monospace;
+        color: #00aa44;
+        margin-top: 0.5rem;
+        font-size: clamp(0.8rem, 2vw, 1rem);
+      }
+
+      /* Terminal Popup */
+      #terminal-popup {
+        position: absolute;
+        bottom: 2rem;
+        right: 2rem;
+        width: 350px;
+        max-width: calc(100vw - 4rem);
+        background: rgba(0, 10, 3, 0.85);
+        border: 1px solid rgba(0, 255, 204, 0.3);
+        border-left: 4px solid #ff0055;
+        padding: 1.5rem;
+        backdrop-filter: blur(10px);
+        transform: translateY(150%);
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        font-family: "Courier New", monospace;
+      }
+      #terminal-popup.visible {
+        transform: translateY(0);
+      }
+      #terminal-title {
+        color: #ff0055;
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+      }
+      #terminal-desc {
+        color: #e0e0e0;
+        font-size: 0.9rem;
+        line-height: 1.4;
+      }
+
+      /* Mobile Opt */
+      @media (max-width: 768px) {
+        .ui-overlay {
+          padding: 1rem;
+        }
+        #terminal-popup {
+          bottom: 1rem;
+          right: 1rem;
+          width: calc(100vw - 2rem);
+          max-width: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 3D Canvas -->
+    <div id="3d-graph" aria-hidden="true"></div>
+
+    <!-- UI Overlay -->
+    <div class="ui-overlay">
+      <div class="ui-header flex justify-between items-start">
+        <div>
+          <h1>> /sys/skill_tree.exe</h1>
+          <p class="subtitle">
+            Click nodes to expand/collapse. Drag to rotate.
+          </p>
+        </div>
+        <a
+          href="index.html"
+          class="text-[var(--accent)] hover:text-[#ff0055] transition font-mono whitespace-nowrap bg-black/50 px-4 py-2 border border-[var(--accent)]/30 rounded backdrop-blur-md text-sm md:text-base"
+        >
+          <i class="fas fa-arrow-left mr-2"></i>MAIN_FRAME
+        </a>
+      </div>
+
+      <div id="terminal-popup">
+        <div id="terminal-title">AWAITING INPUT</div>
+        <div id="terminal-desc">
+          Select a node from the network to view detailed telemetry.
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // --- SKILL TREE DATA ---
+      const rootData = {
+        id: "Tanish Mittal",
+        desc: "Core System. Machine Learning Engineer & Data Scientist.",
+        color: "#ff0055",
+        val: 25,
+        children: [
+          {
+            id: "Deep Learning",
+            desc: "Architecting and training deep neural networks for complex pattern recognition.",
+            color: "#00ffcc",
+            val: 18,
+            children: [
+              {
+                id: "PyTorch",
+                desc: "Primary DL framework for research and production workflows.",
+                color: "#ffffff",
+                val: 10,
+              },
+              {
+                id: "TensorFlow",
+                desc: "Used heavily for Edge AI and TFLite model deployment.",
+                color: "#ffffff",
+                val: 10,
+              },
+              {
+                id: "Transformers",
+                desc: "Attention-based architectures for NLP & Vision tasks.",
+                color: "#ffffff",
+                val: 10,
+              },
+              {
+                id: "CNNs",
+                desc: "Convolutional Neural Networks for image classification and segmentation.",
+                color: "#ffffff",
+                val: 10,
+              },
+            ],
+          },
+          {
+            id: "Machine Learning",
+            desc: "Classical predictive modeling and statistical learning algorithms.",
+            color: "#00aa44",
+            val: 18,
+            children: [
+              {
+                id: "Scikit-Learn",
+                desc: "The go-to library for traditional ML pipelines and baseline models.",
+                color: "#ffffff",
+                val: 10,
+              },
+              {
+                id: "XGBoost",
+                desc: "Gradient boosting algorithms for tabular data dominance.",
+                color: "#ffffff",
+                val: 10,
+              },
+              {
+                id: "Federated Learning",
+                desc: "Decentralized model training for privacy-preserving Edge AI.",
+                color: "#ffffff",
+                val: 10,
+              },
+            ],
+          },
+          {
+            id: "Data Engineering",
+            desc: "Building robust pipelines, preprocessing, and scalable data infrastructure.",
+            color: "#0055ff",
+            val: 18,
+            children: [
+              {
+                id: "Pandas & NumPy",
+                desc: "The core data manipulation and matrix computation ecosystem.",
+                color: "#ffffff",
+                val: 10,
+              },
+              {
+                id: "SQL",
+                desc: "Advanced querying, joins, and relational database management.",
+                color: "#ffffff",
+                val: 10,
+              },
+              {
+                id: "Docker",
+                desc: "Containerizing ML applications for seamless cloud deployment.",
+                color: "#ffffff",
+                val: 10,
+              },
+            ],
+          },
+          {
+            id: "Web & Deployment",
+            desc: "Bridging the gap between ML models and interactive user experiences.",
+            color: "#ffaa00",
+            val: 18,
+            children: [
+              {
+                id: "Flask & FastAPI",
+                desc: "Creating high-performance REST APIs for model inference.",
+                color: "#ffffff",
+                val: 10,
+              },
+              {
+                id: "Streamlit",
+                desc: "Rapid prototyping of data dashboards and model interfaces.",
+                color: "#ffffff",
+                val: 10,
+              },
+              {
+                id: "WebGL & Three.js",
+                desc: "Building 3D data visualizations and interactive portfolios.",
+                color: "#ffffff",
+                val: 10,
+              },
+            ],
+          },
+        ],
+      };
+
+      // --- GRAPH LOGIC ---
+      // Transform hierarchical data into nodes and links
+      const nodesById = {};
+      const links = [];
+
+      function traverseTree(node, parent = null) {
+        // Create node object
+        const n = {
+          id: node.id,
+          desc: node.desc,
+          color: node.color,
+          val: node.val,
+          collapsed: node.id !== "Tanish Mittal", // Initially collapse all except root's immediate children
+          childLinks: [],
+        };
+        nodesById[node.id] = n;
+
+        // If it has children, parse them
+        if (node.children) {
+          node.children.forEach((child) => {
+            traverseTree(child, n);
+            const link = { source: n.id, target: child.id };
+            n.childLinks.push(link);
+          });
+        }
+      }
+
+      traverseTree(rootData);
+
+      // Helper to get visible graph data
+      function getPrunedTree() {
+        const visibleNodes = [];
+        const visibleLinks = [];
+
+        // Traverse from root. If a node is NOT collapsed, add its children.
+        function traverseVisible(nodeId) {
+          const node = nodesById[nodeId];
+          if (!node) return;
+          visibleNodes.push(node);
+
+          if (!node.collapsed && node.childLinks) {
+            node.childLinks.forEach((link) => {
+              visibleLinks.push(link);
+              traverseVisible(link.target.id || link.target); // Account for object vs string
+            });
+          }
+        }
+
+        traverseVisible(rootData.id);
+        return { nodes: visibleNodes, links: visibleLinks };
+      }
+
+      // Initialize Graph
+      const elem = document.getElementById("3d-graph");
+      const Graph = ForceGraph3D()(elem)
+        .backgroundColor("#010302")
+        .nodeColor("color")
+        .nodeRelSize(6)
+        .nodeVal("val")
+        .nodeLabel("id")
+        .linkWidth(1.5)
+        .linkColor(() => "rgba(0, 255, 204, 0.3)")
+        .linkDirectionalParticles(2)
+        .linkDirectionalParticleWidth(2)
+        .linkDirectionalParticleSpeed(0.005)
+        .onNodeClick((node) => {
+          // Toggle collapse state
+          if (node.childLinks.length > 0) {
+            node.collapsed = !node.collapsed;
+            Graph.graphData(getPrunedTree());
+          }
+
+          // Aim camera at node
+          const distance = 150;
+          const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
+          Graph.cameraPosition(
+            {
+              x: node.x * distRatio,
+              y: node.y * distRatio,
+              z: node.z * distRatio,
+            }, // new position
+            node, // lookAt
+            2000, // ms transition duration
+          );
+
+          // Update UI Terminal
+          const terminal = document.getElementById("terminal-popup");
+          document.getElementById("terminal-title").innerText = "> " + node.id;
+          document.getElementById("terminal-desc").innerText = node.desc;
+          terminal.style.borderColor =
+            node.color === "#ffffff" ? "#00ffcc" : node.color;
+          terminal.style.borderLeftColor = node.color;
+          document.getElementById("terminal-title").style.color = node.color;
+
+          terminal.classList.add("visible");
+        });
+
+      // Initial render
+      Graph.graphData(getPrunedTree());
+
+      // Auto-spin camera slightly for aesthetic
+      let angle = 0;
+      setInterval(() => {
+        angle += Math.PI / 1000;
+        // Only spin if we haven't clicked/zoomed recently, or just keep it subtle
+      }, 10);
+
+      // Handle window resize
+      window.addEventListener("resize", () => {
+        Graph.width(window.innerWidth);
+        Graph.height(window.innerHeight);
+      });
+
+      // Make terminal popup vanish if clicking background
+      Graph.onBackgroundClick(() => {
+        document.getElementById("terminal-popup").classList.remove("visible");
+      });
+    </script>
+  </body>
+</html>
