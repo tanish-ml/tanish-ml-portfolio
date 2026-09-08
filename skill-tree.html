@@ -44,7 +44,6 @@
         cursor: grabbing;
       }
 
-      /* Overlay UI */
       .ui-overlay {
         position: fixed;
         top: 0;
@@ -78,7 +77,6 @@
         font-size: clamp(0.8rem, 2vw, 1rem);
       }
 
-      /* Terminal Popup */
       #terminal-popup {
         position: absolute;
         bottom: 2rem;
@@ -133,7 +131,7 @@
       <div class="ui-header flex justify-between items-start">
         <div>
           <h1>> /sys/skill_tree.exe</h1>
-          <p class="subtitle">Click nodes to expand deep network layers.</p>
+          <p class="subtitle">Click nodes to unlock specific skill branches.</p>
         </div>
         <a
           href="index.html"
@@ -152,7 +150,7 @@
     </div>
 
     <script>
-      // --- PROPER MULTILEVEL HIERARCHICAL SKILL TREE DATA ---
+      // --- STRUCTURED RPG-STYLE SKILL TREE DATA ---
       const rootData = {
         id: "Tanish Mittal",
         desc: "Core System. Architecting Intelligence at the Edge.",
@@ -160,195 +158,261 @@
         val: 30,
         children: [
           {
-            id: "Artificial Intelligence",
-            desc: "The core computational brain. Neural networks and classical learning.",
-            color: "#ff0055", // Neon Pink
-            val: 22,
-            children: [
-              {
-                id: "Deep Learning",
-                desc: "High-dimensional neural architectures.",
-                color: "#ff3377",
-                val: 18,
-                children: [
-                  {
-                    id: "PyTorch",
-                    desc: "Advanced tensor computation and dynamic neural networks.",
-                    color: "#ff6699",
-                    val: 14,
-                  },
-                  {
-                    id: "Computer Vision",
-                    desc: "Giving machines the ability to see and parse visual data.",
-                    color: "#ff3377",
-                    val: 16,
-                    children: [
-                      {
-                        id: "CNN",
-                        desc: "Convolutional Neural Networks for spatial feature extraction.",
-                        color: "#ff6699",
-                        val: 12,
-                      },
-                    ],
-                  },
-                  {
-                    id: "NLP",
-                    desc: "Natural Language Processing. Teaching machines to read and generate text.",
-                    color: "#ff3377",
-                    val: 16,
-                    children: [
-                      {
-                        id: "Transformers",
-                        desc: "Attention is all you need. State-of-the-art sequence models.",
-                        color: "#ff6699",
-                        val: 12,
-                      },
-                      {
-                        id: "RNN",
-                        desc: "Recurrent Neural Networks for temporal and sequential data.",
-                        color: "#ff6699",
-                        val: 12,
-                      },
-                    ],
-                  },
-                ],
-              },
-              {
-                id: "Machine Learning",
-                desc: "Classical predictive modeling and statistical inference.",
-                color: "#ff1166",
-                val: 18,
-                children: [
-                  {
-                    id: "Scikit-Learn",
-                    desc: "The standard library for baseline models and clustering.",
-                    color: "#ff4488",
-                    val: 14,
-                  },
-                  {
-                    id: "Federated Learning",
-                    desc: "Decentralized, privacy-preserving AI trained across edge devices.",
-                    color: "#ff4488",
-                    val: 14,
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            id: "Data Systems",
-            desc: "The circulatory system. Pipelines, processing, and persistence.",
-            color: "#0055ff", // Electric Blue
-            val: 22,
-            children: [
-              {
-                id: "Databases",
-                desc: "High-performance storage architectures.",
-                color: "#3377ff",
-                val: 18,
-                children: [
-                  {
-                    id: "SQL",
-                    desc: "Relational data structuring and complex querying.",
-                    color: "#6699ff",
-                    val: 14,
-                  },
-                  {
-                    id: "MongoDB",
-                    desc: "NoSQL document storage for unstructured data.",
-                    color: "#6699ff",
-                    val: 14,
-                  },
-                  {
-                    id: "Redis",
-                    desc: "In-memory data structure store for extreme speed caching.",
-                    color: "#6699ff",
-                    val: 14,
-                  },
-                  {
-                    id: "Influx",
-                    desc: "Time-series database built for high-frequency telemetry.",
-                    color: "#6699ff",
-                    val: 14,
-                  },
-                ],
-              },
-              {
-                id: "Data Processing",
-                desc: "Wrangling and streaming massive datasets.",
-                color: "#3377ff",
-                val: 18,
-                children: [
-                  {
-                    id: "Pandas & NumPy",
-                    desc: "Vectorized matrix operations and data manipulation.",
-                    color: "#6699ff",
-                    val: 14,
-                  },
-                  {
-                    id: "Kafka",
-                    desc: "High-throughput distributed event streaming platform.",
-                    color: "#6699ff",
-                    val: 14,
-                  },
-                  {
-                    id: "MQTT",
-                    desc: "Lightweight messaging protocol optimized for IoT and Edge devices.",
-                    color: "#6699ff",
-                    val: 14,
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            id: "Software & Web",
-            desc: "The interface. Bridging complex models to human interaction.",
+            id: "Technical Skills",
+            desc: "The engineering core. High-performance software and AI systems.",
             color: "#00ffcc", // Neon Cyan
             val: 22,
             children: [
               {
-                id: "Backend APIs",
-                desc: "Serving ML models to the web securely and rapidly.",
-                color: "#33ffdd",
+                id: "Artificial Intelligence",
+                desc: "The computational brain. Neural networks and classical learning.",
+                color: "#ff0055", // Neon Pink
                 val: 18,
                 children: [
                   {
-                    id: "Flask & FastAPI",
-                    desc: "High-performance Python routing and inference serving.",
-                    color: "#66ffee",
+                    id: "Deep Learning",
+                    desc: "High-dimensional neural architectures.",
+                    color: "#ff3377",
+                    val: 14,
+                    children: [
+                      {
+                        id: "PyTorch",
+                        desc: "Advanced tensor computation and dynamic neural networks.",
+                        color: "#ff6699",
+                        val: 10,
+                      },
+                      {
+                        id: "Computer Vision",
+                        desc: "Giving machines the ability to see and parse visual data.",
+                        color: "#ff6699",
+                        val: 10,
+                        children: [
+                          {
+                            id: "CNN",
+                            desc: "Convolutional Neural Networks for spatial feature extraction.",
+                            color: "#ff99bb",
+                            val: 8,
+                          },
+                        ],
+                      },
+                      {
+                        id: "NLP",
+                        desc: "Natural Language Processing. Teaching machines to read and generate text.",
+                        color: "#ff6699",
+                        val: 10,
+                        children: [
+                          {
+                            id: "Transformers",
+                            desc: "Attention is all you need. State-of-the-art sequence models.",
+                            color: "#ff99bb",
+                            val: 8,
+                          },
+                          {
+                            id: "RNN",
+                            desc: "Recurrent Neural Networks for temporal and sequential data.",
+                            color: "#ff99bb",
+                            val: 8,
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  {
+                    id: "Machine Learning",
+                    desc: "Classical predictive modeling and statistical inference.",
+                    color: "#ff3377",
+                    val: 14,
+                    children: [
+                      {
+                        id: "Scikit-Learn",
+                        desc: "The standard library for baseline models and clustering.",
+                        color: "#ff6699",
+                        val: 10,
+                      },
+                      {
+                        id: "Federated Learning",
+                        desc: "Decentralized, privacy-preserving AI trained across edge devices.",
+                        color: "#ff6699",
+                        val: 10,
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                id: "Data Systems",
+                desc: "The circulatory system. Pipelines, processing, and persistence.",
+                color: "#0055ff", // Electric Blue
+                val: 18,
+                children: [
+                  {
+                    id: "Databases",
+                    desc: "High-performance storage architectures.",
+                    color: "#3377ff",
+                    val: 14,
+                    children: [
+                      {
+                        id: "SQL",
+                        desc: "Relational data structuring and complex querying.",
+                        color: "#6699ff",
+                        val: 10,
+                      },
+                      {
+                        id: "MongoDB",
+                        desc: "NoSQL document storage for unstructured data.",
+                        color: "#6699ff",
+                        val: 10,
+                      },
+                      {
+                        id: "Redis",
+                        desc: "In-memory data structure store for extreme speed caching.",
+                        color: "#6699ff",
+                        val: 10,
+                      },
+                      {
+                        id: "Influx",
+                        desc: "Time-series database built for high-frequency telemetry.",
+                        color: "#6699ff",
+                        val: 10,
+                      },
+                    ],
+                  },
+                  {
+                    id: "Data Processing",
+                    desc: "Wrangling and streaming massive datasets.",
+                    color: "#3377ff",
+                    val: 14,
+                    children: [
+                      {
+                        id: "Pandas & NumPy",
+                        desc: "Vectorized matrix operations and data manipulation.",
+                        color: "#6699ff",
+                        val: 10,
+                      },
+                      {
+                        id: "Kafka",
+                        desc: "High-throughput distributed event streaming platform.",
+                        color: "#6699ff",
+                        val: 10,
+                      },
+                      {
+                        id: "MQTT",
+                        desc: "Lightweight messaging protocol optimized for IoT and Edge devices.",
+                        color: "#6699ff",
+                        val: 10,
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                id: "System Design",
+                desc: "Architecting scalable, resilient, and highly available backends.",
+                color: "#aa00ff", // Purple
+                val: 18,
+                children: [
+                  {
+                    id: "Microservices",
+                    desc: "Decoupling monolithic architectures into independent, scalable services.",
+                    color: "#cc66ff",
                     val: 14,
                   },
                   {
-                    id: "Firebase",
-                    desc: "Real-time backend-as-a-service and authentication.",
-                    color: "#66ffee",
+                    id: "Distributed Systems",
+                    desc: "Designing for fault tolerance, consensus, and horizontal scaling.",
+                    color: "#cc66ff",
+                    val: 14,
+                  },
+                  {
+                    id: "Load Balancing",
+                    desc: "Efficiently routing traffic across multiple server instances.",
+                    color: "#cc66ff",
+                    val: 14,
+                  },
+                  {
+                    id: "API Gateways",
+                    desc: "Managing authentication, rate limiting, and routing for external clients.",
+                    color: "#cc66ff",
                     val: 14,
                   },
                 ],
               },
               {
-                id: "Frontend",
-                desc: "User-facing architecture and visualizations.",
-                color: "#33ffdd",
+                id: "Software & Web",
+                desc: "The interface. Bridging complex models to human interaction.",
+                color: "#00ffcc", // Neon Cyan
                 val: 18,
                 children: [
                   {
-                    id: "WebDev",
-                    desc: "HTML, CSS, JavaScript, and modern WebGL.",
-                    color: "#66ffee",
+                    id: "Backend APIs",
+                    desc: "Serving ML models to the web securely and rapidly.",
+                    color: "#33ffdd",
+                    val: 14,
+                    children: [
+                      {
+                        id: "Flask & FastAPI",
+                        desc: "High-performance Python routing and inference serving.",
+                        color: "#66ffee",
+                        val: 10,
+                      },
+                      {
+                        id: "Firebase",
+                        desc: "Real-time backend-as-a-service and authentication.",
+                        color: "#66ffee",
+                        val: 10,
+                      },
+                    ],
+                  },
+                  {
+                    id: "Frontend",
+                    desc: "User-facing architecture and visualizations.",
+                    color: "#33ffdd",
+                    val: 14,
+                    children: [
+                      {
+                        id: "WebDev",
+                        desc: "HTML, CSS, JavaScript, and modern WebGL.",
+                        color: "#66ffee",
+                        val: 10,
+                      },
+                      {
+                        id: "Streamlit",
+                        desc: "Rapid dashboarding and data-app prototyping.",
+                        color: "#66ffee",
+                        val: 10,
+                      },
+                      {
+                        id: "UI/UX",
+                        desc: "Designing intuitive, cyberpunk-inspired user experiences.",
+                        color: "#66ffee",
+                        val: 10,
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                id: "DevOps & Cloud",
+                desc: "The infrastructure. Scalability and version control.",
+                color: "#ffaa00", // Bright Orange/Yellow
+                val: 18,
+                children: [
+                  {
+                    id: "AWS",
+                    desc: "Amazon Web Services. Cloud compute, S3, and scalable ML deployment.",
+                    color: "#ffbb33",
                     val: 14,
                   },
                   {
-                    id: "Streamlit",
-                    desc: "Rapid dashboarding and data-app prototyping.",
-                    color: "#66ffee",
+                    id: "Docker",
+                    desc: "Containerizing environments to ensure 'it works on my machine' works everywhere.",
+                    color: "#ffbb33",
                     val: 14,
                   },
                   {
-                    id: "UI/UX",
-                    desc: "Designing intuitive, cyberpunk-inspired user experiences.",
-                    color: "#66ffee",
+                    id: "Git",
+                    desc: "Distributed version control and collaborative repository management.",
+                    color: "#ffbb33",
                     val: 14,
                   },
                 ],
@@ -356,27 +420,39 @@
             ],
           },
           {
-            id: "DevOps & Cloud",
-            desc: "The infrastructure. Scalability and version control.",
-            color: "#ffaa00", // Bright Orange/Yellow
+            id: "Non-Technical Skills",
+            desc: "The human element. Strategy, leadership, and execution.",
+            color: "#ffff00", // Yellow
             val: 22,
             children: [
               {
-                id: "AWS",
-                desc: "Amazon Web Services. Cloud compute, S3, and scalable ML deployment.",
-                color: "#ffbb33",
+                id: "Communication",
+                desc: "Translating complex mathematical concepts into clear business value for stakeholders.",
+                color: "#ffff66",
                 val: 16,
               },
               {
-                id: "Docker",
-                desc: "Containerizing environments to ensure 'it works on my machine' works everywhere.",
-                color: "#ffbb33",
+                id: "Dedication",
+                desc: "Relentless pursuit of optimization and seeing complex projects through to completion.",
+                color: "#ffff66",
                 val: 16,
               },
               {
-                id: "Git",
-                desc: "Distributed version control and collaborative repository management.",
-                color: "#ffbb33",
+                id: "Problem Solving",
+                desc: "Analytical mindset to break down seemingly impossible architectures into viable steps.",
+                color: "#ffff66",
+                val: 16,
+              },
+              {
+                id: "Cross-functional Leadership",
+                desc: "Bridging the gap between Data Scientists, Backend Engineers, and Product Managers.",
+                color: "#ffff66",
+                val: 16,
+              },
+              {
+                id: "Agile Execution",
+                desc: "Iterative development, sprint planning, and rapid prototyping in fast-paced environments.",
+                color: "#ffff66",
                 val: 16,
               },
             ],
@@ -394,8 +470,8 @@
           desc: node.desc,
           color: node.color,
           val: node.val,
-          // Collapse deeply nested nodes initially. Show Root + Level 1.
-          collapsed: parent !== null,
+          // Initially show only the two main branches: Tech and Non-Tech
+          collapsed: parent !== null && parent.id !== "Tanish Mittal",
           childLinks: [],
         };
         nodesById[node.id] = n;
@@ -432,22 +508,28 @@
         return { nodes: visibleNodes, links: visibleLinks };
       }
 
-      // Initialize Graph with "Radial Out" hierarchical layout
       const elem = document.getElementById("3d-graph");
       const Graph = ForceGraph3D()(elem)
-        .backgroundColor("rgba(0,0,0,0)") // Let CSS gradient show
-        .dagMode("radialout") // Strict tree structure! Looks incredibly pro.
-        .dagLevelDistance(80) // Space out the levels
+        .backgroundColor("rgba(0,0,0,0)")
+        // Use Left-to-Right tree mode for a proper, structured "RPG Skill Tree" look
+        .dagMode("lr")
+        .dagLevelDistance(100)
+        // INCREASE RIGIDITY to stop the "flying everywhere" wobble
+        .d3Force(
+          "collide",
+          d3.forceCollide((node) => Math.cbrt(node.val) * 6),
+        )
+        .d3Force("charge", d3.forceManyBody().strength(-150)) // Push nodes apart strictly
         .nodeColor("color")
         .nodeRelSize(5)
         .nodeVal("val")
         .nodeLabel("id")
-        .nodeResolution(16) // Smoother spheres
-        .linkWidth(2)
-        .linkColor(() => "rgba(0, 255, 204, 0.4)")
-        .linkDirectionalParticles(3)
-        .linkDirectionalParticleWidth(2.5)
-        .linkDirectionalParticleSpeed(0.008)
+        .nodeResolution(16)
+        .linkWidth(2.5)
+        .linkColor(() => "rgba(255, 255, 255, 0.2)")
+        .linkDirectionalParticles(2)
+        .linkDirectionalParticleWidth(2)
+        .linkDirectionalParticleSpeed(0.005)
         .onNodeClick((node) => {
           // Toggle collapse state
           if (node.childLinks.length > 0) {
@@ -455,8 +537,8 @@
             Graph.graphData(getPrunedTree());
           }
 
-          // Aim camera at node
-          const distance = 180;
+          // Aim camera at node but keep the perspective clean
+          const distance = 250;
           const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
           Graph.cameraPosition(
             {
@@ -465,7 +547,7 @@
               z: node.z * distRatio,
             },
             node,
-            1500, // Smooth fly
+            1500,
           );
 
           // Update UI Terminal
@@ -481,18 +563,14 @@
           terminal.classList.add("visible");
         });
 
-      // Initial render
+      // Render the structured tree
       Graph.graphData(getPrunedTree());
 
-      // Auto-rotate the graph slightly like a glowing core
-      let angle = 0;
-      setInterval(() => {
-        angle += Math.PI / 2000;
-        Graph.cameraPosition({
-          x: 400 * Math.sin(angle),
-          z: 400 * Math.cos(angle),
-        });
-      }, 20);
+      // Remove the auto-spin completely so it remains a rigid, readable skill tree
+      // Set initial camera position to look at the whole tree from the side
+      setTimeout(() => {
+        Graph.cameraPosition({ x: 0, y: 0, z: 600 });
+      }, 500);
 
       window.addEventListener("resize", () => {
         Graph.width(window.innerWidth);
