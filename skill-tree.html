@@ -29,7 +29,7 @@
       }
       body {
         margin: 0;
-        background-color: var(--bg);
+        background: radial-gradient(circle at center, #05100a 0%, #000000 100%);
         color: var(--text);
         font-family: "Inter", sans-serif;
         overflow: hidden; /* Prevent native scroll, D3 handles panning */
@@ -46,11 +46,10 @@
       #tree-container {
         position: relative;
         z-index: 1;
-      }
         width: 100vw;
         height: 100vh;
         cursor: grab;
-        background: radial-gradient(circle at center, #05100a 0%, #000000 100%);
+        background: transparent;
       }
       #tree-container:active {
         cursor: grabbing;
