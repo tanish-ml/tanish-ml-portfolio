@@ -1,72 +1,68 @@
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+
+<html class="scroll-smooth" lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Tanish Mittal | Neural Architecture</title>
-    <link rel="canonical" href="https://tanish-ml.github.io/" />
-
+    <link href="https://tanish-ml.github.io/" rel="canonical" />
     <!-- Performance & SEO: Preconnect to CDNs -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://cdnjs.cloudflare.com" rel="preconnect" />
     <!-- SEO Meta Tags -->
     <meta
-      name="description"
       content="Tanish Mittal's personal portfolio. Machine Learning Engineer focused on Edge AI, Computer Vision, and Generative NLP. Discover AI and ML projects."
+      name="description"
     />
     <meta
-      name="keywords"
       content="Tanish Mittal, Tanish, AI, ML, Machine Learning Engineer, Artificial Intelligence, Edge AI, Computer Vision, Generative NLP, Neural Networks, Deep Learning, Portfolio, Projects, Developer"
+      name="keywords"
     />
-    <meta name="author" content="Tanish Mittal" />
-    <meta name="robots" content="index, follow" />
-
+    <meta content="Tanish Mittal" name="author" />
+    <meta content="index, follow" name="robots" />
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://tanish-ml.github.io/" />
+    <meta content="website" property="og:type" />
+    <meta content="https://tanish-ml.github.io/" property="og:url" />
     <meta
+      content="Tanish Mittal | Machine Learning Engineer Portfolio"
       property="og:title"
-      content="Tanish Mittal | Machine Learning Engineer Portfolio"
     />
     <meta
+      content="Explore the portfolio of Tanish Mittal, a Machine Learning Engineer specializing in Edge AI, Computer Vision, and NLP."
       property="og:description"
-      content="Explore the portfolio of Tanish Mittal, a Machine Learning Engineer specializing in Edge AI, Computer Vision, and NLP."
     />
     <meta
+      content="https://tanish-ml.github.io/rsz_image.png"
       property="og:image"
-      content="https://tanish-ml.github.io/rsz_image.png"
     />
-
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://tanish-ml.github.io/" />
+    <meta content="summary_large_image" property="twitter:card" />
+    <meta content="https://tanish-ml.github.io/" property="twitter:url" />
     <meta
-      property="twitter:title"
       content="Tanish Mittal | Machine Learning Engineer Portfolio"
+      property="twitter:title"
     />
     <meta
-      property="twitter:description"
       content="Explore the portfolio of Tanish Mittal, a Machine Learning Engineer specializing in Edge AI, Computer Vision, and NLP."
+      property="twitter:description"
     />
     <meta
-      property="twitter:image"
       content="https://tanish-ml.github.io/rsz_image.png"
+      property="twitter:image"
     />
-
     <link
+      href="https://github.com/favicon.ico"
       rel="icon"
       type="image/x-icon"
-      href="https://github.com/favicon.ico"
     />
     <script src="https://cdn.tailwindcss.com"></script>
     <link
-      rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Courier+New:wght@400;700&family=Inter:wght@400;700;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Courier+New:wght@400;700&amp;family=Inter:wght@400;700;900&amp;display=swap"
       rel="stylesheet"
     />
     <style>
@@ -583,7 +579,6 @@
         text-shadow: 0 0 10px #ff0055;
       }
     </style>
-
     <!-- JSON-LD Structured Data for SEO -->
     <script type="application/ld+json">
       {
@@ -610,6 +605,7 @@
   <body class="antialiased">
     <!-- Generative Particle Flow Field Background -->
     <div
+      aria-hidden="true"
       id="webgl-container"
       style="
         position: fixed;
@@ -620,35 +616,30 @@
         z-index: -3;
         pointer-events: none;
       "
-      aria-hidden="true"
     ></div>
-
     <!-- Sidebar -->
     <div id="sidebar">
       <a href="#about" onclick="toggleMenu()">// ABOUT</a>
       <a href="#projects" onclick="toggleMenu()">// PROJECTS</a>
       <a href="#explore" onclick="toggleMenu()">// EXPLORE</a>
-      <a href="#arcade" onclick="toggleMenu()" class="arcade-link">// ARCADE</a>
+      <a class="arcade-link" href="#arcade" onclick="toggleMenu()">// ARCADE</a>
       <a
         href="https://github.com/tanish-ml"
-        target="_blank"
         onclick="toggleMenu()"
+        target="_blank"
         >// GITHUB</a
       >
     </div>
-
     <style>
       .cursor-node {
         display: none !important;
       }
     </style>
-
     <!-- AI Companion Cursor -->
-    <div id="ai-companion" aria-hidden="true">
+    <div aria-hidden="true" id="ai-companion">
       <div class="orb-core"></div>
       <div id="ai-tooltip">Greetings.</div>
     </div>
-
     <!-- Spectral Ghost Cursor Nodes -->
     <div class="cursor-node" id="cursor-main">
       <div class="hud-reticle"></div>
@@ -666,13 +657,10 @@
     <div class="cursor-node ghost-node ghost-4" id="ghost-4">
       <div class="hud-reticle"></div>
     </div>
-
-    <div class="crt-overlay" aria-hidden="true"></div>
-    <div class="crt-vignette" aria-hidden="true"></div>
-
-    <div class="blob blob-1" aria-hidden="true"></div>
-    <div class="blob blob-2" aria-hidden="true"></div>
-
+    <div aria-hidden="true" class="crt-overlay"></div>
+    <div aria-hidden="true" class="crt-vignette"></div>
+    <div aria-hidden="true" class="blob blob-1"></div>
+    <div aria-hidden="true" class="blob blob-2"></div>
     <!-- Nav -->
     <nav
       class="fixed w-full z-50 border-b border-[var(--accent)]/30"
@@ -689,58 +677,56 @@
           class="flex space-x-6 items-center text-sm font-mono text-[var(--accent)]"
         >
           <a
-            href="https://mail.google.com/mail/?view=cm&fs=1&to=tanishmittal2212@gmail.com"
-            target="_blank"
-            class="hover:text-[#ff0055] transition"
             aria-label="Email Me"
-            ><i class="fas fa-envelope text-lg" aria-hidden="true"></i
+            class="hover:text-[#ff0055] transition"
+            href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=tanishmittal2212@gmail.com"
+            target="_blank"
+            ><i aria-hidden="true" class="fas fa-envelope text-lg"></i
           ></a>
           <a
+            aria-label="LinkedIn Profile"
+            class="hover:text-[#ff0055] transition"
             href="https://www.linkedin.com/in/tanish-mittal-42318924a/"
             target="_blank"
-            class="hover:text-[#ff0055] transition"
-            aria-label="LinkedIn Profile"
-            ><i class="fab fa-linkedin text-lg" aria-hidden="true"></i
+            ><i aria-hidden="true" class="fab fa-linkedin text-lg"></i
           ></a>
           <a
+            aria-label="Instagram Profile"
+            class="hover:text-[#ff0055] transition"
             href="https://www.instagram.com/nottanishmittal/"
             target="_blank"
-            class="hover:text-[#ff0055] transition"
-            aria-label="Instagram Profile"
-            ><i class="fab fa-instagram text-lg" aria-hidden="true"></i
+            ><i aria-hidden="true" class="fab fa-instagram text-lg"></i
           ></a>
           <a
+            aria-label="GitHub Profile"
+            class="hover:text-[#ff0055] transition"
             href="https://github.com/tanish-ml"
             target="_blank"
-            class="hover:text-[#ff0055] transition"
-            aria-label="GitHub Profile"
-            ><i class="fab fa-github text-lg" aria-hidden="true"></i
+            ><i aria-hidden="true" class="fab fa-github text-lg"></i
           ></a>
-
           <!-- Toggle Menu Button -->
           <div
+            aria-label="Toggle Menu"
             class="interactive hover:text-[#ff0055] transition cursor-pointer text-xl ml-4"
             onclick="toggleMenu()"
+            onkeydown="if(event.key===\'Enter\'||event.key===\' \') this.click();"
             role="button"
             tabindex="0"
-            aria-label="Toggle Menu"
-            onkeydown="if(event.key===\'Enter\'||event.key===\' \') this.click();"
           >
             <i class="fas fa-bars"></i>
           </div>
         </div>
       </div>
     </nav>
-
     <main id="main-content">
       <!-- Hero Section -->
       <section
         class="min-h-screen flex flex-col justify-center items-start px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto pt-20"
       >
         <p class="text-[#00aa44] font-mono mb-4 tracking-widest">
-          > SYSTEM_INITIALIZATION_COMPLETE
+          &gt; SYSTEM_INITIALIZATION_COMPLETE
         </p>
-        <h1 class="decode-title" id="decoder" data-value="TANISH MITTAL">
+        <h1 class="decode-title" data-value="TANISH MITTAL" id="decoder">
           TANISH MITTAL
         </h1>
         <p
@@ -751,15 +737,14 @@
         </p>
         <div class="flex gap-4 mt-12 font-mono">
           <a
-            href="#projects"
             class="border border-[var(--accent)] text-black bg-[var(--accent)] hover:bg-[#ff0055] hover:border-[#ff0055] hover:text-white px-8 py-3 transition font-bold tracking-widest shadow-[0_0_15px_rgba(0,255,204,0.4)]"
+            href="#projects"
             >ACCESS_MAINFRAME</a
           >
         </div>
       </section>
-
       <!-- Projects Section -->
-      <section id="projects" style="height: 800vh; position: relative">
+      <section id="projects" style="height: 500vh; position: relative">
         <div style="position: sticky; top: 0; height: 100vh; overflow: hidden">
           <div
             style="
@@ -781,12 +766,11 @@
               <h2
                 class="text-3xl font-mono font-bold text-white mb-2 tracking-widest"
               >
-                > /sys/active_nodes
+                &gt; /sys/active_nodes
               </h2>
               <p class="text-[#00aa44] font-mono">[ DEPLOYED ARCHITECTURES ]</p>
               <div class="w-20 h-1 bg-[var(--accent)] mt-4"></div>
             </div>
-
             <div
               id="depth-world"
               style="
@@ -802,11 +786,7 @@
               <div
                 style="
                   position: absolute;
-                  transform: translate3d(
-                    329.731299141762px,
-                    -17.863162263665288px,
-                    -400px
-                  );
+                  transform: translate3d(0px, 150px, -600px);
                   margin-left: -175px;
                   margin-top: -150px;
                   width: 350px;
@@ -814,15 +794,15 @@
                 "
               >
                 <a
-                  href="https://github.com/tanish-ml/ResViT-Tiny"
-                  target="_blank"
                   class="card interactive"
+                  href="https://github.com/tanish-ml/ResViT-Tiny"
                   style="
                     width: 100%;
                     height: 100%;
                     text-decoration: none;
                     display: flex;
                   "
+                  target="_blank"
                 >
                   <span class="card-number">SYS.01</span>
                   <h2
@@ -857,14 +837,13 @@
                   </div>
                 </a>
               </div>
-
               <div
                 style="
                   position: absolute;
                   transform: translate3d(
-                    -160.59926773802997px,
-                    -87.20959528121614px,
-                    -1000px
+                    191.77021544168122px,
+                    143.3004733688409px,
+                    -1200px
                   );
                   margin-left: -175px;
                   margin-top: -150px;
@@ -873,15 +852,15 @@
                 "
               >
                 <a
-                  href="https://github.com/tanish-ml/DocuMind"
-                  target="_blank"
                   class="card interactive"
+                  href="https://github.com/tanish-ml/DocuMind"
                   style="
                     width: 100%;
                     height: 100%;
                     text-decoration: none;
                     display: flex;
                   "
+                  target="_blank"
                 >
                   <span class="card-number">SYS.02</span>
                   <h2
@@ -916,14 +895,13 @@
                   </div>
                 </a>
               </div>
-
               <div
                 style="
                   position: absolute;
                   transform: translate3d(
-                    235.1003275382509px,
-                    -63.11086830485391px,
-                    -1600px
+                    336.5883939231586px,
+                    123.80034223645175px,
+                    -1800px
                   );
                   margin-left: -175px;
                   margin-top: -150px;
@@ -932,15 +910,15 @@
                 "
               >
                 <a
-                  href="https://github.com/tanish-ml/TubeIntel"
-                  target="_blank"
                   class="card interactive"
+                  href="https://github.com/tanish-ml/TubeIntel"
                   style="
                     width: 100%;
                     height: 100%;
                     text-decoration: none;
                     display: flex;
                   "
+                  target="_blank"
                 >
                   <span class="card-number">SYS.03</span>
                   <h2
@@ -965,8 +943,8 @@
                       line-height: 1.4;
                     "
                   >
-                    AI YouTube Summarizer & Researcher - A Streamlit app using
-                    OpenAI to extract transcripts and generate multi-video
+                    AI YouTube Summarizer &amp; Researcher - A Streamlit app
+                    using OpenAI to extract transcripts and generate multi-video
                     insights.
                   </p>
                   <div
@@ -976,14 +954,13 @@
                   </div>
                 </a>
               </div>
-
               <div
                 style="
                   position: absolute;
                   transform: translate3d(
-                    -184.6939667778734px,
-                    89.40131526335936px,
-                    -2200px
+                    398.9979946416218px,
+                    93.24149524059968px,
+                    -2400px
                   );
                   margin-left: -175px;
                   margin-top: -150px;
@@ -992,76 +969,17 @@
                 "
               >
                 <a
-                  href="https://github.com/tanish-ml/GIFT"
-                  target="_blank"
                   class="card interactive"
+                  href="https://github.com/tanish-ml/quantum-circuit-extraction"
                   style="
                     width: 100%;
                     height: 100%;
                     text-decoration: none;
                     display: flex;
                   "
+                  target="_blank"
                 >
                   <span class="card-number">SYS.04</span>
-                  <h2
-                    style="
-                      font-size: 1.25rem;
-                      text-overflow: ellipsis;
-                      white-space: nowrap;
-                      overflow: hidden;
-                      margin-bottom: 0.5rem;
-                    "
-                    title="GIFT"
-                  >
-                    GIFT
-                  </h2>
-                  <p
-                    class="card-desc"
-                    style="
-                      overflow: hidden;
-                      display: -webkit-box;
-                      -webkit-line-clamp: 4;
-                      -webkit-box-orient: vertical;
-                      line-height: 1.4;
-                    "
-                  >
-                    A multi-stage digital escape room and puzzle game with a
-                    retro CRT aesthetic.
-                  </p>
-                  <div
-                    class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
-                  >
-                    <span>[EXPLORE REPO]</span>
-                  </div>
-                </a>
-              </div>
-
-              <div
-                style="
-                  position: absolute;
-                  transform: translate3d(
-                    235.22118805655253px,
-                    16.909218846872708px,
-                    -2800px
-                  );
-                  margin-left: -175px;
-                  margin-top: -150px;
-                  width: 350px;
-                  height: 300px;
-                "
-              >
-                <a
-                  href="https://github.com/tanish-ml/quantum-circuit-extraction"
-                  target="_blank"
-                  class="card interactive"
-                  style="
-                    width: 100%;
-                    height: 100%;
-                    text-decoration: none;
-                    display: flex;
-                  "
-                >
-                  <span class="card-number">SYS.05</span>
                   <h2
                     style="
                       font-size: 1.25rem;
@@ -1094,14 +1012,13 @@
                   </div>
                 </a>
               </div>
-
               <div
                 style="
                   position: absolute;
                   transform: translate3d(
-                    -268.4349878840945px,
-                    78.45387219852601px,
-                    -3400px
+                    363.7189707302727px,
+                    54.35366317150104px,
+                    -3000px
                   );
                   margin-left: -175px;
                   margin-top: -150px;
@@ -1110,17 +1027,17 @@
                 "
               >
                 <a
-                  href="https://github.com/tanish-ml/edge-device-ml-regression"
-                  target="_blank"
                   class="card interactive"
+                  href="https://github.com/tanish-ml/edge-device-ml-regression"
                   style="
                     width: 100%;
                     height: 100%;
                     text-decoration: none;
                     display: flex;
                   "
+                  target="_blank"
                 >
-                  <span class="card-number">SYS.06</span>
+                  <span class="card-number">SYS.05</span>
                   <h2
                     style="
                       font-size: 1.25rem;
@@ -1153,14 +1070,13 @@
                   </div>
                 </a>
               </div>
-
               <div
                 style="
                   position: absolute;
                   transform: translate3d(
-                    274.48055563980495px,
-                    -88.73056272752355px,
-                    -4000px
+                    239.38885764158258px,
+                    10.610580250155436px,
+                    -3600px
                   );
                   margin-left: -175px;
                   margin-top: -150px;
@@ -1169,76 +1085,17 @@
                 "
               >
                 <a
-                  href="https://github.com/tanish-ml/Strategies-for-the-Class-Imbalance-Problem-on-CNN-and-ViT-Tiny-Architectures"
-                  target="_blank"
                   class="card interactive"
-                  style="
-                    width: 100%;
-                    height: 100%;
-                    text-decoration: none;
-                    display: flex;
-                  "
-                >
-                  <span class="card-number">SYS.07</span>
-                  <h2
-                    style="
-                      font-size: 1.25rem;
-                      text-overflow: ellipsis;
-                      white-space: nowrap;
-                      overflow: hidden;
-                      margin-bottom: 0.5rem;
-                    "
-                    title="ViT-Tiny Imbalance"
-                  >
-                    ViT-Tiny Imbalance
-                  </h2>
-                  <p
-                    class="card-desc"
-                    style="
-                      overflow: hidden;
-                      display: -webkit-box;
-                      -webkit-line-clamp: 4;
-                      -webkit-box-orient: vertical;
-                      line-height: 1.4;
-                    "
-                  >
-                    Strategies for the Class Imbalance Problem on CNN and
-                    ViT-Tiny Architectures.
-                  </p>
-                  <div
-                    class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
-                  >
-                    <span>[EXPLORE REPO]</span>
-                  </div>
-                </a>
-              </div>
-
-              <div
-                style="
-                  position: absolute;
-                  transform: translate3d(
-                    -291.8714557429523px,
-                    58.35720163543894px,
-                    -4600px
-                  );
-                  margin-left: -175px;
-                  margin-top: -150px;
-                  width: 350px;
-                  height: 300px;
-                "
-              >
-                <a
                   href="https://github.com/tanish-ml/Cross-Device-BLE-Localization-System"
-                  target="_blank"
-                  class="card interactive"
                   style="
                     width: 100%;
                     height: 100%;
                     text-decoration: none;
                     display: flex;
                   "
+                  target="_blank"
                 >
-                  <span class="card-number">SYS.08</span>
+                  <span class="card-number">SYS.06</span>
                   <h2
                     style="
                       font-size: 1.25rem;
@@ -1270,14 +1127,13 @@
                   </div>
                 </a>
               </div>
-
               <div
                 style="
                   position: absolute;
                   transform: translate3d(
-                    251.17530810354785px,
-                    18.203612835968542px,
-                    -5200px
+                    56.448003223946884px,
+                    -34.080314203963034px,
+                    -4200px
                   );
                   margin-left: -175px;
                   margin-top: -150px;
@@ -1286,192 +1142,17 @@
                 "
               >
                 <a
-                  href="https://github.com/tanish-ml/MNIST-Classifier"
-                  target="_blank"
                   class="card interactive"
-                  style="
-                    width: 100%;
-                    height: 100%;
-                    text-decoration: none;
-                    display: flex;
-                  "
-                >
-                  <span class="card-number">SYS.09</span>
-                  <h2
-                    style="
-                      font-size: 1.25rem;
-                      text-overflow: ellipsis;
-                      white-space: nowrap;
-                      overflow: hidden;
-                      margin-bottom: 0.5rem;
-                    "
-                    title="MNIST Classifier"
-                  >
-                    MNIST Classifier
-                  </h2>
-                  <p
-                    class="card-desc"
-                    style="
-                      overflow: hidden;
-                      display: -webkit-box;
-                      -webkit-line-clamp: 4;
-                      -webkit-box-orient: vertical;
-                      line-height: 1.4;
-                    "
-                  >
-                    Handwritten digit classification model.
-                  </p>
-                  <div
-                    class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
-                  >
-                    <span>[EXPLORE REPO]</span>
-                  </div>
-                </a>
-              </div>
-
-              <div
-                style="
-                  position: absolute;
-                  transform: translate3d(
-                    -331.795906880508px,
-                    -7.886075032798234px,
-                    -5800px
-                  );
-                  margin-left: -175px;
-                  margin-top: -150px;
-                  width: 350px;
-                  height: 300px;
-                "
-              >
-                <a
-                  href="https://github.com/tanish-ml/Titanic-Survival-Data-Analytics-Project"
-                  target="_blank"
-                  class="card interactive"
-                  style="
-                    width: 100%;
-                    height: 100%;
-                    text-decoration: none;
-                    display: flex;
-                  "
-                >
-                  <span class="card-number">SYS.10</span>
-                  <h2
-                    style="
-                      font-size: 1.25rem;
-                      text-overflow: ellipsis;
-                      white-space: nowrap;
-                      overflow: hidden;
-                      margin-bottom: 0.5rem;
-                    "
-                    title="Titanic Analytics"
-                  >
-                    Titanic Analytics
-                  </h2>
-                  <p
-                    class="card-desc"
-                    style="
-                      overflow: hidden;
-                      display: -webkit-box;
-                      -webkit-line-clamp: 4;
-                      -webkit-box-orient: vertical;
-                      line-height: 1.4;
-                    "
-                  >
-                    Titanic Survival Data Analytics Project.
-                  </p>
-                  <div
-                    class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
-                  >
-                    <span>[EXPLORE REPO]</span>
-                  </div>
-                </a>
-              </div>
-
-              <div
-                style="
-                  position: absolute;
-                  transform: translate3d(
-                    179.76130799411885px,
-                    33.971905011292435px,
-                    -6400px
-                  );
-                  margin-left: -175px;
-                  margin-top: -150px;
-                  width: 350px;
-                  height: 300px;
-                "
-              >
-                <a
-                  href="https://github.com/tanish-ml/Customer-Churn-Prediction-using-Artificial-Neural-Network-ANN-"
-                  target="_blank"
-                  class="card interactive"
-                  style="
-                    width: 100%;
-                    height: 100%;
-                    text-decoration: none;
-                    display: flex;
-                  "
-                >
-                  <span class="card-number">SYS.11</span>
-                  <h2
-                    style="
-                      font-size: 1.25rem;
-                      text-overflow: ellipsis;
-                      white-space: nowrap;
-                      overflow: hidden;
-                      margin-bottom: 0.5rem;
-                    "
-                    title="Customer Churn ANN"
-                  >
-                    Customer Churn ANN
-                  </h2>
-                  <p
-                    class="card-desc"
-                    style="
-                      overflow: hidden;
-                      display: -webkit-box;
-                      -webkit-line-clamp: 4;
-                      -webkit-box-orient: vertical;
-                      line-height: 1.4;
-                    "
-                  >
-                    Customer Churn Prediction using Artificial Neural Network
-                    (ANN).
-                  </p>
-                  <div
-                    class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
-                  >
-                    <span>[EXPLORE REPO]</span>
-                  </div>
-                </a>
-              </div>
-
-              <div
-                style="
-                  position: absolute;
-                  transform: translate3d(
-                    -184.07847052343033px,
-                    -55.21763025637127px,
-                    -7000px
-                  );
-                  margin-left: -175px;
-                  margin-top: -150px;
-                  width: 350px;
-                  height: 300px;
-                "
-              >
-                <a
                   href="https://github.com/tanish-ml/Binary-Image-Classification-Project"
-                  target="_blank"
-                  class="card interactive"
                   style="
                     width: 100%;
                     height: 100%;
                     text-decoration: none;
                     display: flex;
                   "
+                  target="_blank"
                 >
-                  <span class="card-number">SYS.12</span>
+                  <span class="card-number">SYS.07</span>
                   <h2
                     style="
                       font-size: 1.25rem;
@@ -1503,14 +1184,13 @@
                   </div>
                 </a>
               </div>
-
               <div
                 style="
                   position: absolute;
                   transform: translate3d(
-                    259.9423556084679px,
-                    36.452200567627344px,
-                    -7600px
+                    -140.31329107584793px,
+                    -75.72691568997864px,
+                    -4800px
                   );
                   margin-left: -175px;
                   margin-top: -150px;
@@ -1519,75 +1199,17 @@
                 "
               >
                 <a
-                  href="https://github.com/tanish-ml/Pepper_scripts"
-                  target="_blank"
                   class="card interactive"
-                  style="
-                    width: 100%;
-                    height: 100%;
-                    text-decoration: none;
-                    display: flex;
-                  "
-                >
-                  <span class="card-number">SYS.13</span>
-                  <h2
-                    style="
-                      font-size: 1.25rem;
-                      text-overflow: ellipsis;
-                      white-space: nowrap;
-                      overflow: hidden;
-                      margin-bottom: 0.5rem;
-                    "
-                    title="Pepper Scripts"
-                  >
-                    Pepper Scripts
-                  </h2>
-                  <p
-                    class="card-desc"
-                    style="
-                      overflow: hidden;
-                      display: -webkit-box;
-                      -webkit-line-clamp: 4;
-                      -webkit-box-orient: vertical;
-                      line-height: 1.4;
-                    "
-                  >
-                    Different functionalities on Pepper.
-                  </p>
-                  <div
-                    class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
-                  >
-                    <span>[EXPLORE REPO]</span>
-                  </div>
-                </a>
-              </div>
-
-              <div
-                style="
-                  position: absolute;
-                  transform: translate3d(
-                    -345.9804736818819px,
-                    -95.00812719857217px,
-                    -8200px
-                  );
-                  margin-left: -175px;
-                  margin-top: -150px;
-                  width: 350px;
-                  height: 300px;
-                "
-              >
-                <a
                   href="https://github.com/tanish-ml/netmambaplus_xai"
-                  target="_blank"
-                  class="card interactive"
                   style="
                     width: 100%;
                     height: 100%;
                     text-decoration: none;
                     display: flex;
                   "
+                  target="_blank"
                 >
-                  <span class="card-number">SYS.14</span>
+                  <span class="card-number">SYS.08</span>
                   <h2
                     style="
                       font-size: 1.25rem;
@@ -1619,14 +1241,13 @@
                   </div>
                 </a>
               </div>
-
               <div
                 style="
                   position: absolute;
                   transform: translate3d(
-                    321.24376665162094px,
-                    76.72680014772486px,
-                    -8800px
+                    -302.7209981231713px,
+                    -110.60905733118682px,
+                    -5400px
                   );
                   margin-left: -175px;
                   margin-top: -150px;
@@ -1635,103 +1256,49 @@
                 "
               >
                 <a
-                  href="https://github.com/tanish-ml/English-to-Hinglish-Neural-Machine-Translation"
-                  target="_blank"
                   class="card interactive"
+                  href="https://github.com/tanish-ml"
                   style="
                     width: 100%;
                     height: 100%;
                     text-decoration: none;
                     display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    text-align: center;
+                    background: rgba(0, 255, 204, 0.05);
+                    border: 1px dashed var(--accent);
                   "
-                >
-                  <span class="card-number">SYS.15</span>
-                  <h2
-                    style="
-                      font-size: 1.25rem;
-                      text-overflow: ellipsis;
-                      white-space: nowrap;
-                      overflow: hidden;
-                      margin-bottom: 0.5rem;
-                    "
-                    title="EN-Hinglish NMT"
-                  >
-                    EN-Hinglish NMT
-                  </h2>
-                  <p
-                    class="card-desc"
-                    style="
-                      overflow: hidden;
-                      display: -webkit-box;
-                      -webkit-line-clamp: 4;
-                      -webkit-box-orient: vertical;
-                      line-height: 1.4;
-                    "
-                  >
-                    English to Hinglish Neural Machine Translation.
-                  </p>
-                  <div
-                    class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
-                  >
-                    <span>[EXPLORE REPO]</span>
-                  </div>
-                </a>
-              </div>
-
-              <div
-                style="
-                  position: absolute;
-                  transform: translate3d(
-                    -345.1366127245806px,
-                    -49.342909907559054px,
-                    -9400px
-                  );
-                  margin-left: -175px;
-                  margin-top: -150px;
-                  width: 350px;
-                  height: 300px;
-                "
-              >
-                <a
-                  href="https://github.com/tanish-ml/Stock-Market-Analysis"
                   target="_blank"
-                  class="card interactive"
-                  style="
-                    width: 100%;
-                    height: 100%;
-                    text-decoration: none;
-                    display: flex;
-                  "
                 >
-                  <span class="card-number">SYS.16</span>
-                  <h2
-                    style="
-                      font-size: 1.25rem;
-                      text-overflow: ellipsis;
-                      white-space: nowrap;
-                      overflow: hidden;
-                      margin-bottom: 0.5rem;
-                    "
-                    title="Stock Market Analysis"
-                  >
-                    Stock Market Analysis
-                  </h2>
-                  <p
-                    class="card-desc"
-                    style="
-                      overflow: hidden;
-                      display: -webkit-box;
-                      -webkit-line-clamp: 4;
-                      -webkit-box-orient: vertical;
-                      line-height: 1.4;
-                    "
-                  >
-                    Stock Market Analysis and prediction.
-                  </p>
                   <div
-                    class="flex gap-3 text-xs font-mono text-[var(--accent)] mt-auto pt-4 border-t border-[var(--border)] w-full"
+                    style="
+                      display: flex;
+                      flex-direction: column;
+                      align-items: center;
+                      justify-content: center;
+                    "
                   >
-                    <span>[EXPLORE REPO]</span>
+                    <h3
+                      style="
+                        font-size: 1.5rem;
+                        color: var(--accent);
+                        margin-bottom: 1rem;
+                      "
+                    >
+                      <i class="fab fa-github" style="margin-right: 8px"></i
+                      >Wanna see more?
+                    </h3>
+                    <p
+                      style="
+                        color: #e0e0e0;
+                        font-family: &quot;Courier New&quot;, monospace;
+                        font-size: 0.95rem;
+                      "
+                    >
+                      Visit my GitHub profile to explore all my repositories,
+                      scripts, and ongoing experiments.
+                    </p>
                   </div>
                 </a>
               </div>
@@ -1739,17 +1306,16 @@
           </div>
         </div>
       </section>
-
       <!-- Explore Section -->
       <section
-        id="explore"
         class="py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative z-10 border-t border-[var(--accent)]/30"
+        id="explore"
       >
         <div class="mb-16">
           <h2
             class="text-3xl font-mono font-bold text-white mb-2 tracking-widest"
           >
-            > /vault/explore_scrollytelling
+            &gt; /vault/explore_scrollytelling
           </h2>
           <p class="text-[#00aa44] font-mono">
             [ INTERACTIVE 3D DATA VISUALIZATIONS ]
@@ -1757,8 +1323,8 @@
         </div>
         <div class="grid-ui">
           <a
-            href="skill-tree.html"
             class="card interactive group"
+            href="skill-tree.html"
             style="text-decoration: none"
           >
             <span class="card-number" style="color: var(--accent)">EXP.01</span>
@@ -1773,10 +1339,9 @@
               <i class="fas fa-eye"></i> EXPLORE
             </div>
           </a>
-
           <a
-            href="deep-learning-architecture.html"
             class="card interactive group"
+            href="deep-learning-architecture.html"
             style="text-decoration: none"
           >
             <span class="card-number" style="color: var(--accent)">EXP.02</span>
@@ -1791,10 +1356,9 @@
               <i class="fas fa-eye"></i> EXPLORE
             </div>
           </a>
-
           <a
-            href="federated-learning.html"
             class="card interactive group"
+            href="federated-learning.html"
             style="text-decoration: none"
           >
             <span class="card-number" style="color: var(--accent)">EXP.03</span>
@@ -1811,30 +1375,28 @@
           </a>
         </div>
       </section>
-
       <!-- Arcade Section -->
       <section
-        id="arcade"
         class="py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative z-10 border-t border-[var(--accent)]/30"
+        id="arcade"
       >
         <div class="mb-16">
           <h2
             class="text-3xl font-mono font-bold text-white mb-2 tracking-widest"
           >
-            > /vault/arcade_games
+            &gt; /vault/arcade_games
           </h2>
           <p class="text-[#00aa44] font-mono">
             [ SELECT A MODULE TO INITIATE SIMULATION ]
           </p>
         </div>
-
         <div class="grid-ui">
           <div
             class="card interactive"
             onclick="openGame('arcade/index.html#/stage-2')"
+            onkeydown="if(event.key===\'Enter\'||event.key===\' \') this.click();"
             role="button"
             tabindex="0"
-            onkeydown="if(event.key===\'Enter\'||event.key===\' \') this.click();"
           >
             <span class="card-number">GAME.01</span>
             <h2>Cyber Maze</h2>
@@ -1845,13 +1407,12 @@
               <i class="fas fa-play"></i> EXECUTE
             </div>
           </div>
-
           <div
             class="card interactive"
             onclick="openGame('arcade/index.html#/stage-3')"
+            onkeydown="if(event.key===\'Enter\'||event.key===\' \') this.click();"
             role="button"
             tabindex="0"
-            onkeydown="if(event.key===\'Enter\'||event.key===\' \') this.click();"
           >
             <span class="card-number">GAME.02</span>
             <h2>Flappy Terminal</h2>
@@ -1862,13 +1423,12 @@
               <i class="fas fa-play"></i> EXECUTE
             </div>
           </div>
-
           <div
             class="card interactive"
             onclick="openGame('arcade/index.html#/stage-4')"
+            onkeydown="if(event.key===\'Enter\'||event.key===\' \') this.click();"
             role="button"
             tabindex="0"
-            onkeydown="if(event.key===\'Enter\'||event.key===\' \') this.click();"
           >
             <span class="card-number">GAME.03</span>
             <h2>Twist Puzzle</h2>
@@ -1879,13 +1439,12 @@
               <i class="fas fa-play"></i> EXECUTE
             </div>
           </div>
-
           <div
             class="card interactive"
             onclick="openGame('arcade/index.html#/stage-6')"
+            onkeydown="if(event.key===\'Enter\'||event.key===\' \') this.click();"
             role="button"
             tabindex="0"
-            onkeydown="if(event.key===\'Enter\'||event.key===\' \') this.click();"
           >
             <span class="card-number">GAME.05</span>
             <h2>Devil's Challenge</h2>
@@ -1896,7 +1455,6 @@
           </div>
         </div>
       </section>
-
       <!-- Game Modal -->
       <div id="game-modal">
         <div class="close-btn interactive" onclick="closeGame()">
@@ -1904,9 +1462,7 @@
         </div>
         <iframe id="game-frame" src=""></iframe>
       </div>
-
       <!-- Scripts -->
-
       <!-- Three.js Core & Post-Processing -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
@@ -1915,11 +1471,9 @@
       <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
-
       <!-- GSAP Core & ScrollTrigger -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
       <script>
         // --- BOOT SEQUENCE LOGIC ---
         const bootLines = [
@@ -2192,7 +1746,7 @@
             progress = 1;
           }
 
-          const maxZ = 11100;
+          const maxZ = 5400;
           const currentZ = progress * maxZ;
 
           const camX = Math.sin(progress * Math.PI * 2) * 80; // Sweeping curve
