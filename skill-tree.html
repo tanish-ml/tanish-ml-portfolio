@@ -570,10 +570,18 @@
             centerNode(d);
             updateTerminal(d);
           });
-
-        // Add Circle
+        // Add invisible oversized Hitbox for massive click area
         nodeEnter
           .append("circle")
+          .attr("class", "hitbox")
+          .attr("r", 35)
+          .style("fill", "transparent")
+          .style("cursor", "pointer");
+
+        // Add visual Circle
+        nodeEnter
+          .append("circle")
+          .attr("class", "visual-node")
           .attr("r", 1e-6)
           .style("fill", (d) => (d._children ? d.data.color : "#010302"))
           .style("stroke", (d) => d.data.color);
@@ -602,7 +610,7 @@
 
         // Update the node attributes and style
         nodeUpdate
-          .select("circle")
+          .select("circle.visual-node")
           .attr("r", 6)
           .style("fill", (d) =>
             d._children && !d.children ? d.data.color : "#010302",
@@ -628,7 +636,7 @@
           .attr("transform", (d) => `translate(${source.y},${source.x})`)
           .remove();
 
-        nodeExit.select("circle").attr("r", 1e-6);
+        nodeExit.select("circle.visual-node").attr("r", 1e-6);
         nodeExit.select("text").style("fill-opacity", 1e-6);
 
         // --- LINKS ---
@@ -717,7 +725,7 @@
       let pHeight = (canvas.height = window.innerHeight);
 
       const particles = [];
-      const numParticles = 150;
+      const numParticles = 350;
 
       for (let i = 0; i < numParticles; i++) {
         particles.push({
@@ -777,15 +785,15 @@
             const dy = p.y - screenY;
             const distance = Math.sqrt(dx * dx + dy * dy);
 
-            const repelRadius = 80 * scale; // Repulsion field scales with zoom
+            const repelRadius = 150 * scale; // Repulsion field scales with zoom
 
             if (distance < repelRadius && distance > 0) {
               const force = (repelRadius - distance) / repelRadius;
-              repulseX += (dx / distance) * force * 2;
-              repulseY += (dy / distance) * force * 2;
+              repulseX += (dx / distance) * force * 5;
+              repulseY += (dy / distance) * force * 5;
 
               // Draw connecting energy tether if very close
-              if (distance < repelRadius * 0.5) {
+              if (distance < repelRadius * 0.6) {
                 ctx.beginPath();
                 ctx.moveTo(p.x, p.y);
                 ctx.lineTo(screenX, screenY);
