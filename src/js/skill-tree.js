@@ -6,7 +6,7 @@ function revealBody() {
     document.body.classList.add("fade-in-loaded");
   });
 }
-if (document.readyState === 'complete') {
+if (document.readyState === "complete") {
   revealBody();
 } else {
   window.addEventListener("load", revealBody);

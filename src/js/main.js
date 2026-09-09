@@ -1,7 +1,10 @@
-import "/adaptive-fps.js";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import WebGLWorker from "../workers/webgl-worker.js?worker";
+import * as THREE from "three";
+import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
+import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
+import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
+import "/adaptive-fps.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -10,7 +13,7 @@ function revealBody() {
     document.body.classList.add("fade-in-loaded");
   });
 }
-if (document.readyState === 'complete') {
+if (document.readyState === "complete") {
   revealBody();
 } else {
   window.addEventListener("load", revealBody);
@@ -35,10 +38,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Init Terminal Boot Sequence
+  // Init Boot Sequence
   initBootSequence();
   initGhostCursor();
-  initWebWorker();
+  initWebGL();
   initHTMLGSAP();
 });
 
@@ -62,12 +65,11 @@ function initBootSequence() {
       terminalBody.appendChild(p);
       if (index === bootLines.length - 1) {
         setTimeout(() => {
-          document.getElementById("boot-sequence").style.opacity = "0";
-          setTimeout(
-            () =>
-              (document.getElementById("boot-sequence").style.display = "none"),
-            500,
-          );
+          const seq = document.getElementById("boot-sequence");
+          if (seq) {
+            seq.style.opacity = "0";
+            setTimeout(() => (seq.style.display = "none"), 500);
+          }
         }, 800);
       }
     }, delay);
@@ -102,7 +104,6 @@ function initGhostCursor() {
     document.body.classList.remove("target-locked");
   });
 
-  // Interactive elements hover state
   document.querySelectorAll(".interactive").forEach((el) => {
     el.addEventListener("mouseenter", () => {
       document.body.classList.add("target-locked");
@@ -130,60 +131,124 @@ function initGhostCursor() {
   renderAnimation();
 }
 
-function initWebWorker() {
+function initWebGL() {
   const container3D = document.getElementById("webgl-container");
   if (!container3D) return;
 
-  const canvas = document.createElement("canvas");
-  // Fullscreen styling
-  Object.assign(canvas.style, {
-    position: "absolute",
-    top: "0",
-    left: "0",
-    width: "100vw",
-    height: "100vh",
-    outline: "none",
-    border: "none",
-    zIndex: "-3",
-  });
-  container3D.appendChild(canvas);
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x030508, 0.005);
 
-  let worker;
-  if ("transferControlToOffscreen" in canvas) {
-    const offscreen = canvas.transferControlToOffscreen();
-    worker = new WebGLWorker();
-    worker.postMessage(
-      {
-        type: "init",
-        canvas: offscreen,
-        width: window.innerWidth,
-        height: window.innerHeight,
-        pixelRatio: window.devicePixelRatio,
-      },
-      [offscreen],
-    );
-  } else {
-    console.warn("OffscreenCanvas not supported! Web Worker disabled.");
-    // Fallback: If not supported, we'd theoretically load Three.js here.
-    // For this rewrite, we assume modern browser support.
-    return;
+  const camera = new THREE.PerspectiveCamera(
+    60,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000,
+  );
+  camera.position.set(0, 15, 60);
+  camera.rotation.set(-0.1, 0, 0);
+
+  const renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: true,
+  });
+  renderer.setClearColor(0x030508, 1);
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  // Deliberately NOT setting high pixel ratio to maintain original buttery performance
+  container3D.appendChild(renderer.domElement);
+
+  const renderScene = new RenderPass(scene, camera);
+  const bloomPass = new UnrealBloomPass(
+    new THREE.Vector2(window.innerWidth, window.innerHeight),
+    1.2,
+    0.4,
+    0.2,
+  );
+  const composer = new EffectComposer(renderer);
+  composer.addPass(renderScene);
+  composer.addPass(bloomPass);
+
+  const masterGroup = new THREE.Group();
+  scene.add(masterGroup);
+
+  // Floating Data Cubes
+  const numCubes = 400;
+  const cubeGeo = new THREE.BoxGeometry(0.4, 0.4, 0.4);
+  const cubeMat = new THREE.MeshBasicMaterial({
+    color: 0x00ffcc,
+    transparent: true,
+    opacity: 0.6,
+  });
+
+  const instancedCubes = new THREE.InstancedMesh(cubeGeo, cubeMat, numCubes);
+  const dummy = new THREE.Object3D();
+  const cubeData = [];
+
+  for (let i = 0; i < numCubes; i++) {
+    const x = (Math.random() - 0.5) * 400;
+    const y = (Math.random() - 0.5) * 100;
+    const z = (Math.random() - 0.5) * 400;
+    const rx = Math.random() * Math.PI;
+    const ry = Math.random() * Math.PI;
+    cubeData.push({ x, y, z, rx, ry });
+
+    dummy.position.set(x, y, z);
+    dummy.rotation.set(rx, ry, 0);
+    dummy.updateMatrix();
+    instancedCubes.setMatrixAt(i, dummy.matrix);
+  }
+  masterGroup.add(instancedCubes);
+
+  // Server Monoliths
+  const monolithGeo = new THREE.BoxGeometry(8, 40, 8);
+  const monolithMat = new THREE.MeshBasicMaterial({
+    color: 0x002211,
+    wireframe: true,
+    transparent: true,
+    opacity: 0.3,
+  });
+
+  for (let i = 0; i < 25; i++) {
+    const m = new THREE.Mesh(monolithGeo, monolithMat);
+    m.position.set((Math.random() - 0.5) * 200, 0, Math.random() * -500 + 50);
+    masterGroup.add(m);
   }
 
   // Handle Resize
   window.addEventListener("resize", () => {
-    worker.postMessage({
-      type: "resize",
-      width: window.innerWidth,
-      height: window.innerHeight,
-    });
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    composer.setSize(window.innerWidth, window.innerHeight);
   });
 
-  // Handle Downgrade Event
+  let disablePostProcessing = false;
   window.addEventListener("fpsDowngrade", () => {
-    worker.postMessage({ type: "downgrade" });
+    disablePostProcessing = true;
   });
 
-  // Handle Magnetic Cards
+  function animate3D() {
+    requestAnimationFrame(animate3D);
+
+    for (let i = 0; i < numCubes; i++) {
+      let data = cubeData[i];
+      data.rx += 0.01;
+      data.ry += 0.01;
+      dummy.position.set(data.x, data.y, data.z);
+      dummy.rotation.set(data.rx, data.ry, 0);
+      dummy.updateMatrix();
+      instancedCubes.setMatrixAt(i, dummy.matrix);
+    }
+    instancedCubes.instanceMatrix.needsUpdate = true;
+
+    if (disablePostProcessing) {
+      renderer.render(scene, camera);
+    } else {
+      composer.render();
+    }
+  }
+  animate3D();
+
+  // Magnetic Cards
   document.querySelectorAll(".card").forEach((card) => {
     card.addEventListener("mousemove", (e) => {
       const rect = card.getBoundingClientRect();
@@ -191,8 +256,6 @@ function initWebWorker() {
       const y = e.clientY - rect.top;
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
-
-      // 15 degrees max rotation
       const rotateX = ((y - centerY) / centerY) * -10;
       const rotateY = ((x - centerX) / centerX) * 10;
 
@@ -209,15 +272,8 @@ function initWebWorker() {
     });
   });
 
-  // --- GSAP CAMERA PROXY ---
-  const proxyCamera = { x: 0, y: 15, z: 60, rx: -0.1, ry: 0, rz: 0 };
-
-  function updateWorkerCamera() {
-    worker.postMessage({ type: "camera", data: proxyCamera });
-  }
-
-  // 1. Projects Section (The Dive & Forward Tunnel)
-  gsap.to(proxyCamera, {
+  // GSAP ScrollTrigger
+  gsap.to(camera.position, {
     scrollTrigger: {
       trigger: "#projects",
       start: "top bottom",
@@ -227,23 +283,20 @@ function initWebWorker() {
     z: -50,
     y: 2,
     ease: "none",
-    onUpdate: updateWorkerCamera,
   });
 
-  gsap.to(proxyCamera, {
+  gsap.to(camera.rotation, {
     scrollTrigger: {
       trigger: "#projects",
       start: "top bottom",
       end: "bottom top",
       scrub: 1,
     },
-    rx: 0,
+    x: 0,
     ease: "none",
-    onUpdate: updateWorkerCamera,
   });
 
-  // 2. Explore Section (The Aggressive Right Bank & Dive)
-  gsap.to(proxyCamera, {
+  gsap.to(camera.position, {
     scrollTrigger: {
       trigger: "#explore",
       start: "top bottom",
@@ -253,28 +306,25 @@ function initWebWorker() {
     x: 10,
     z: -30,
     ease: "power2.inOut",
-    onUpdate: updateWorkerCamera,
   });
 
-  gsap.to(proxyCamera, {
+  gsap.to(camera.rotation, {
     scrollTrigger: {
       trigger: "#explore",
       start: "top bottom",
       end: "bottom top",
       scrub: 1,
     },
-    rx: -0.05,
-    onUpdate: updateWorkerCamera,
+    x: -0.05,
   });
 }
 
 function initHTMLGSAP() {
-  // Make the UI cards fly in dynamically as you scroll
   gsap.utils.toArray(".card, .mb-16").forEach((element) => {
     gsap.from(element, {
       scrollTrigger: {
         trigger: element,
-        start: "top 90%", // Trigger when top of element hits 90% of viewport
+        start: "top 90%",
         toggleActions: "play none none reverse",
       },
       y: 80,
@@ -284,7 +334,6 @@ function initHTMLGSAP() {
     });
   });
 
-  // Interactive parallax text
   gsap.to(".hud-overlay", {
     scrollTrigger: {
       trigger: "body",
@@ -297,7 +346,6 @@ function initHTMLGSAP() {
   });
 }
 
-// Global functions for inline HTML event handlers
 window.toggleMenu = function () {
   const menu = document.getElementById("mobile-menu");
   menu.classList.toggle("hidden");

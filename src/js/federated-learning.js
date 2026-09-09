@@ -11,7 +11,7 @@ function revealBody() {
     document.body.classList.add("fade-in-loaded");
   });
 }
-if (document.readyState === 'complete') {
+if (document.readyState === "complete") {
   revealBody();
 } else {
   window.addEventListener("load", revealBody);
@@ -55,7 +55,7 @@ camera.position.set(0, 20, 80);
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setClearColor(0x030508);
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
 container.appendChild(renderer.domElement);
 
 // --- POST-PROCESSING (BLOOM) ---
