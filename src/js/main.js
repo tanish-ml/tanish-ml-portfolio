@@ -337,8 +337,8 @@ function initHTMLGSAP() {
 }
 
 window.toggleMenu = function () {
-  const menu = document.getElementById("mobile-menu");
-  menu.classList.toggle("hidden");
+  const menu = document.getElementById("sidebar");
+  menu.classList.toggle("open");
 };
 window.openGame = function (url) {
   document.getElementById("game-frame").src = url;
@@ -369,7 +369,7 @@ const renderASCII = () => {
   img.onload = () => {
     const cols = 150;
     const aspect = img.height / img.width;
-    const rows = Math.floor(cols * aspect * 0.5);
+    const rows = Math.floor(cols * aspect * 0.6);
 
     const offCanvas = document.createElement("canvas");
     offCanvas.width = cols;
@@ -379,7 +379,7 @@ const renderASCII = () => {
     const imgData = offCtx.getImageData(0, 0, cols, rows).data;
 
     const fontSize = 800 / cols;
-    canvas.width = 800;
+    canvas.width = cols * fontSize * 0.6;
     canvas.height = rows * fontSize;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -441,3 +441,36 @@ function initDepthChamber() {
     world.style.transform = `translate3d(${camX}px, ${camY}px, ${currentZ}px)`;
   });
 }
+  // --- CYBER TEXT DECODER ---
+  const initCyberDecoder = () => {
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*!¿§';
+    const el = document.getElementById('decoder');
+    if (!el) return;
+    let interval = null;
+
+    function scramble() {
+      let iteration = 0;
+      clearInterval(interval);
+
+      interval = setInterval(() => {
+        el.innerText = el.dataset.value
+          .split('')
+          .map((letter, index) => {
+            if (index < iteration) {
+              return el.dataset.value[index];
+            }
+            return letters[Math.floor(Math.random() * letters.length)];
+          })
+          .join('');
+
+        if (iteration >= el.dataset.value.length) {
+          clearInterval(interval);
+        }
+        iteration += 1 / 3;
+      }, 30);
+    }
+
+    scramble();
+    el.addEventListener('mouseenter', scramble);
+  };
+  initCyberDecoder();
