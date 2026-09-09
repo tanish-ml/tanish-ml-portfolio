@@ -70,9 +70,24 @@
 
     <!-- Vanilla Page Fade Logic (Zero Overhead, Zero SPA Bugs) -->
 
-    <script type="module" crossorigin src="/assets/main-BEGxC7AN.js"></script>
+    <script>
+      // Fallback: If ES modules fail to load (e.g., opened via VSCode Live Server without Vite),
+      // ensure the site becomes visible instead of remaining permanently blank.
+      setTimeout(() => {
+        if (
+          document.body &&
+          !document.body.classList.contains("fade-in-loaded")
+        ) {
+          document.body.classList.add("fade-in-loaded");
+          console.error(
+            "ES Modules failed to load. Are you using a static Live Server instead of 'npm run dev'?",
+          );
+        }
+      }, 1000);
+    </script>
+    <script type="module" crossorigin src="/assets/main-D96IRTey.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/adaptive-fps-b15lSVGD.js">
-    <link rel="modulepreload" crossorigin href="/assets/ScrollTrigger-CiEuWA-R.js">
+    <link rel="modulepreload" crossorigin href="/assets/UnrealBloomPass-e7YNBY0C.js">
     <link rel="stylesheet" crossorigin href="/assets/main-Dq2rC-2e.css">
   </head>
   <body class="antialiased">
@@ -210,7 +225,7 @@
         </div>
       </section>
       <!-- Projects Section -->
-      <section id="projects" style="height: 1500vh; position: relative">
+      <section id="projects" style="height: 400vh; position: relative">
         <div style="position: sticky; top: 0; height: 100vh; overflow: hidden">
           <div
             style="

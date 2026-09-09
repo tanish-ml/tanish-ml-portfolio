@@ -55,6 +55,8 @@ camera.position.set(0, 20, 80);
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setClearColor(0x030508);
 renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
+  renderer.setClearColor(0x010203, 1);
 
 container.appendChild(renderer.domElement);
 
@@ -493,5 +495,7 @@ window.addEventListener("resize", () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
+  renderer.setClearColor(0x010203, 1);
   composer.setSize(window.innerWidth, window.innerHeight);
 });

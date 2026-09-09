@@ -51,10 +51,24 @@
 
     <!-- Vanilla Page Fade Logic (Zero Overhead, Zero SPA Bugs) -->
 
-    <script type="module" crossorigin src="/assets/federatedLearning-DBMKXogu.js"></script>
+    <script>
+      // Fallback: If ES modules fail to load (e.g., opened via VSCode Live Server without Vite),
+      // ensure the site becomes visible instead of remaining permanently blank.
+      setTimeout(() => {
+        if (
+          document.body &&
+          !document.body.classList.contains("fade-in-loaded")
+        ) {
+          document.body.classList.add("fade-in-loaded");
+          console.error(
+            "ES Modules failed to load. Are you using a static Live Server instead of 'npm run dev'?",
+          );
+        }
+      }, 1000);
+    </script>
+    <script type="module" crossorigin src="/assets/federatedLearning-TKZf7r50.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/adaptive-fps-b15lSVGD.js">
-    <link rel="modulepreload" crossorigin href="/assets/UnrealBloomPass-B-0PeK9S.js">
-    <link rel="modulepreload" crossorigin href="/assets/ScrollTrigger-CiEuWA-R.js">
+    <link rel="modulepreload" crossorigin href="/assets/UnrealBloomPass-e7YNBY0C.js">
     <link rel="stylesheet" crossorigin href="/assets/federatedLearning-C16PAs30.css">
   </head>
   <body>

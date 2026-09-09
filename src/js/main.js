@@ -136,7 +136,7 @@ function initWebGL() {
   if (!container3D) return;
 
   const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x030508, 0.005);
+  scene.fog = new THREE.FogExp2(0x010203, 0.005);
 
   const camera = new THREE.PerspectiveCamera(
     60,
@@ -151,7 +151,8 @@ function initWebGL() {
     antialias: true,
     alpha: true,
   });
-  renderer.setClearColor(0x030508, 1);
+  renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
+  renderer.setClearColor(0x010203, 1);
   renderer.setSize(window.innerWidth, window.innerHeight);
   // Deliberately NOT setting high pixel ratio to maintain original buttery performance
   container3D.appendChild(renderer.domElement);
@@ -171,7 +172,7 @@ function initWebGL() {
   scene.add(masterGroup);
 
   // Floating Data Cubes
-  const numCubes = 400;
+  const numCubes = 1500;
   const cubeGeo = new THREE.BoxGeometry(0.4, 0.4, 0.4);
   const cubeMat = new THREE.MeshBasicMaterial({
     color: 0x00ffcc,
@@ -184,9 +185,9 @@ function initWebGL() {
   const cubeData = [];
 
   for (let i = 0; i < numCubes; i++) {
-    const x = (Math.random() - 0.5) * 400;
-    const y = (Math.random() - 0.5) * 100;
-    const z = (Math.random() - 0.5) * 400;
+    const x = (Math.random() - 0.5) * 200;
+    const y = (Math.random() - 0.5) * 80;
+    const z = (Math.random() - 0.5) * 500;
     const rx = Math.random() * Math.PI;
     const ry = Math.random() * Math.PI;
     cubeData.push({ x, y, z, rx, ry });
@@ -197,21 +198,6 @@ function initWebGL() {
     instancedCubes.setMatrixAt(i, dummy.matrix);
   }
   masterGroup.add(instancedCubes);
-
-  // Server Monoliths
-  const monolithGeo = new THREE.BoxGeometry(8, 40, 8);
-  const monolithMat = new THREE.MeshBasicMaterial({
-    color: 0x002211,
-    wireframe: true,
-    transparent: true,
-    opacity: 0.3,
-  });
-
-  for (let i = 0; i < 25; i++) {
-    const m = new THREE.Mesh(monolithGeo, monolithMat);
-    m.position.set((Math.random() - 0.5) * 200, 0, Math.random() * -500 + 50);
-    masterGroup.add(m);
-  }
 
   // Handle Resize
   window.addEventListener("resize", () => {
@@ -233,6 +219,8 @@ function initWebGL() {
       let data = cubeData[i];
       data.rx += 0.01;
       data.ry += 0.01;
+      data.z += 0.1;
+      if (data.z > 100) data.z = -400;
       dummy.position.set(data.x, data.y, data.z);
       dummy.rotation.set(data.rx, data.ry, 0);
       dummy.updateMatrix();
@@ -280,7 +268,7 @@ function initWebGL() {
       end: "bottom top",
       scrub: 1,
     },
-    z: -50,
+    z: -250,
     y: 2,
     ease: "none",
   });
