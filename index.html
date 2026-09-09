@@ -574,6 +574,7 @@
         });
       });
     </script>
+    <script src="adaptive-fps.js"></script>
   </head>
   <body class="antialiased">
     <!-- Generative Particle Flow Field Background -->
@@ -1686,6 +1687,14 @@
         };
         renderASCII();
 
+        // Adaptive FPS Downgrade Hook
+        window.addEventListener("fpsDowngrade", () => {
+          window.disablePostProcessing = true;
+          if (typeof renderer !== "undefined") {
+            renderer.setPixelRatio(1);
+          }
+        });
+
         // --- 3D SCROLL-DRIVEN BACKGROUND (THREE.JS + GSAP) ---
         gsap.registerPlugin(ScrollTrigger);
 
@@ -1823,7 +1832,11 @@
           }
           instancedCubes.instanceMatrix.needsUpdate = true;
 
-          composer.render();
+          if (window.disablePostProcessing) {
+            renderer.render(scene, camera);
+          } else {
+            composer.render();
+          }
         }
         animate3D();
 

@@ -215,6 +215,7 @@
         });
       });
     </script>
+    <script src="adaptive-fps.js"></script>
   </head>
   <body>
     <!-- Particle Canvas -->
@@ -770,7 +771,11 @@
       const particles = [];
       const numParticles = 350;
 
-      for (let i = 0; i < numParticles; i++) {
+      // Adaptive performance: cut particles by 50%
+      const limit = window.reduceParticles
+        ? Math.floor(numParticles / 2)
+        : numParticles;
+      for (let i = 0; i < limit; i++) {
         particles.push({
           x: Math.random() * pWidth,
           y: Math.random() * pHeight,
@@ -779,6 +784,10 @@
           baseRadius: Math.random() * 2 + 1,
         });
       }
+
+      window.addEventListener("fpsDowngrade", () => {
+        window.reduceParticles = true;
+      });
 
       function animateParticles() {
         ctx.clearRect(0, 0, pWidth, pHeight);

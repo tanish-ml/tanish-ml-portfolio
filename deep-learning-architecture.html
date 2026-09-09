@@ -221,6 +221,7 @@
         });
       });
     </script>
+    <script src="adaptive-fps.js"></script>
   </head>
   <body>
     <nav>
@@ -734,7 +735,11 @@
         dustMesh.rotation.y = elapsedTime * 0.02;
 
         // Use composer for Bloom effect instead of raw renderer
-        composer.render();
+        if (window.disablePostProcessing) {
+          renderer.render(scene, camera);
+        } else {
+          composer.render();
+        }
       }
       animate();
 
