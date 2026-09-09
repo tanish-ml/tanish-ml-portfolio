@@ -174,7 +174,7 @@ function initWebGL() {
   scene.add(masterGroup);
 
   // Floating Data Cubes
-  const numCubes = 4000;
+  const numCubes = 8000;
   const cubeGeo = new THREE.BoxGeometry(0.4, 0.4, 0.4);
   const cubeMat = new THREE.MeshBasicMaterial({
     color: 0x00ffcc,
