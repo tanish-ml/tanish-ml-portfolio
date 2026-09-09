@@ -474,3 +474,17 @@ function initDepthChamber() {
     el.addEventListener('mouseenter', scramble);
   };
   initCyberDecoder();
+
+  // Close sidebar when clicking outside
+  document.addEventListener("click", (e) => {
+    const menu = document.getElementById("sidebar");
+    if (!menu) return;
+    
+    // Ignore clicks on the toggle buttons
+    if (e.target.closest('[onclick="toggleMenu()"]')) return;
+    
+    // Close if open and click is outside
+    if (menu.classList.contains("open") && !menu.contains(e.target)) {
+      menu.classList.remove("open");
+    }
+  });
