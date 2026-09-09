@@ -411,7 +411,7 @@ const renderASCII = () => {
       }
     }
   };
-  img.src = "/rsz_image.png"; // Need absolute path because main.js is inside /src/js
+  img.onerror = () => console.error("Failed to load rsz_image.png"); img.src = "rsz_image.png"; // Need absolute path because main.js is inside /src/js
 };
 renderASCII();
 
@@ -431,7 +431,7 @@ function initDepthChamber() {
     }
 
     // 3D Depth Fly-through
-    const maxZ = 11800; // Fly through the Z-axis
+    const maxZ = 9500; // Fly through the Z-axis
     const currentZ = progress * maxZ;
 
     // Add a slight "snake" camera wobble
