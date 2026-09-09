@@ -43,6 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
   initGhostCursor();
   initWebGL();
   initHTMLGSAP();
+  initDepthChamber();
+  renderASCII();
 });
 
 function initBootSequence() {
@@ -356,3 +358,86 @@ window.closeGame = function () {
     .querySelectorAll(".cursor-node")
     .forEach((node) => (node.style.opacity = "1"));
 };
+
+// --- ASCII ART RENDERING ---
+const renderASCII = () => {
+  const canvas = document.getElementById("ascii-canvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+
+  const img = new Image();
+  img.onload = () => {
+    const cols = 150;
+    const aspect = img.height / img.width;
+    const rows = Math.floor(cols * aspect * 0.5);
+
+    const offCanvas = document.createElement("canvas");
+    offCanvas.width = cols;
+    offCanvas.height = rows;
+    const offCtx = offCanvas.getContext("2d", { willReadFrequently: true });
+    offCtx.drawImage(img, 0, 0, cols, rows);
+    const imgData = offCtx.getImageData(0, 0, cols, rows).data;
+
+    const fontSize = 800 / cols;
+    canvas.width = 800;
+    canvas.height = rows * fontSize;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.font = `bold ${fontSize}px "Courier New", monospace`;
+    ctx.textBaseline = "top";
+
+    const asciiChars =
+      ' .\\`^",:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$';
+
+    for (let y = 0; y < rows; y++) {
+      for (let x = 0; x < cols; x++) {
+        const idx = (y * cols + x) * 4;
+        const r = imgData[idx];
+        const g = imgData[idx + 1];
+        const b = imgData[idx + 2];
+        const brightness = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+        const charIdx = Math.floor(brightness * (asciiChars.length - 1));
+        const char = asciiChars[charIdx];
+
+        if (char !== " ") {
+          ctx.fillStyle =
+            brightness > 0.6
+              ? "#ffffff"
+              : brightness > 0.3
+                ? "#33ff33"
+                : "#008800";
+          ctx.fillText(char, x * fontSize * 0.6, y * fontSize);
+        }
+      }
+    }
+  };
+  img.src = "/rsz_image.png"; // Need absolute path because main.js is inside /src/js
+};
+renderASCII();
+
+function initDepthChamber() {
+  // --- DEPTH CHAMBER SCROLL LOGIC ---
+  document.addEventListener("scroll", () => {
+    const container = document.getElementById("projects");
+    const world = document.getElementById("world");
+    if (!container || !world) return;
+
+    const rect = container.getBoundingClientRect();
+    let progress = 0;
+    if (rect.top <= 0 && rect.bottom >= window.innerHeight) {
+      progress = Math.abs(rect.top) / (rect.height - window.innerHeight);
+    } else if (rect.bottom < window.innerHeight) {
+      progress = 1;
+    }
+
+    // 3D Depth Fly-through
+    const maxZ = 11800; // Fly through the Z-axis
+    const currentZ = progress * maxZ;
+
+    // Add a slight "snake" camera wobble
+    const camX = Math.sin(progress * Math.PI * 10) * 100;
+    const camY = Math.cos(progress * Math.PI * 6) * 50;
+
+    world.style.transform = `translate3d(${camX}px, ${camY}px, ${currentZ}px)`;
+  });
+}
