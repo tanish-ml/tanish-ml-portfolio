@@ -1737,19 +1737,6 @@
         const masterGroup = new THREE.Group();
         scene.add(masterGroup);
 
-        // 1. Cyberpunk Grid Floor
-        const gridGeo = new THREE.PlaneGeometry(1000, 1000, 100, 100);
-        const gridMat = new THREE.MeshBasicMaterial({
-          color: 0x00ffcc,
-          wireframe: true,
-          transparent: true,
-          opacity: 0.15,
-        });
-        const grid = new THREE.Mesh(gridGeo, gridMat);
-        grid.rotation.x = -Math.PI / 2;
-        grid.position.y = -10;
-        masterGroup.add(grid);
-
         // 2. Floating Data Cubes (Particles)
         const numCubes = 400; // Drastically reduced for cleaner look
         const cubeGeo = new THREE.BoxGeometry(0.4, 0.4, 0.4);
@@ -1815,10 +1802,6 @@
         // --- ANIMATION LOOP ---
         function animate3D() {
           requestAnimationFrame(animate3D);
-
-          // Move the grid to simulate forward movement
-          grid.position.z += 0.2;
-          if (grid.position.z > 20) grid.position.z = 0;
 
           // Rotate floating cubes
           for (let i = 0; i < numCubes; i++) {
