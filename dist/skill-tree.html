@@ -22,22 +22,9 @@
 
     <!-- Vanilla Page Fade Logic (Zero Overhead, Zero SPA Bugs) -->
 
-    <link rel="stylesheet" href="/src/styles/skill-tree.css" />
-    <script>
-      // Fallback: If ES modules fail to load (e.g., opened via VSCode Live Server without Vite),
-      // ensure the site becomes visible instead of remaining permanently blank.
-      setTimeout(() => {
-        if (
-          document.body &&
-          !document.body.classList.contains("fade-in-loaded")
-        ) {
-          document.body.classList.add("fade-in-loaded");
-          console.error(
-            "ES Modules failed to load. Are you using a static Live Server instead of 'npm run dev'?",
-          );
-        }
-      }, 1000);
-    </script>
+    <script type="module" crossorigin src="/assets/skillTree-Uznh2keg.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/adaptive-fps-b15lSVGD.js">
+    <link rel="stylesheet" crossorigin href="/assets/skillTree-B9Q1X2tp.css">
   </head>
   <body>
     <!-- Particle Canvas -->
@@ -77,6 +64,5 @@
     </div>
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <script type="module" src="/src/js/skill-tree.js"></script>
   </body>
 </html>
