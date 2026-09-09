@@ -431,7 +431,7 @@ function initDepthChamber() {
     }
 
     // 3D Depth Fly-through
-    const maxZ = 9500; // Fly through the Z-axis
+    const maxZ = 8300; // Fly through the Z-axis
     const currentZ = progress * maxZ;
 
     // Add a slight "snake" camera wobble
