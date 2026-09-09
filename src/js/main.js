@@ -419,7 +419,7 @@ function initDepthChamber() {
   // --- DEPTH CHAMBER SCROLL LOGIC ---
   document.addEventListener("scroll", () => {
     const container = document.getElementById("projects");
-    const world = document.getElementById("world");
+    const world = document.getElementById("depth-world");
     if (!container || !world) return;
 
     const rect = container.getBoundingClientRect();
