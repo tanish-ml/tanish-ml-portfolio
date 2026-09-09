@@ -1,11 +1,16 @@
 import * as d3 from "d3";
 import "/adaptive-fps.js";
 
-window.addEventListener("load", () => {
+function revealBody() {
   requestAnimationFrame(() => {
     document.body.classList.add("fade-in-loaded");
   });
-});
+}
+if (document.readyState === 'complete') {
+  revealBody();
+} else {
+  window.addEventListener("load", revealBody);
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   document.body.addEventListener("click", (e) => {

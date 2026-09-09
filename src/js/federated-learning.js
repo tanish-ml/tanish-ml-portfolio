@@ -6,11 +6,16 @@ import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
 
-window.addEventListener("load", () => {
+function revealBody() {
   requestAnimationFrame(() => {
     document.body.classList.add("fade-in-loaded");
   });
-});
+}
+if (document.readyState === 'complete') {
+  revealBody();
+} else {
+  window.addEventListener("load", revealBody);
+}
 
 gsap.registerPlugin(ScrollTrigger);
 document.addEventListener("DOMContentLoaded", () => {

@@ -5,11 +5,16 @@ import WebGLWorker from "../workers/webgl-worker.js?worker";
 
 gsap.registerPlugin(ScrollTrigger);
 
-window.addEventListener("load", () => {
+function revealBody() {
   requestAnimationFrame(() => {
     document.body.classList.add("fade-in-loaded");
   });
-});
+}
+if (document.readyState === 'complete') {
+  revealBody();
+} else {
+  window.addEventListener("load", revealBody);
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   // Page Transition Logic
