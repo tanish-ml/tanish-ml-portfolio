@@ -142,7 +142,6 @@
       /* Hide AI Orb on Touch Devices (Mobile) */
       /* Touch Devices (Phones & Tablets) */
       @media (hover: none) and (pointer: coarse) {
-        #ai-companion,
         #arcade,
         .arcade-link {
           display: none !important;
@@ -179,86 +178,9 @@
         top: 0;
       }
       /* --- AI COMPANION CURSOR --- */
-      #ai-companion {
-        position: fixed;
-        top: 0;
-        left: 0;
-        pointer-events: none;
-        z-index: 9999999;
-        transform: translate3d(-100px, -100px, 0);
-        display: flex;
-        align-items: center;
-      }
-      .orb-core {
-        width: 18px;
-        height: 18px;
-        background: radial-gradient(
-          circle at 30% 30%,
-          #ffffff,
-          #00ffcc 50%,
-          #004433 90%
-        );
-        border-radius: 50%;
-        box-shadow:
-          0 0 20px #00ffcc,
-          inset 0 0 10px #ffffff;
-        animation:
-          floatOrb 2s ease-in-out infinite,
-          pulseOrb 2s infinite alternate;
-        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        margin-left: -9px; /* center on mouse */
-        margin-top: -9px;
-      }
-      @keyframes floatOrb {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-5px);
-        }
-      }
-      @keyframes pulseOrb {
-        0% {
-          box-shadow:
-            0 0 10px #00ffcc,
-            inset 0 0 5px #ffffff;
-        }
-        100% {
-          box-shadow:
-            0 0 30px #00ffcc,
-            0 0 15px #ffffff,
-            inset 0 0 10px #ffffff;
-        }
-      }
-      #ai-tooltip {
-        margin-left: 20px;
-        background: rgba(0, 15, 5, 0.9);
-        border: 1px solid #00ffcc;
-        border-left: 3px solid #00ffcc;
-        padding: 8px 12px;
-        color: #ffffff;
-        font-family: "Courier New", monospace;
-        font-size: 0.8rem;
-        max-width: 220px;
-        border-radius: 2px;
-        opacity: 0;
-        transform: translateX(-10px) scale(0.9);
-        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        text-shadow: 0 0 5px #00ffcc;
-        box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
-        line-height: 1.4;
-      }
-      #ai-companion.talking #ai-tooltip {
-        opacity: 1;
-        transform: translateX(0) scale(1);
-      }
-      #ai-companion.talking .orb-core {
-        transform: scale(1.4);
-        box-shadow:
-          0 0 40px #00ffcc,
-          inset 0 0 20px #ffffff;
-      }
+
+      #ai-companion.talking 
+      #ai-companion.talking 
 
       /* --- CRT AESTHETIC --- */
       .crt-overlay {
@@ -687,10 +609,7 @@
       }
     </style>
     <!-- AI Companion Cursor -->
-    <div aria-hidden="true" id="ai-companion">
-      <div class="orb-core"></div>
-      <div id="ai-tooltip">Greetings.</div>
-    </div>
+
     <!-- Spectral Ghost Cursor Nodes -->
     <div class="cursor-node" id="cursor-main">
       <div class="hud-reticle"></div>
@@ -1511,67 +1430,15 @@
         el.addEventListener("mouseenter", scramble);
 
         // --- AI COMPANION LOGIC ---
-        const aiCompanion = document.getElementById("ai-companion");
-        const aiTooltip = document.getElementById("ai-tooltip");
 
         let mouseX = 0,
           mouseY = 0;
-        let orbX = 0,
-          orbY = 0;
 
         // Smooth follow logic
         window.addEventListener("mousemove", (e) => {
           mouseX = e.clientX;
           mouseY = e.clientY;
         });
-
-        function animateOrb() {
-          // Lerp orb towards mouse
-          orbX += (mouseX - orbX) * 0.25;
-          orbY += (mouseY - orbY) * 0.25;
-          aiCompanion.style.transform = `translate3d(${orbX}px, ${orbY}px, 0)`;
-          requestAnimationFrame(animateOrb);
-        }
-        animateOrb();
-
-        const aiLines = {
-          "Cyber Maze": [
-            "Analyzing Cyber Maze... Tanish built this using grid physics mapping.",
-            "A digital labyrinth. Can your pathfinding algorithm beat this?",
-            "I've run 14 million simulations of this maze. You're going to get lost.",
-            "Fascinating grid physics in this one. Watch your step.",
-            "Cyber Maze initialized. Are you ready to dive into the grid?",
-            "Tanish coded some tricky wall-collisions here. Good luck.",
-            "Grid mapping active. Navigating this will require precision.",
-          ],
-          "Deep Learning Scrollytelling": [
-            "Ah, the neural network visualizer! A beautiful Multi-Layer Perceptron.",
-            "Forward propagation in real-time. Tanish optimized this perfectly.",
-            "Want to see how I think? Step into the Deep Learning architecture.",
-            "This 3D WebGL representation is highly accurate to my own neural pathways.",
-            "Observe the flow of data packets through the hidden layers.",
-            "A masterful breakdown of weights, biases, and ReLU activations.",
-            "This is where the magic happens. Pure matrix multiplication.",
-          ],
-          github: [
-            "Accessing Tanish's central repository...",
-            "Warning: High concentrations of clean, optimized code ahead.",
-            "Let's check the commit history. Tanish is always pushing updates.",
-            "Open-source intelligence gathered here. Proceed to GitHub?",
-            "I see you like reading source code. Excellent choice.",
-            "Connecting to the mainframe... GitHub uplink established.",
-            "Pull requests and repositories. A developer's true home.",
-          ],
-          default: [
-            "Target locked. Ready to execute.",
-            "Awaiting your command, user.",
-            "This element is fully interactive.",
-            "I am detecting a clickable node.",
-            "Hovering over an active module.",
-            "Shall we proceed with this execution?",
-            "Interaction detected. Standing by.",
-          ],
-        };
 
         document.querySelectorAll(".interactive, a").forEach((el) => {
           el.addEventListener("mouseenter", () => {
@@ -1595,11 +1462,8 @@
             const randomLine = pool[Math.floor(Math.random() * pool.length)];
 
             aiTooltip.innerText = randomLine;
-            aiCompanion.classList.add("talking");
           });
-          el.addEventListener("mouseleave", () => {
-            aiCompanion.classList.remove("talking");
-          });
+          el.addEventListener("mouseleave", () => {});
         });
 
         // --- GHOST CURSOR KINEMATICS ---
@@ -1668,10 +1532,6 @@
           document
             .querySelectorAll(".cursor-node")
             .forEach((node) => (node.style.opacity = "0"));
-
-          // Hide AI Orb so it doesn't float over the game
-          const orb = document.getElementById("ai-companion");
-          if (orb) orb.style.display = "none";
         }
         function closeGame() {
           document.getElementById("game-modal").style.display = "none";
@@ -1682,10 +1542,6 @@
           document
             .querySelectorAll(".cursor-node")
             .forEach((node) => (node.style.opacity = "1"));
-
-          // Restore AI Orb
-          const orb = document.getElementById("ai-companion");
-          if (orb) orb.style.display = "block";
         }
 
         window.addEventListener("message", (event) => {
