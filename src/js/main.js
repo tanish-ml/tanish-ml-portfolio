@@ -174,7 +174,7 @@ function initWebGL() {
   scene.add(masterGroup);
 
   // Floating Data Cubes
-  const numCubes = 1500;
+  const numCubes = 4000;
   const cubeGeo = new THREE.BoxGeometry(0.4, 0.4, 0.4);
   const cubeMat = new THREE.MeshBasicMaterial({
     color: 0x00ffcc,
@@ -187,9 +187,9 @@ function initWebGL() {
   const cubeData = [];
 
   for (let i = 0; i < numCubes; i++) {
-    const x = (Math.random() - 0.5) * 200;
-    const y = (Math.random() - 0.5) * 80;
-    const z = (Math.random() - 0.5) * 500;
+    const x = (Math.random() - 0.5) * 600;
+    const y = (Math.random() - 0.5) * 300;
+    const z = (Math.random() - 0.5) * 2000;
     const rx = Math.random() * Math.PI;
     const ry = Math.random() * Math.PI;
     cubeData.push({ x, y, z, rx, ry });
@@ -219,10 +219,14 @@ function initWebGL() {
 
     for (let i = 0; i < numCubes; i++) {
       let data = cubeData[i];
-      data.rx += 0.01;
-      data.ry += 0.01;
-      data.z += 0.1;
-      if (data.z > 100) data.z = -400;
+              data.rx += 0.01;
+        data.ry += 0.01;
+        data.z += 0.2;
+        if (data.z > camera.position.z + 200) {
+          data.z = camera.position.z - 1800;
+          data.x = (Math.random() - 0.5) * 600;
+          data.y = (Math.random() - 0.5) * 300;
+        }
       dummy.position.set(data.x, data.y, data.z);
       dummy.rotation.set(data.rx, data.ry, 0);
       dummy.updateMatrix();
@@ -435,10 +439,10 @@ function initDepthChamber() {
     const currentZ = progress * maxZ;
 
     // Add a slight "snake" camera wobble
-    const camX = Math.sin(progress * Math.PI * 10) * 100;
-    const camY = Math.cos(progress * Math.PI * 6) * 50;
+    
+    
 
-    world.style.transform = `translate3d(${camX}px, ${camY}px, ${currentZ}px)`;
+    world.style.transform = `translate3d(0px, 0px, ${currentZ}px)`;
   });
 }
   // --- CYBER TEXT DECODER ---
